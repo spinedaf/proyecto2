@@ -5,8 +5,9 @@
  */
 package capaLogica;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Hashtable;
 
 /**
  *
@@ -18,11 +19,16 @@ public class Tarea {
     private String descripcion;
     private Date fechaCreacion;
     
-    public Tarea(String pnombre, String pdescripcion, Date pfechaCreacion)
+    private SalaDeReparacion sala;
+    private Hashtable<String,Operario> listaOperarios;
+    
+    public Tarea(String pnombre, String pdescripcion, Date pfecha)
     {
         this.setDescripcion(pdescripcion);
         this.setNombre(pnombre);
-        this.setFechaCreacion(pfechaCreacion);
+        this.setFechaCreacion(pfecha);
+        
+        listaOperarios = new Hashtable<String,Operario>();
     }
 
     /**
@@ -67,5 +73,37 @@ public class Tarea {
         this.fechaCreacion = fechaCreacion;
     }
     
-    
+    public void agregarOperario(Operario pOperario)
+    {
+        if(pOperario != null)
+        {
+            listaOperarios.put(pOperario.getId(), pOperario);
+        }
+    }
+
+    /**
+     * @return the sala
+     */
+    public SalaDeReparacion getSala() {
+        return sala;
+    }
+
+    /**
+     * @return the listaOperarios
+     */
+    public ArrayList<Operario> getListaOperarios() {
+        ArrayList<Operario> lista = new ArrayList<Operario>();
+        for(Operario op: listaOperarios.values())
+        {
+            lista.add(op);
+        }
+        return lista;
+    }
+
+    /**
+     * @param sala the sala to set
+     */
+    private void setSala(SalaDeReparacion sala) {
+        this.sala = sala;
+    }
 }

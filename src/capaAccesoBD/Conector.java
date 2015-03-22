@@ -40,9 +40,7 @@ public class Conector{
 //	
 	
 	public static AccesoBD getConector() throws java.sql.SQLException,Exception{
-            String curDir = System.getProperty("user.dir").toString();
-            curDir = curDir.replace("\\", "/");
-            String path = curDir + "/databases/BDRepara.mdb";
+            String path = getDBPath();
             String driverPath = "jdbc:ucanaccess://" + path;
             
             File f = new File(path);
@@ -57,4 +55,12 @@ public class Conector{
             return conectorBD;
 	}
 	
+        public static String getDBPath()
+        {
+            String curDir = System.getProperty("user.dir").toString();
+            curDir = curDir.replace("\\", "/");
+            String path = curDir + "/databases/BDRepara.mdb";
+            
+            return path;
+        }
 }
