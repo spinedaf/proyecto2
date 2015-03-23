@@ -40,4 +40,59 @@ public class MultiOperario {
             }
             return operario;
     }
+    
+    public  void actualizarSala(Operario poperario) throws 
+			java.sql.SQLException,Exception{
+        String sql;
+        sql = "UPDATE TOperario "+
+        "SET sala='"+poperario.getSala()+"' "+
+        "WHERE identificacion='"+poperario.getId()+"';";
+        try {
+                Conector.getConector().ejecutarSQL(sql);
+        }
+        catch (Exception e) {
+                throw new Exception ("El Operario no esta registrado.");
+        }
+    }
+    
+    public Operario buscar(String pnombre) throws
+        java.sql.SQLException,Exception{
+            Operario operario = null;
+            java.sql.ResultSet rs;
+            String sql;
+            sql = "SELECT identificacion,nombre,apellido,telefono,direccion,fechaIngreso,aniosExperiencia,cargo,sala "+
+            "FROM TOperario "+
+            "WHERE nombre='"+pnombre+"';";
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            if (rs.next()){
+                operario = new Operario(
+                    rs.getString("identificacion"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("telefono"),
+                    rs.getString("direccion"),
+                    rs.getDate("fechaIngreso"),
+                    rs.getInt("aniosExperiencia"),
+                    rs.getString("cargo")
+                    );
+            } else {
+                throw new Exception ("Operario no esta registrado.");
+            }
+            rs.close();
+            return operario;
+    }
+    
+    public  void borrar(Operario poperario) throws
+        java.sql.SQLException,Exception{
+            java.sql.ResultSet rs;
+            String sql;
+            sql= "DELETE FROM TOperario "+
+            "WHERE nombre='"+poperario.getNombre()+"';";
+            try {
+                Conector.getConector().ejecutarSQL(sql);
+            }
+            catch (Exception e) {
+                throw new Exception ("Operario tiene entradas.");
+            }
+	}
 }

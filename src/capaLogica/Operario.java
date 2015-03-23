@@ -22,8 +22,8 @@ public class Operario {
     private Date fechaIngreso;
     private int aniosExperiencia;
     private String cargo;
-    
-    private ArrayList<Tarea> listaTareas;
+   
+    private SalaDeReparacion  sala;
     
     public Operario(String pid, String pnombre, String papellido, String ptelefono,
             String pdireccion, Date fecha, int panios, String pcargo)
@@ -36,7 +36,6 @@ public class Operario {
         this.setId(pid);
         this.setFechaIngreso(fecha);
         
-        listaTareas = new ArrayList<Tarea>();
     }
     
     public Operario(String pid, String pnombre, String papellido, String pcargo)
@@ -155,12 +154,18 @@ public class Operario {
     private void setCargo(String cargo) {
         this.cargo = cargo;
     }
-    
-    public void asignarTarea(Tarea pTarea)
-    {
-        if(pTarea != null)
-        {
-            listaTareas.add(pTarea);
-        }
+
+    /**
+     * @return the sala
+     */
+    public SalaDeReparacion getSala() {
+        return sala;
+    }
+
+    /**
+     * @param sala the sala to set
+     */
+    public void setSala(SalaDeReparacion sala) {
+        this.sala = sala;
     }
 }

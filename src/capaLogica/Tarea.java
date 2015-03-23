@@ -20,7 +20,7 @@ public class Tarea {
     private Date fechaCreacion;
     
     private SalaDeReparacion sala;
-    private Hashtable<String,Operario> listaOperarios;
+    private Operario operario;
     
     public Tarea(String pnombre, String pdescripcion, Date pfecha)
     {
@@ -28,7 +28,8 @@ public class Tarea {
         this.setNombre(pnombre);
         this.setFechaCreacion(pfecha);
         
-        listaOperarios = new Hashtable<String,Operario>();
+        sala = null;
+        operario = null;
     }
 
     /**
@@ -72,14 +73,6 @@ public class Tarea {
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
-    
-    public void agregarOperario(Operario pOperario)
-    {
-        if(pOperario != null)
-        {
-            listaOperarios.put(pOperario.getId(), pOperario);
-        }
-    }
 
     /**
      * @return the sala
@@ -89,21 +82,23 @@ public class Tarea {
     }
 
     /**
-     * @return the listaOperarios
-     */
-    public ArrayList<Operario> getListaOperarios() {
-        ArrayList<Operario> lista = new ArrayList<Operario>();
-        for(Operario op: listaOperarios.values())
-        {
-            lista.add(op);
-        }
-        return lista;
-    }
-
-    /**
      * @param sala the sala to set
      */
     private void setSala(SalaDeReparacion sala) {
         this.sala = sala;
+    }
+
+    /**
+     * @return the operario
+     */
+    public Operario getOperario() {
+        return operario;
+    }
+
+    /**
+     * @param operario the operario to set
+     */
+    public void setOperario(Operario operario) {
+        this.operario = operario;
     }
 }
