@@ -27,8 +27,8 @@ public class MultiOperario {
         Operario operario=null;
             String sql;
             sql = "INSERT INTO TOperario "+
-            "(identificacion, nombre, apellido, telefono, direccion, fechaIngreso, "
-                    + "aniosExperiencia, cargo) "+
+            "(cedulaOperario, nombreOperario, apellidoOperario, telefonoOperario, direccionOperario, fechaIngresoOperario, "
+                    + "anosExperienciaOperario, cargoOperario) "+
             "VALUES ('"+id+"', '"+nombre+"', '"+apellido+"', '"+telefono+"', '"+
                         direccion+"', '"+ mmddyyyyXmas+"', '"+anios+"', '"+cargo+"');";
             try {
@@ -36,44 +36,30 @@ public class MultiOperario {
                 operario = new Operario(id, nombre,apellido,telefono,direccion,hoy,anios,cargo);
             }
             catch (Exception e) {
-                throw new Exception ("El numero de identificaci�n ya esta en el sistema.");
+                throw new Exception ("El operario ya esta en el sistema.");
             }
             return operario;
     }
     
-    public  void actualizarSala(Operario poperario) throws 
-			java.sql.SQLException,Exception{
-        String sql;
-        sql = "UPDATE TOperario "+
-        "SET sala='"+poperario.getSala()+"' "+
-        "WHERE identificacion='"+poperario.getId()+"';";
-        try {
-                Conector.getConector().ejecutarSQL(sql);
-        }
-        catch (Exception e) {
-                throw new Exception ("El Operario no esta registrado.");
-        }
-    }
-    
-    public Operario buscar(String pnombre) throws
+    public Operario buscar(String pcedula) throws
         java.sql.SQLException,Exception{
             Operario operario = null;
             java.sql.ResultSet rs;
             String sql;
-            sql = "SELECT identificacion,nombre,apellido,telefono,direccion,fechaIngreso,aniosExperiencia,cargo,sala "+
+            sql = "SELECT * "+
             "FROM TOperario "+
-            "WHERE nombre='"+pnombre+"';";
+            "WHERE cedulaOperario='"+pcedula+"';";
             rs = Conector.getConector().ejecutarSQL(sql,true);
             if (rs.next()){
                 operario = new Operario(
-                    rs.getString("identificacion"),
-                    rs.getString("nombre"),
-                    rs.getString("apellido"),
-                    rs.getString("telefono"),
-                    rs.getString("direccion"),
-                    rs.getDate("fechaIngreso"),
-                    rs.getInt("aniosExperiencia"),
-                    rs.getString("cargo")
+                    rs.getString("cedulaOperario"),
+                    rs.getString("nombreOperario"),
+                    rs.getString("apellidoOperario"),
+                    rs.getString("telefonoOperario"),
+                    rs.getString("direccionOperario"),
+                    rs.getDate("fechaIngresoOperario"),
+                    rs.getInt("anosExperienciaOperario"),
+                    rs.getString("cargoOperario")
                     );
             } else {
                 throw new Exception ("Operario no esta registrado.");
@@ -87,7 +73,7 @@ public class MultiOperario {
             java.sql.ResultSet rs;
             String sql;
             sql= "DELETE FROM TOperario "+
-            "WHERE nombre='"+poperario.getNombre()+"';";
+            "WHERE cedulaOperario='"+poperario.getId()+"';";
             try {
                 Conector.getConector().ejecutarSQL(sql);
             }
