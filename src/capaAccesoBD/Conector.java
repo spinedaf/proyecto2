@@ -59,7 +59,7 @@ public class Conector{
         {
             String curDir = System.getProperty("user.dir").toString();
             curDir = curDir.replace("\\", "/");
-            String path = curDir + "/databases/BDRepara.mdb";
+            String path = curDir + "/databases/BDRepara.accdb";
             
             return path;
         }

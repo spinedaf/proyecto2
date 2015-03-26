@@ -30,7 +30,9 @@ public class MultiOperario {
             "(cedulaOperario, nombreOperario, apellidoOperario, telefonoOperario, direccionOperario, fechaIngresoOperario, "
                     + "anosExperienciaOperario, cargoOperario) "+
             "VALUES ('"+id+"', '"+nombre+"', '"+apellido+"', '"+telefono+"', '"+
-                        direccion+"', '"+ mmddyyyyXmas+"', '"+anios+"', '"+cargo+"');";
+                        direccion+"', '"+ mmddyyyyXmas+"', '"+anios+"', '"+cargo+"')";
+
+            
             try {
                 Conector.getConector().ejecutarSQL(sql);
                 operario = new Operario(id, nombre,apellido,telefono,direccion,hoy,anios,cargo);

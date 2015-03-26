@@ -56,7 +56,8 @@ public class AccesoBD{
 	
 	public void ejecutarSQL(String sentencia) 
 	throws SQLException,Exception{	
-		st.execute(sentencia);		
+		st.execute(sentencia);	
+            
 	}
 	
 	/**

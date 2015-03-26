@@ -5,6 +5,10 @@
  */
 package capaLogica;
 
+import capaAccesoBD.Conector;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -32,10 +36,18 @@ public class MultiOperarioTest {
     
     @Before
     public void setUp() {
+        File f = new File(Conector.getDBPath());
+        try{
+            //f.delete();
+            Files.delete(Paths.get(Conector.getDBPath()));
+        }catch(Exception e){}
     }
     
     @After
     public void tearDown() {
+        try{
+            Files.delete(Paths.get(Conector.getDBPath()));
+        }catch(Exception e){}
     }
 
     /**
@@ -66,7 +78,7 @@ public class MultiOperarioTest {
     @Test
     public void testBuscar() throws Exception {
         System.out.println("buscar");
-        String id = "123";
+        String id = "1234";
         String nombre = "Oldemarsh";
         String apellido = "De Tierra Blanca";
         String telefono = "88888888";
@@ -76,7 +88,7 @@ public class MultiOperarioTest {
         MultiOperario instance = new MultiOperario();
         instance.crear(id, nombre, apellido, telefono, direccion, anios, cargo);
         
-        Operario result = instance.buscar(nombre);
+        Operario result = instance.buscar(id);
         assertEquals(nombre, result.getNombre());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -89,7 +101,7 @@ public class MultiOperarioTest {
     public void testBorrar() throws Exception {
         System.out.println("borrar");
         
-        String id = "123";
+        String id = "1235";
         String nombre = "Oldemarsh";
         String apellido = "De Tierra Blanca";
         String telefono = "88888888";
