@@ -16,24 +16,25 @@ import java.util.Date;
  */
 public class MultiTarea {
     
-    public Tarea crear(String pnombre, String pdescripcion)throws
+    public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionPropuesta, int duracionReal, int idSala, 
+            int idReparacion)throws
 			java.sql.SQLException,Exception
     {
-        Date hoy = new Date();
         Timestamp mmddyyyyXmas = 
-        new Timestamp(hoy.getTime()); 
+        new Timestamp(pFecha.getTime()); 
         
         Tarea tarea=null;
             String sql;
             sql = "INSERT INTO TTarea "+
-            "(nombre, descripcion, fechaCreacion) "+
-            "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"');";
+            "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, id_reparacion) "+
+            "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+idSala
+                    +"', '"+idReparacion+"');";
             try {
                 Conector.getConector().ejecutarSQL(sql);
-                tarea = new Tarea (pnombre, pdescripcion,hoy);
+                tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
             }
             catch (Exception e) {
-                throw new Exception ("El numero de identificaci�n ya esta en el sistema.");
+                throw new Exception ("El nombre de tarea ya esta en el sistema.");
             }
             return tarea;
     }
@@ -43,15 +44,19 @@ public class MultiTarea {
             Tarea tarea = null;
             java.sql.ResultSet rs;
             String sql;
-            sql = "SELECT nombre,descripcion,fechaCreacion "+
+            sql = "SELECT * "+
             "FROM TTarea "+
             "WHERE nombre='"+pnombre+"';";
             rs = Conector.getConector().ejecutarSQL(sql,true);
             if (rs.next()){
                 tarea = new Tarea(
-                    rs.getString("nombre"),
-                    rs.getString("descripcion"),
-                    rs.getDate("fechaCreacion")
+                    rs.getString("nombreTarea"),
+                    rs.getString("descripcionTarea"),
+                    rs.getDate("fechaCreacionTarea"),
+                    rs.getInt("duracionRealTarea"),
+                    rs.getInt("duracionPropuestaTarea"),
+                    rs.getInt("id_reparacion"),
+                    rs.getInt("id_sala")
                     );
             } else {
                 throw new Exception ("La tarea no esta registrada.");
@@ -65,7 +70,7 @@ public class MultiTarea {
             java.sql.ResultSet rs;
             String sql;
             sql= "DELETE FROM TTarea "+
-            "WHERE nombre='"+ptarea.getNombre()+"';";
+            "WHERE nombreTarea='"+ptarea.getNombre()+"';";
             try {
                 Conector.getConector().ejecutarSQL(sql);
             }

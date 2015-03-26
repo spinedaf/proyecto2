@@ -32,6 +32,7 @@ public class Operario {
         this.setTelefono(ptelefono);
         this.setNombre(pnombre);
         this.setApellido(papellido);
+        this.setDireccion(pdireccion);
         this.setAniosExperiencia(panios);
         this.setId(pid);
         this.setFechaIngreso(fecha);

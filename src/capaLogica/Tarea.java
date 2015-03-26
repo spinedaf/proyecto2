@@ -18,18 +18,29 @@ public class Tarea {
     private String nombre;
     private String descripcion;
     private Date fechaCreacion;
+    private int duracionPropuesta;
+    private int duracionReal;
     
+    private int idSala;
     private SalaDeReparacion sala;
-    private Operario operario;
+    private int idReparacion;
+    private Reparacion reparacion;
+    private ArrayList<Operario> listaOperarios;
     
-    public Tarea(String pnombre, String pdescripcion, Date pfecha)
+    public Tarea(String pnombre, String pdescripcion, Date pfechaCreacion, int pduracionReal, int pduracionPropuesta, 
+            int pidReparacion, int pidSala)
     {
         this.setDescripcion(pdescripcion);
         this.setNombre(pnombre);
-        this.setFechaCreacion(pfecha);
+        this.setFechaCreacion(pfechaCreacion);
+        this.setDuracionReal(pduracionReal);
+        this.setDuracionPropuesta(pduracionPropuesta);
+        this.setIdReparacion(pidReparacion);
+        this.setIdSala(pidSala);
         
         sala = null;
-        operario = null;
+        sala = null;
+        listaOperarios = new ArrayList<Operario>();
     }
 
     /**
@@ -89,16 +100,86 @@ public class Tarea {
     }
 
     /**
-     * @return the operario
+     * @return the duracionPropuesta
      */
-    public Operario getOperario() {
-        return operario;
+    public int getDuracionPropuesta() {
+        return duracionPropuesta;
     }
 
     /**
-     * @param operario the operario to set
+     * @param duracionPropuesta the duracionPropuesta to set
      */
-    public void setOperario(Operario operario) {
-        this.operario = operario;
+    public void setDuracionPropuesta(int duracionPropuesta) {
+        this.duracionPropuesta = duracionPropuesta;
+    }
+
+    /**
+     * @return the duracionReal
+     */
+    public int getDuracionReal() {
+        return duracionReal;
+    }
+
+    /**
+     * @param duracionReal the duracionReal to set
+     */
+    public void setDuracionReal(int duracionReal) {
+        this.duracionReal = duracionReal;
+    }
+
+    /**
+     * @return the idSala
+     */
+    public int getIdSala() {
+        return idSala;
+    }
+
+    /**
+     * @param idSala the idSala to set
+     */
+    public void setIdSala(int idSala) {
+        this.idSala = idSala;
+    }
+
+    /**
+     * @return the idReparacion
+     */
+    public int getIdReparacion() {
+        return idReparacion;
+    }
+
+    /**
+     * @param idReparacion the idReparacion to set
+     */
+    public void setIdReparacion(int idReparacion) {
+        this.idReparacion = idReparacion;
+    }
+
+    /**
+     * @return the reparacion
+     */
+    public Reparacion getReparacion() {
+        return reparacion;
+    }
+
+    /**
+     * @param reparacion the reparacion to set
+     */
+    public void setReparacion(Reparacion reparacion) {
+        this.reparacion = reparacion;
+    }
+
+    /**
+     * @return the listaOperarios
+     */
+    public ArrayList<Operario> getListaOperarios() {
+        return listaOperarios;
+    }
+
+    /**
+     * @param listaOperarios the listaOperarios to set
+     */
+    public void setListaOperarios(ArrayList<Operario> listaOperarios) {
+        this.listaOperarios = listaOperarios;
     }
 }

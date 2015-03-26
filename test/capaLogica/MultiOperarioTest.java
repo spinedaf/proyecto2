@@ -23,6 +23,8 @@ import static org.junit.Assert.*;
  */
 public class MultiOperarioTest {
     
+    
+    
     public MultiOperarioTest() {
     }
     
@@ -36,11 +38,6 @@ public class MultiOperarioTest {
     
     @Before
     public void setUp() {
-        File f = new File(Conector.getDBPath());
-        try{
-            //f.delete();
-            Files.delete(Paths.get(Conector.getDBPath()));
-        }catch(Exception e){}
     }
     
     @After
@@ -68,6 +65,11 @@ public class MultiOperarioTest {
         Operario expResult = new Operario(id,nombre,apellido,telefono, direccion,new Date(),anios,cargo);
         Operario result = instance.crear(id, nombre, apellido, telefono, direccion, anios, cargo);
         assertEquals(expResult.getNombre(), result.getNombre());
+        assertEquals(expResult.getApellido(), result.getApellido());
+        assertEquals(expResult.getCargo(), result.getCargo());
+        assertEquals(expResult.getDireccion(), result.getDireccion());
+        assertEquals(expResult.getTelefono(), result.getTelefono());
+        assertEquals(expResult.getFechaIngreso(), result.getFechaIngreso());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -90,6 +92,10 @@ public class MultiOperarioTest {
         
         Operario result = instance.buscar(id);
         assertEquals(nombre, result.getNombre());
+        assertEquals(apellido, result.getApellido());
+        assertEquals(cargo, result.getCargo());
+        assertEquals(direccion, result.getDireccion());
+        assertEquals(telefono, result.getTelefono());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
