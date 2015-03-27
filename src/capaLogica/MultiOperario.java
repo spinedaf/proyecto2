@@ -17,30 +17,29 @@ import java.util.Date;
 public class MultiOperario {
     
     public Operario crear(String id, String nombre, String apellido, String telefono,
-            String direccion, int anios, String cargo)throws
+            String direccion, Date pfecha, int anios, String cargo)throws
 			java.sql.SQLException,Exception
     {
-        Date hoy = new Date();
         Timestamp mmddyyyyXmas = 
-        new Timestamp(hoy.getTime()); 
+        new Timestamp(pfecha.getTime()); 
         
         Operario operario=null;
-            String sql;
-            sql = "INSERT INTO TOperario "+
-            "(cedulaOperario, nombreOperario, apellidoOperario, telefonoOperario, direccionOperario, fechaIngresoOperario, "
-                    + "anosExperienciaOperario, cargoOperario) "+
-            "VALUES ('"+id+"', '"+nombre+"', '"+apellido+"', '"+telefono+"', '"+
-                        direccion+"', '"+ mmddyyyyXmas+"', '"+anios+"', '"+cargo+"')";
+        String sql;
+        sql = "INSERT INTO TOperario "+
+        "(cedulaOperario, nombreOperario, apellidoOperario, telefonoOperario, direccionOperario, fechaIngresoOperario, "
+                + "anosExperienciaOperario, cargoOperario) "+
+        "VALUES ('"+id+"', '"+nombre+"', '"+apellido+"', '"+telefono+"', '"+
+                    direccion+"', '"+ mmddyyyyXmas+"', '"+anios+"', '"+cargo+"')";
 
-            
-            try {
-                Conector.getConector().ejecutarSQL(sql);
-                operario = new Operario(id, nombre,apellido,telefono,direccion,hoy,anios,cargo);
-            }
-            catch (Exception e) {
-                throw new Exception ("El operario ya esta en el sistema.");
-            }
-            return operario;
+
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            operario = new Operario(id, nombre,apellido,telefono,direccion,pfecha,anios,cargo);
+        }
+        catch (Exception e) {
+            throw new Exception ("El operario ya esta en el sistema.");
+        }
+        return operario;
     }
     
     public Operario buscar(String pcedula) throws

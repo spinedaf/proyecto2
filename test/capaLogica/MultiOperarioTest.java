@@ -63,7 +63,7 @@ public class MultiOperarioTest {
         String sala = "Tramado";
         MultiOperario instance = new MultiOperario();
         Operario expResult = new Operario(id,nombre,apellido,telefono, direccion,new Date(),anios,cargo);
-        Operario result = instance.crear(id, nombre, apellido, telefono, direccion, anios, cargo);
+        Operario result = instance.crear(id, nombre, apellido, telefono, direccion, new Date(), anios, cargo);
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getApellido(), result.getApellido());
         assertEquals(expResult.getCargo(), result.getCargo());
@@ -88,7 +88,7 @@ public class MultiOperarioTest {
         int anios = 0;
         String cargo = "Jefe";
         MultiOperario instance = new MultiOperario();
-        instance.crear(id, nombre, apellido, telefono, direccion, anios, cargo);
+        instance.crear(id, nombre, apellido, telefono, direccion, new Date(), anios, cargo);
         
         Operario result = instance.buscar(id);
         assertEquals(nombre, result.getNombre());
@@ -115,7 +115,7 @@ public class MultiOperarioTest {
         int anios = 0;
         String cargo = "Jefe";
         MultiOperario instance = new MultiOperario();
-        Operario poperario = instance.crear(id, nombre, apellido, telefono, direccion, anios, cargo);
+        Operario poperario = instance.crear(id, nombre, apellido, telefono, direccion, new Date(), anios, cargo);
         instance.borrar(poperario);
         
         Operario operarioBorrado = null;
