@@ -7,8 +7,9 @@ package capaLogica;
 
 import capaAccesoBD.*;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Vector;
 
 /**
  *
@@ -46,7 +47,7 @@ public class MultiTarea {
             String sql;
             sql = "SELECT * "+
             "FROM TTarea "+
-            "WHERE nombre='"+pnombre+"';";
+            "WHERE nombreTarea='"+pnombre+"';";
             rs = Conector.getConector().ejecutarSQL(sql,true);
             if (rs.next()){
                 tarea = new Tarea(
@@ -63,6 +64,58 @@ public class MultiTarea {
             }
             rs.close();
             return tarea;
+    }
+    
+    public ArrayList<Tarea> buscarPorReparacion(int idReparacion)throws java.sql.SQLException,Exception{
+	java.sql.ResultSet rs;
+        String sql;
+        Tarea tarea=null;
+        ArrayList<Tarea> tareas= new ArrayList<Tarea>();
+        sql="SELECT * "+
+        "FROM TTarea "+
+        "WHERE id_reparacion='"+idReparacion+"';";
+        Conector.getConector().ejecutarSQL(sql);
+        rs = Conector.getConector().ejecutarSQL(sql,true);
+        while (rs.next()){
+            tarea = new Tarea(
+                rs.getString("nombreTarea"),
+                rs.getString("descripcionTarea"),
+                rs.getDate("fechaCreacionTarea"),
+                rs.getInt("duracionRealTarea"),
+                rs.getInt("duracionPropuestaTarea"),
+                rs.getInt("id_reparacion"),
+                rs.getInt("id_sala")
+                );
+            tareas.add(tarea);
+        }
+        rs.close();
+        return tareas;    
+    }
+    
+    public ArrayList<Tarea> buscarPorSala(int idSala)throws java.sql.SQLException,Exception{
+	java.sql.ResultSet rs;
+        String sql;
+        Tarea tarea=null;
+        ArrayList<Tarea> tareas= new ArrayList<Tarea>();
+        sql="SELECT * "+
+        "FROM TTarea "+
+        "WHERE id_sala='"+idSala+"';";
+        Conector.getConector().ejecutarSQL(sql);
+        rs = Conector.getConector().ejecutarSQL(sql,true);
+        while (rs.next()){
+            tarea = new Tarea(
+                rs.getString("nombreTarea"),
+                rs.getString("descripcionTarea"),
+                rs.getDate("fechaCreacionTarea"),
+                rs.getInt("duracionRealTarea"),
+                rs.getInt("duracionPropuestaTarea"),
+                rs.getInt("id_reparacion"),
+                rs.getInt("id_sala")
+                );
+            tareas.add(tarea);
+        }
+        rs.close();
+        return tareas;    
     }
     
     public  void borrar(Tarea ptarea) throws
