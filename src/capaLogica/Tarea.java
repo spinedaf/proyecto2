@@ -23,19 +23,19 @@ public class Tarea {
     
     private int idSala;
     private SalaDeReparacion sala;
-    private int idReparacion;
+    private String codigoReparacion;
     private Reparacion reparacion;
     private ArrayList<Operario> listaOperarios;
     
     public Tarea(String pnombre, String pdescripcion, Date pfechaCreacion, int pduracionReal, int pduracionPropuesta, 
-            int pidReparacion, int pidSala)
+            String pcodigoReparacion, int pidSala)
     {
         this.setDescripcion(pdescripcion);
         this.setNombre(pnombre);
         this.setFechaCreacion(pfechaCreacion);
         this.setDuracionReal(pduracionReal);
         this.setDuracionPropuesta(pduracionPropuesta);
-        this.setIdReparacion(pidReparacion);
+        this.setCodigoReparacion(pcodigoReparacion);
         this.setIdSala(pidSala);
         
         sala = null;
@@ -142,20 +142,6 @@ public class Tarea {
     }
 
     /**
-     * @return the idReparacion
-     */
-    public int getIdReparacion() {
-        return idReparacion;
-    }
-
-    /**
-     * @param idReparacion the idReparacion to set
-     */
-    public void setIdReparacion(int idReparacion) {
-        this.idReparacion = idReparacion;
-    }
-
-    /**
      * @return the reparacion
      */
     public Reparacion getReparacion() {
@@ -181,5 +167,19 @@ public class Tarea {
      */
     public void setListaOperarios(ArrayList<Operario> listaOperarios) {
         this.listaOperarios = listaOperarios;
+    }
+
+    /**
+     * @return the codigoReparacion
+     */
+    public String getCodigoReparacion() {
+        return codigoReparacion;
+    }
+
+    /**
+     * @param codigoReparacion the codigoReparacion to set
+     */
+    public void setCodigoReparacion(String codigoReparacion) {
+        this.codigoReparacion = codigoReparacion;
     }
 }

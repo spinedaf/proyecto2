@@ -18,7 +18,7 @@ import java.util.Vector;
 public class MultiTarea {
     
     public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionReal, int duracionPropuesta, 
-            int idReparacion, int idSala)throws
+            String codigoReparacion, int idSala)throws
 			java.sql.SQLException,Exception
     {
         Timestamp mmddyyyyXmas = 
@@ -27,12 +27,12 @@ public class MultiTarea {
         Tarea tarea=null;
         String sql;
         sql = "INSERT INTO TTarea "+
-        "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, id_reparacion) "+
+        "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, codigo_reparacion) "+
         "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+idSala
-                +"', '"+idReparacion+"');";
+                +"', '"+codigoReparacion+"');";
         try {
             Conector.getConector().ejecutarSQL(sql);
-            tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
+            tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoReparacion,idSala);
         }
         catch (Exception e) {
             throw new Exception ("El nombre de tarea ya esta en el sistema.");
@@ -56,7 +56,7 @@ public class MultiTarea {
                 rs.getDate("fechaCreacionTarea"),
                 rs.getInt("duracionRealTarea"),
                 rs.getInt("duracionPropuestaTarea"),
-                rs.getInt("id_reparacion"),
+                rs.getString("codigo_reparacion"),
                 rs.getInt("id_sala")
                 );
         } else {
@@ -66,14 +66,14 @@ public class MultiTarea {
         return tarea;
     }
     
-    public ArrayList<Tarea> buscarPorReparacion(int idReparacion)throws java.sql.SQLException,Exception{
+    public ArrayList<Tarea> buscarPorReparacion(String codigo)throws java.sql.SQLException,Exception{
 	java.sql.ResultSet rs;
         String sql;
         Tarea tarea=null;
         ArrayList<Tarea> tareas= new ArrayList<Tarea>();
         sql="SELECT * "+
         "FROM TTarea "+
-        "WHERE id_reparacion='"+idReparacion+"';";
+        "WHERE codigo_reparacion='"+codigo+"';";
         Conector.getConector().ejecutarSQL(sql);
         rs = Conector.getConector().ejecutarSQL(sql,true);
         while (rs.next()){
@@ -83,7 +83,7 @@ public class MultiTarea {
                 rs.getDate("fechaCreacionTarea"),
                 rs.getInt("duracionRealTarea"),
                 rs.getInt("duracionPropuestaTarea"),
-                rs.getInt("id_reparacion"),
+                rs.getString("codigo_reparacion"),
                 rs.getInt("id_sala")
                 );
             tareas.add(tarea);
@@ -109,7 +109,7 @@ public class MultiTarea {
                 rs.getDate("fechaCreacionTarea"),
                 rs.getInt("duracionRealTarea"),
                 rs.getInt("duracionPropuestaTarea"),
-                rs.getInt("id_reparacion"),
+                rs.getString("codigo_reparacion"),
                 rs.getInt("id_sala")
                 );
             tareas.add(tarea);

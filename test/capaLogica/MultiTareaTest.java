@@ -61,16 +61,16 @@ public class MultiTareaTest {
         int duracionPropuesta = 5;
         int duracionReal = 4;
         int idSala = 3;
-        int idReparacion = 10;
+        String codigoRepa = "india";
         MultiTarea instance = new MultiTarea();
-        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
-        Tarea result = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, idReparacion, idSala);
+        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoRepa,idSala);
+        Tarea result = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, codigoRepa, idSala);
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getDescripcion(), result.getDescripcion());
         assertEquals(expResult.getDuracionPropuesta(), result.getDuracionPropuesta());
         assertEquals(expResult.getDuracionReal(), result.getDuracionReal());
         assertEquals(expResult.getFechaCreacion(), result.getFechaCreacion());
-        assertEquals(expResult.getIdReparacion(), result.getIdReparacion());
+        assertEquals(expResult.getCodigoReparacion(), result.getCodigoReparacion());
         assertEquals(expResult.getIdSala(), result.getIdSala());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -88,10 +88,10 @@ public class MultiTareaTest {
         int duracionPropuesta = 5;
         int duracionReal = 4;
         int idSala = 3;
-        int idReparacion = 10;
+        String codigoRepa = "india";
         MultiTarea instance = new MultiTarea();
-        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionReal,duracionPropuesta,idReparacion,idSala);
-        instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, idReparacion, idSala);
+        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionReal,duracionPropuesta,codigoRepa,idSala);
+        instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, codigoRepa, idSala);
 
         Tarea result = instance.buscar(pnombre);
         assertEquals(expResult.getNombre(), result.getNombre());
@@ -99,7 +99,7 @@ public class MultiTareaTest {
         assertEquals(expResult.getDescripcion(), result.getDescripcion());
         assertEquals(expResult.getDuracionPropuesta(), result.getDuracionPropuesta());
         assertEquals(expResult.getDuracionReal(), result.getDuracionReal());
-        assertEquals(expResult.getIdReparacion(), result.getIdReparacion());
+        assertEquals(expResult.getCodigoReparacion(), result.getCodigoReparacion());
         assertEquals(expResult.getIdSala(), result.getIdSala());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
@@ -111,15 +111,15 @@ public class MultiTareaTest {
     @Test
     public void testBuscarPorReparacion() throws Exception {
         System.out.println("buscarPorReparacion");
-        int idReparacion = 10;
+        String codigo = "10";
         MultiTarea instance = new MultiTarea();
-        ArrayList<Tarea> result = instance.buscarPorReparacion(idReparacion);
+        ArrayList<Tarea> result = instance.buscarPorReparacion(codigo);
         
         boolean idCorrecta = true;
         
         for(Tarea t: result)
         {
-            if(t.getIdReparacion() != idReparacion)
+            if(t.getCodigoReparacion().compareTo(codigo) != 0)
                 idCorrecta = false;
         }
         
@@ -162,10 +162,10 @@ public class MultiTareaTest {
         int duracionPropuesta = 5;
         int duracionReal = 4;
         int idSala = 3;
-        int idReparacion = 10;
+        String codigoRepa = "tango";
         
         MultiTarea instance = new MultiTarea();
-        Tarea tarea = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, idReparacion, idSala );
+        Tarea tarea = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, codigoRepa, idSala );
         instance.borrar(tarea);
         
         Tarea resultado = null;

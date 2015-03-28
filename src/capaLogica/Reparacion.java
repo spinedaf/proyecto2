@@ -145,6 +145,9 @@ public class Reparacion {
      * @return the listaDeTareas
      */
     public ArrayList<Tarea> getListaDeTareas() {
+        /*if(listaDeTareas == null){
+            this.setListaDeTareas(new MultiTarea().buscarPorReparacion(codigo));
+        }*/
         return listaDeTareas;
     }
 
@@ -168,5 +171,6 @@ public class Reparacion {
     public void setPlacaVehiculo(String placaVehiculo) {
         this.placaVehiculo = placaVehiculo;
     }
+   
     
 }
