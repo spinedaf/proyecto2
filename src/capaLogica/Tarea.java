@@ -6,7 +6,7 @@
 package capaLogica;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Hashtable;
 
 /**

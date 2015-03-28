@@ -5,8 +5,8 @@
  */
 package capaLogica;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -25,8 +25,9 @@ public class Reparacion {
     private Vehiculo vehiculo;
     private ArrayList<Tarea> listaDeTareas;
     
-    public Reparacion(String pnombre, String ptipo, Date pfechaAsignacion, String pplacaVehiculo)
+    public Reparacion(String pcodigo, String pnombre, String ptipo, Date pfechaAsignacion, String pplacaVehiculo)
     {
+        this.setCodigo(pcodigo);
         this.setNombre(pnombre);
         this.setTipo(ptipo);
         this.setFechaAsignacion(pfechaAsignacion);

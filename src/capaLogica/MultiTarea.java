@@ -8,7 +8,7 @@ package capaLogica;
 import capaAccesoBD.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Vector;
 
 /**
@@ -17,53 +17,53 @@ import java.util.Vector;
  */
 public class MultiTarea {
     
-    public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionPropuesta, int duracionReal, int idSala, 
-            int idReparacion)throws
+    public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionReal, int duracionPropuesta, 
+            int idReparacion, int idSala)throws
 			java.sql.SQLException,Exception
     {
         Timestamp mmddyyyyXmas = 
         new Timestamp(pFecha.getTime()); 
         
         Tarea tarea=null;
-            String sql;
-            sql = "INSERT INTO TTarea "+
-            "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, id_reparacion) "+
-            "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+idSala
-                    +"', '"+idReparacion+"');";
-            try {
-                Conector.getConector().ejecutarSQL(sql);
-                tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
-            }
-            catch (Exception e) {
-                throw new Exception ("El nombre de tarea ya esta en el sistema.");
-            }
-            return tarea;
+        String sql;
+        sql = "INSERT INTO TTarea "+
+        "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, id_reparacion) "+
+        "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+idSala
+                +"', '"+idReparacion+"');";
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
+        }
+        catch (Exception e) {
+            throw new Exception ("El nombre de tarea ya esta en el sistema.");
+        }
+        return tarea;
     }
     
     public Tarea buscar(String pnombre) throws
         java.sql.SQLException,Exception{
-            Tarea tarea = null;
-            java.sql.ResultSet rs;
-            String sql;
-            sql = "SELECT * "+
-            "FROM TTarea "+
-            "WHERE nombreTarea='"+pnombre+"';";
-            rs = Conector.getConector().ejecutarSQL(sql,true);
-            if (rs.next()){
-                tarea = new Tarea(
-                    rs.getString("nombreTarea"),
-                    rs.getString("descripcionTarea"),
-                    rs.getDate("fechaCreacionTarea"),
-                    rs.getInt("duracionRealTarea"),
-                    rs.getInt("duracionPropuestaTarea"),
-                    rs.getInt("id_reparacion"),
-                    rs.getInt("id_sala")
-                    );
-            } else {
-                throw new Exception ("La tarea no esta registrada.");
-            }
-            rs.close();
-            return tarea;
+        Tarea tarea = null;
+        java.sql.ResultSet rs;
+        String sql;
+        sql = "SELECT * "+
+        "FROM TTarea "+
+        "WHERE nombreTarea='"+pnombre+"';";
+        rs = Conector.getConector().ejecutarSQL(sql,true);
+        if (rs.next()){
+            tarea = new Tarea(
+                rs.getString("nombreTarea"),
+                rs.getString("descripcionTarea"),
+                rs.getDate("fechaCreacionTarea"),
+                rs.getInt("duracionRealTarea"),
+                rs.getInt("duracionPropuestaTarea"),
+                rs.getInt("id_reparacion"),
+                rs.getInt("id_sala")
+                );
+        } else {
+            throw new Exception ("La tarea no esta registrada.");
+        }
+        rs.close();
+        return tarea;
     }
     
     public ArrayList<Tarea> buscarPorReparacion(int idReparacion)throws java.sql.SQLException,Exception{

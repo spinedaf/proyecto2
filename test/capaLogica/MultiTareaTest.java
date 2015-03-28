@@ -9,7 +9,8 @@ import capaAccesoBD.Conector;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
+import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -56,14 +57,14 @@ public class MultiTareaTest {
         System.out.println("crear");
         String pnombre = "Engrasar";
         String pdescripcion = "Engrase";
-        Date pFecha = new Date();
+        Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());;
         int duracionPropuesta = 5;
         int duracionReal = 4;
         int idSala = 3;
         int idReparacion = 10;
         MultiTarea instance = new MultiTarea();
         Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
-        Tarea result = instance.crear(pnombre, pdescripcion, pFecha, duracionPropuesta, duracionReal, idSala, idReparacion);
+        Tarea result = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, idReparacion, idSala);
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getDescripcion(), result.getDescripcion());
         assertEquals(expResult.getDuracionPropuesta(), result.getDuracionPropuesta());
@@ -83,17 +84,23 @@ public class MultiTareaTest {
         System.out.println("buscar");
        String pnombre = "Engrasar";
         String pdescripcion = "Engrase";
-        Date pFecha = new Date();
+        Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());
         int duracionPropuesta = 5;
         int duracionReal = 4;
         int idSala = 3;
         int idReparacion = 10;
         MultiTarea instance = new MultiTarea();
-        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,idSala,idReparacion);
-        instance.crear(pnombre, pdescripcion, pFecha, duracionPropuesta, duracionReal, idSala, idReparacion);
+        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionReal,duracionPropuesta,idReparacion,idSala);
+        instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, idReparacion, idSala);
 
         Tarea result = instance.buscar(pnombre);
         assertEquals(expResult.getNombre(), result.getNombre());
+        //assertEquals(expResult.getFechaCreacion(), result.getFechaCreacion());
+        assertEquals(expResult.getDescripcion(), result.getDescripcion());
+        assertEquals(expResult.getDuracionPropuesta(), result.getDuracionPropuesta());
+        assertEquals(expResult.getDuracionReal(), result.getDuracionReal());
+        assertEquals(expResult.getIdReparacion(), result.getIdReparacion());
+        assertEquals(expResult.getIdSala(), result.getIdSala());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -151,14 +158,14 @@ public class MultiTareaTest {
         
         String pnombre = "Desengrasar";
         String pdescripcion = "Desengrase";
-        Date pFecha = new Date();
+        Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());
         int duracionPropuesta = 5;
         int duracionReal = 4;
         int idSala = 3;
         int idReparacion = 10;
         
         MultiTarea instance = new MultiTarea();
-        Tarea tarea = instance.crear(pnombre, pdescripcion, pFecha, duracionPropuesta, duracionReal, idSala, idReparacion);
+        Tarea tarea = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, idReparacion, idSala );
         instance.borrar(tarea);
         
         Tarea resultado = null;

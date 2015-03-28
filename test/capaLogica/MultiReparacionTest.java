@@ -5,7 +5,8 @@
  */
 package capaLogica;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,18 +45,46 @@ public class MultiReparacionTest {
     @Test
     public void testCrear() throws Exception {
         System.out.println("crear");
+        String pcodigo = "bravos";
         String pnombre = "Arreglar bumper";
         String tipo = "Enderazado";
-        Date pfechaAsignacion = new Date();
+        Date pfechaAsignacion = new Date(Calendar.getInstance().getTimeInMillis());
         String pplacaVehiculo = "TX-101";
         MultiReparacion instance = new MultiReparacion();
-        Reparacion expResult = new Reparacion(pnombre,tipo,pfechaAsignacion,pplacaVehiculo);
-        Reparacion result = instance.crear(pnombre, tipo, pfechaAsignacion, pplacaVehiculo);
+        Reparacion expResult = new Reparacion(pcodigo, pnombre,tipo,pfechaAsignacion,pplacaVehiculo);
+        Reparacion result = instance.crear(pcodigo, pnombre, tipo, pfechaAsignacion, pplacaVehiculo);
         
+        assertEquals(expResult.getCodigo(), result.getCodigo());
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getTipo(), result.getTipo());
         assertEquals(expResult.getPlacaVehiculo(), result.getPlacaVehiculo());
         assertEquals(expResult.getFechaAsignacion(), result.getFechaAsignacion());
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of buscar method, of class MultiReparacion.
+     */
+    @Test
+    public void testBuscar() throws Exception {
+        System.out.println("buscar");
+        String pcodigo = "pentos";
+        String pnombre = "Arreglar bumper";
+        String tipo = "Enderazado";
+        Date pfechaAsignacion = new Date(Calendar.getInstance().getTimeInMillis());
+        String pplacaVehiculo = "TX-101";
+        
+        MultiReparacion instance = new MultiReparacion();
+        Reparacion expResult = new Reparacion(pcodigo, pnombre,tipo,pfechaAsignacion,pplacaVehiculo);
+        instance.crear(pcodigo, pnombre, tipo, pfechaAsignacion, pplacaVehiculo);
+        Reparacion result = instance.buscar(pcodigo);
+        
+        assertEquals(expResult.getCodigo(), result.getCodigo());
+        assertEquals(expResult.getNombre(), result.getNombre());
+        assertEquals(expResult.getTipo(), result.getTipo());
+        assertEquals(expResult.getPlacaVehiculo(), result.getPlacaVehiculo());
+        //assertEquals(expResult.getFechaAsignacion(), result.getFechaAsignacion());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }

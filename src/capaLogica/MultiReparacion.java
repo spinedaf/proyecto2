@@ -7,7 +7,8 @@ package capaLogica;
 
 import capaAccesoBD.Conector;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 
 /**
  *
@@ -15,7 +16,23 @@ import java.util.Date;
  */
 public class MultiReparacion {
     
-    public Reparacion crear(String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo)throws
+    String updateString;
+    String insertString;
+    PreparedStatement updateReparacion;
+    
+    public MultiReparacion()
+    {
+        updateString = "UPDATE TReparacion "+
+		"SET codigoReparacion= ?, "+
+		"nombreReparacion= ?, "+
+		"tipoReparacion= ?, "+
+                "fechaAsignacionReparacion= ?, "+
+                "placaVehiculo= ?, "+
+		"WHERE codigoReparacion= ?;";
+        
+    }
+    
+    public Reparacion crear(String pcodigo, String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo)throws
 			java.sql.SQLException,Exception   
     {
         Timestamp mmddyyyyXmas = 
@@ -24,13 +41,13 @@ public class MultiReparacion {
         Reparacion reparacion=null;
         String sql;
         sql = "INSERT INTO TReparacion "+
-        "(nombreReparacion, tipoReparacion, fechaAsignacionReparacion, placaVehiculo) "+
-        "VALUES ('"+pnombre+"', '"+tipo+"', '"+mmddyyyyXmas+"', '"+pplacaVehiculo+"')";
+        "(codigoReparacion, nombreReparacion, tipoReparacion, fechaAsignacionReparacion, placaVehiculo) "+
+        "VALUES ('"+pcodigo+"', '"+pnombre+"', '"+tipo+"', '"+mmddyyyyXmas+"', '"+pplacaVehiculo+"')";
 
 
         try {
             Conector.getConector().ejecutarSQL(sql);
-            reparacion = new Reparacion(pnombre, tipo,pfechaAsignacion,pplacaVehiculo);
+            reparacion = new Reparacion(pcodigo, pnombre, tipo,pfechaAsignacion,pplacaVehiculo);
         }
         catch (Exception e) {
             throw new Exception ("La reparacion ya esta en el sistema.");
@@ -38,4 +55,28 @@ public class MultiReparacion {
         return reparacion;
     }
     
+    public Reparacion buscar(String codigo)throws
+        java.sql.SQLException,Exception{
+        Reparacion reparacion = null;
+        java.sql.ResultSet rs;
+        String sql;
+        sql = "SELECT * "+
+        "FROM TReparacion "+
+        "WHERE codigoReparacion='"+codigo+"';";
+        rs = Conector.getConector().ejecutarSQL(sql,true);
+        if (rs.next()){
+            reparacion = new Reparacion(
+                rs.getString("codigoReparacion"),
+                rs.getString("nombreReparacion"),
+                rs.getString("tipoReparacion"),
+                rs.getDate("fechaAsignacionReparacion"),
+                rs.getString("placaVehiculo")
+                );
+        } else {
+            throw new Exception ("La tarea no esta registrada.");
+        }
+        rs.close();
+        return reparacion;
+    }
+
 }
