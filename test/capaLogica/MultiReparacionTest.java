@@ -6,6 +6,7 @@
 package capaLogica;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -87,6 +88,80 @@ public class MultiReparacionTest {
         //assertEquals(expResult.getFechaAsignacion(), result.getFechaAsignacion());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of actualizar method, of class MultiReparacion.
+     */
+    @Test
+    public void testActualizar() throws Exception {
+        System.out.println("actualizar");
+        String pcodigo = "qart";
+        String pnombre = "Arreglar bumper";
+        String tipo = "Enderazado";
+        Date pfechaAsignacion = new Date(Calendar.getInstance().getTimeInMillis());
+        String pplacaVehiculo = "TX-101";
+        
+        Reparacion preparacion = new Reparacion(pcodigo, pnombre,tipo,pfechaAsignacion,pplacaVehiculo);
+        MultiReparacion instance = new MultiReparacion();
+        instance.crear(pcodigo, pnombre, tipo, pfechaAsignacion, pplacaVehiculo);
+        
+        preparacion.setNombre("Arreglar retrovisores");
+        
+        instance.actualizar(preparacion);
+        Reparacion nueva = instance.buscar(pcodigo);
+        
+        assertEquals(nueva.getNombre(), "Arreglar retrovisores");
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of buscarPorVehiculo method, of class MultiReparacion.
+     */
+    @Test
+    public void testBuscarPorVehiculo() throws Exception {
+        System.out.println("buscarPorVehiculo");
+        String pplaca = "TX-101";
+        MultiReparacion instance = new MultiReparacion();
+        ArrayList<Reparacion> result = instance.buscarPorVehiculo(pplaca);
+        
+        boolean placaCorrecta = true;
+        
+        for(Reparacion r: result)
+            if(r.getPlacaVehiculo().compareTo(pplaca) != 0)
+                placaCorrecta = false;
+        
+        assertEquals(placaCorrecta, true);
+        // TODO review the generated test code and remove the default call to fail.
+        //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of borrar method, of class MultiReparacion.
+     */
+    @Test
+    public void testBorrar() throws Exception {
+        System.out.println("borrar");
+        
+        String pcodigo = "pentos";
+        String pnombre = "Arreglar bumper";
+        String tipo = "Enderazado";
+        Date pfechaAsignacion = new Date(Calendar.getInstance().getTimeInMillis());
+        String pplacaVehiculo = "TX-101";
+        MultiReparacion instance = new MultiReparacion();
+        
+        Reparacion repa = instance.crear(pcodigo, pnombre, tipo, pfechaAsignacion, pplacaVehiculo);
+        instance.borrar(repa);
+        
+        Reparacion resultado = null;
+        try{
+            resultado = instance.buscar(pnombre);
+        }catch(Exception e){}
+        
+        boolean encontrada = (resultado == null?false:true);
+        assertEquals(encontrada, false);
+        
     }
     
 }

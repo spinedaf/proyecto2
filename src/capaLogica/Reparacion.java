@@ -27,11 +27,18 @@ public class Reparacion {
     
     public Reparacion(String pcodigo, String pnombre, String ptipo, Date pfechaAsignacion, String pplacaVehiculo)
     {
+        this(pcodigo,pnombre, ptipo, pfechaAsignacion,pfechaAsignacion,pfechaAsignacion,pplacaVehiculo);
+    }
+    
+    public Reparacion(String pcodigo, String pnombre, String ptipo, Date pfechaAsignacion, Date ptiempoInicio, Date ptiempoFinal, String pplacaVehiculo)
+    {
         this.setCodigo(pcodigo);
         this.setNombre(pnombre);
         this.setTipo(ptipo);
         this.setFechaAsignacion(pfechaAsignacion);
         this.setPlacaVehiculo(pplacaVehiculo);
+        this.setTiempoDeInicio(ptiempoInicio);
+        this.setTiempoDeFinalizacion(ptiempoFinal);
         
         listaDeTareas = new ArrayList<Tarea>();
     }
