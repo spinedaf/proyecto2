@@ -78,27 +78,22 @@ public class MultiVehiculo {
     /**
      *
      * @param pplaca
-     * @return
      * @throws SQLException
      * @throws Exception
      */
-    public String borrarPorPlaca(String pplaca) throws
+    public void borrarPorPlaca(String pplaca) throws
             java.sql.SQLException, Exception {
         String msg;
+
         java.sql.ResultSet rs;
         String sql;
-        sql = "DELETE * "
-                + "FROM TVehiculo "
+        sql = "DELETE FROM TVehiculo "
                 + "WHERE placa='" + pplaca + "';";
-        rs = Conector.getConector().ejecutarSQL(sql, true);
-        if (rs.next()) {
-            msg = "Registro Eliminado";
-        } else {
-            msg = "Registro No eliminado";
-            throw new Exception("No existe un vehiculo registrado con esa placa.");
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+        } catch (Exception e) {
+            throw new Exception("No hay vehiculo con esa placa.");
         }
-        rs.close();
-        return msg;
     }
 
 }

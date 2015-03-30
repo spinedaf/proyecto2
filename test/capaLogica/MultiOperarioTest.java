@@ -152,6 +152,7 @@ public class MultiOperarioTest {
 
     /**
      * Test of buscarPorTarea method, of class MultiOperario.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscarPorTarea() throws Exception {

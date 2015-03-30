@@ -91,6 +91,13 @@ public class MultiOperario {
             return operario;
     }
     
+    /**
+     *
+     * @param pnombreTarea
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public ArrayList<Operario> buscarPorTarea(String pnombreTarea)throws
         java.sql.SQLException,Exception{
         java.sql.ResultSet rs;
@@ -120,6 +127,12 @@ public class MultiOperario {
         return operarios;    
     }
     
+    /**
+     *
+     * @param poperario
+     * @throws SQLException
+     * @throws Exception
+     */
     public  void borrar(Operario poperario) throws
         java.sql.SQLException,Exception{
             java.sql.ResultSet rs;

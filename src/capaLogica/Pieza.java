@@ -27,8 +27,7 @@ public class Pieza {
      * @param pdescripcion
      * @param ppais
      * @param pnumeroUnidades
-     * @param pais
-     * @param numeroUnidades
+     * @param pdescripcionProblema
      * @param pidIdTarea
      */
     public Pieza(String pcodigo, String pmarca, String ppais, String pdescripcion,

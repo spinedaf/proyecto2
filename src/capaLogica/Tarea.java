@@ -97,6 +97,8 @@ public class Tarea {
 
     /**
      * @return the sala
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
     public SalaDeReparacion getSala() throws
             java.sql.SQLException,Exception{
@@ -158,6 +160,8 @@ public class Tarea {
 
     /**
      * @return the reparacion
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
     public Reparacion getReparacion() throws
             java.sql.SQLException,Exception{
@@ -177,6 +181,8 @@ public class Tarea {
 
     /**
      * @return the listaOperarios
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
     public ArrayList<Operario> getListaOperarios() throws
         java.sql.SQLException,Exception{

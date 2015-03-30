@@ -88,26 +88,21 @@ public class MultiPieza {
     /**
      *
      * @param pidTarea
-     * @return
      * @throws SQLException
      * @throws Exception
      */
-    public String borrarPorTarea(int pidTarea) throws
+    public void borrarPorTarea(int pidTarea) throws
             java.sql.SQLException, Exception {
-        String msg;
+       
         java.sql.ResultSet rs;
         String sql;
         sql = "DELETE * "
                 + "FROM TPieza "
                 + "WHERE id_tarea='" + pidTarea + "';";
-        rs = Conector.getConector().ejecutarSQL(sql, true);
-        if (rs.next()) {
-            msg = "Registro Eliminado";
-        } else {
-            msg = "Registro No eliminado";
-            throw new Exception("No hay piezas para una tarea que no existe.");
+            try {
+            Conector.getConector().ejecutarSQL(sql);
+        } catch (Exception e) {
+            throw new Exception("Hoy piezas asociadas a esa tarea.");
         }
-        rs.close();
-        return msg;
     }
 }

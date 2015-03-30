@@ -147,6 +147,8 @@ public class Reparacion {
 
     /**
      * @return the vehiculo
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
     public Vehiculo getVehiculo() throws
             java.sql.SQLException,Exception{
@@ -165,6 +167,8 @@ public class Reparacion {
 
     /**
      * @return the listaDeTareas
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
      */
     public ArrayList<Tarea> getListaDeTareas() throws
             java.sql.SQLException,Exception{

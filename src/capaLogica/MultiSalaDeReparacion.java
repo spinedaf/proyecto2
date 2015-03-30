@@ -7,16 +7,16 @@ package capaLogica;
 
 import java.util.ArrayList;
 
-
 import capaAccesoBD.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 /**
  *
  * @author Jagonchen
  */
 public class MultiSalaDeReparacion {
-    
+
     /**
      *
      * @param pdescripcion
@@ -33,7 +33,7 @@ public class MultiSalaDeReparacion {
         String sql;
         sql = "INSERT INTO TSala "
                 + "(descripcionSala, ubicacionSala, capacidadSala) "
-                + "VALUES ('" + pdescripcion + "', '" + pubicacion + "', " + pcapacidad +  ");";
+                + "VALUES ('" + pdescripcion + "', '" + pubicacion + "', " + pcapacidad + ");";
         try {
             Conector.getConector().ejecutarSQL(sql);
             sala = new SalaDeReparacion(pdescripcion, pubicacion, pcapacidad);
@@ -51,12 +51,12 @@ public class MultiSalaDeReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<SalaDeReparacion>  buscarSalaDeReparacion(int pidTarea) throws
+    public ArrayList<SalaDeReparacion> buscarSalaDeReparacion(int pidTarea) throws
             java.sql.SQLException, Exception {
         SalaDeReparacion sala = null;
-        ArrayList<SalaDeReparacion> salas= new ArrayList<>();
+        ArrayList<SalaDeReparacion> salas = new ArrayList<>();
         java.sql.ResultSet rs;
-      
+
         String sql;
         sql = "SELECT * "
                 + "FROM TSala "
@@ -79,32 +79,22 @@ public class MultiSalaDeReparacion {
     /**
      *
      * @param pIdSala
-     * @return
      * @throws SQLException
      * @throws Exception
      */
-    public String borrarSalaId(int pIdSala) throws
+    public void borrarSalaId(int pIdSala) throws
             java.sql.SQLException, Exception {
-        String msg;
         java.sql.ResultSet rs;
         String sql;
         sql = "DELETE * "
                 + "FROM TSala"
                 + "WHERE id_sala='" + pIdSala + "';";
         rs = Conector.getConector().ejecutarSQL(sql, true);
-        if (rs.next()) {
-            msg = "Registro Eliminado";
-        } else {
-            msg = "Registro No eliminado";
-            throw new Exception("No hay salas con ese id.");
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+        } catch (Exception e) {
+            throw new Exception("No hay salas con es id.");
         }
-        rs.close();
-        return msg;
     }
-    
 
-        
-    
-
-   
 }
