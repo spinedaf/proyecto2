@@ -22,8 +22,7 @@ public class Operario {
     private Date fechaIngreso;
     private int aniosExperiencia;
     private String cargo;
-   
-    private SalaDeReparacion  sala;
+ 
     
     /**
      *
@@ -172,19 +171,5 @@ public class Operario {
      */
     private void setCargo(String cargo) {
         this.cargo = cargo;
-    }
-
-    /**
-     * @return the sala
-     */
-    public SalaDeReparacion getSala() {
-        return sala;
-    }
-
-    /**
-     * @param sala the sala to set
-     */
-    public void setSala(SalaDeReparacion sala) {
-        this.sala = sala;
     }
 }

@@ -98,7 +98,12 @@ public class Tarea {
     /**
      * @return the sala
      */
-    public SalaDeReparacion getSala() {
+    public SalaDeReparacion getSala() throws
+            java.sql.SQLException,Exception{
+        if(sala == null){
+            ArrayList<SalaDeReparacion> salas = new MultiSalaDeReparacion().buscarSalaDeReparacion(idSala);
+            sala = salas.get(0);
+        }
         return sala;
     }
 
@@ -154,7 +159,12 @@ public class Tarea {
     /**
      * @return the reparacion
      */
-    public Reparacion getReparacion() {
+    public Reparacion getReparacion() throws
+            java.sql.SQLException,Exception{
+        if(reparacion == null){
+            ArrayList<SalaDeReparacion> salas = new MultiSalaDeReparacion().buscarSalaDeReparacion(idSala);
+            sala = salas.get(0);
+        }
         return reparacion;
     }
 
@@ -168,7 +178,11 @@ public class Tarea {
     /**
      * @return the listaOperarios
      */
-    public ArrayList<Operario> getListaOperarios() {
+    public ArrayList<Operario> getListaOperarios() throws
+        java.sql.SQLException,Exception{
+        if(listaOperarios.isEmpty()){
+            this.setListaOperarios(new MultiOperario().buscarPorTarea(nombre));
+        }
         return listaOperarios;
     }
 

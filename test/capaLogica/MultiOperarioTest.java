@@ -9,6 +9,7 @@ import capaAccesoBD.Conector;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -41,6 +42,9 @@ public class MultiOperarioTest {
      */
     @AfterClass
     public static void tearDownClass() {
+        try{
+            Files.delete(Paths.get(Conector.getDBPath()));
+        }catch(Exception e){}
     }
     
     /**
@@ -144,6 +148,25 @@ public class MultiOperarioTest {
         assertEquals(resultado,true);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of buscarPorTarea method, of class MultiOperario.
+     */
+    @Test
+    public void testBuscarPorTarea() throws Exception {
+        MultiOperario instance = new MultiOperario();
+        
+        ArrayList<Operario> results = instance.buscarPorTarea("11");
+        
+        boolean match = true;
+        
+        for(Operario op: results){
+            if(op.getId().compareTo("1856158") != 0)
+                match = false;
+        }
+        
+        assertEquals(match,true);
     }
     
 }

@@ -148,7 +148,11 @@ public class Reparacion {
     /**
      * @return the vehiculo
      */
-    public Vehiculo getVehiculo() {
+    public Vehiculo getVehiculo() throws
+            java.sql.SQLException,Exception{
+        if(vehiculo == null){
+            vehiculo = new MultiVehiculo().buscarPorPlaca(this.placaVehiculo);
+        }
         return vehiculo;
     }
 
@@ -162,10 +166,11 @@ public class Reparacion {
     /**
      * @return the listaDeTareas
      */
-    public ArrayList<Tarea> getListaDeTareas() {
-        /*if(listaDeTareas == null){
+    public ArrayList<Tarea> getListaDeTareas() throws
+            java.sql.SQLException,Exception{
+        if(listaDeTareas.isEmpty()){
             this.setListaDeTareas(new MultiTarea().buscarPorReparacion(codigo));
-        }*/
+        }
         return listaDeTareas;
     }
 
