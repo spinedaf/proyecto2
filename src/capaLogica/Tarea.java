@@ -103,8 +103,7 @@ public class Tarea {
     public SalaDeReparacion getSala() throws
             java.sql.SQLException,Exception{
         if(sala == null){
-            ArrayList<SalaDeReparacion> salas = new MultiSalaDeReparacion().buscarSalaDeReparacion(idSala);
-            sala = salas.get(0);
+            sala = new MultiSalaDeReparacion().buscarSalaDeReparacion(idSala);
         }
         return sala;
     }
@@ -166,8 +165,7 @@ public class Tarea {
     public Reparacion getReparacion() throws
             java.sql.SQLException,Exception{
         if(reparacion == null){
-            ArrayList<SalaDeReparacion> salas = new MultiSalaDeReparacion().buscarSalaDeReparacion(idSala);
-            sala = salas.get(0);
+            this.reparacion = new MultiReparacion().buscar(this.codigoReparacion);
         }
         return reparacion;
     }

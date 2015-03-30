@@ -51,10 +51,9 @@ public class MultiSalaDeReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<SalaDeReparacion> buscarSalaDeReparacion(int pidTarea) throws
+    public SalaDeReparacion buscarSalaDeReparacion(int pidTarea) throws
             java.sql.SQLException, Exception {
         SalaDeReparacion sala = null;
-        ArrayList<SalaDeReparacion> salas = new ArrayList<>();
         java.sql.ResultSet rs;
 
         String sql;
@@ -62,18 +61,18 @@ public class MultiSalaDeReparacion {
                 + "FROM TSala "
                 + "WHERE id_sala = " + pidTarea + ";";
         rs = Conector.getConector().ejecutarSQL(sql, true);
-        if (rs.next()) {
+        if (rs.next()){
             sala = new SalaDeReparacion(
-                    rs.getString("descripcionSala"),
-                    rs.getString("ubicacionSala"),
-                    rs.getInt("capacidadSala")
+                rs.getString("descripcionSala"),
+                rs.getString("ubicacionSala"),
+                rs.getInt("capacidadSala")
             );
-            salas.add(sala);
         } else {
-            throw new Exception("No hay piezas para una tarea que no existe.");
+            throw new Exception ("La tarea no esta registrada.");
         }
+        
         rs.close();
-        return salas;
+        return sala;
     }
 
     /**

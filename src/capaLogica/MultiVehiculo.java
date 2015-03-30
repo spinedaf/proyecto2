@@ -7,6 +7,7 @@ package capaLogica;
 
 import capaAccesoBD.*;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -69,12 +70,37 @@ public class MultiVehiculo {
                     rs.getString("estado")
             );
         } else {
-            throw new Exception("No existe un vehiculo registrado con esa placa.");
+            rs.close();
+            return vehiculo;
+           
         }
         rs.close();
         return vehiculo;
     }
 
+        public ArrayList<Vehiculo> buscarTodos() throws
+            java.sql.SQLException, Exception {
+        Vehiculo vehiculo = null;
+        java.sql.ResultSet rs;
+        String sql;
+        ArrayList<Vehiculo> carros = new ArrayList<Vehiculo>(); 
+        sql = "SELECT * "
+                + "FROM TVehiculo ";
+        rs = Conector.getConector().ejecutarSQL(sql, true);
+        while(rs.next()){
+            vehiculo = new Vehiculo(
+                rs.getString("placa"),
+                rs.getString("modelo"),
+                rs.getString("nombrePropietario"),
+                rs.getString("apellidoPropietario"),
+                rs.getString("estado")
+            );
+            carros.add(vehiculo);
+        }
+        rs.close();
+        return carros;
+    }
+    
     /**
      *
      * @param pplaca

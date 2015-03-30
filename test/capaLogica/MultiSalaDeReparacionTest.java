@@ -80,9 +80,9 @@ public class MultiSalaDeReparacionTest {
         System.out.println("buscarSalaDeReparacion");
         int pidTarea = 9;
         MultiSalaDeReparacion instance = new MultiSalaDeReparacion();
-        ArrayList<SalaDeReparacion> expResult = instance.buscarSalaDeReparacion(pidTarea);
-        ArrayList<SalaDeReparacion> result = instance.buscarSalaDeReparacion(pidTarea);
-        assertEquals(expResult.size(), result.size());
+        SalaDeReparacion expResult = instance.buscarSalaDeReparacion(pidTarea);
+        SalaDeReparacion result = instance.buscarSalaDeReparacion(pidTarea);
+        assertEquals(expResult.getDescripcion(), result.getDescripcion());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
