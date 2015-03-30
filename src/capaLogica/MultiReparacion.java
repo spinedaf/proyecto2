@@ -8,6 +8,7 @@ package capaLogica;
 import capaAccesoBD.Conector;
 import java.sql.Timestamp;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -16,6 +17,17 @@ import java.util.ArrayList;
  */
 public class MultiReparacion {
     
+    /**
+     *
+     * @param pcodigo
+     * @param pnombre
+     * @param tipo
+     * @param pfechaAsignacion
+     * @param pplacaVehiculo
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public Reparacion crear(String pcodigo, String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo)throws
 			java.sql.SQLException,Exception   
     {
@@ -39,6 +51,13 @@ public class MultiReparacion {
         return reparacion;
     }
     
+    /**
+     *
+     * @param codigo
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public Reparacion buscar(String codigo)throws
         java.sql.SQLException,Exception{
         Reparacion reparacion = null;
@@ -65,6 +84,12 @@ public class MultiReparacion {
         return reparacion;
     }
 
+    /**
+     *
+     * @param preparacion
+     * @throws SQLException
+     * @throws Exception
+     */
     public  void actualizar(Reparacion preparacion) throws
                     java.sql.SQLException,Exception{
         Timestamp mmddyyyyXmas = new Timestamp(preparacion.getFechaAsignacion().getTime());
@@ -88,6 +113,13 @@ public class MultiReparacion {
         }
     }
     
+    /**
+     *
+     * @param pplaca
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public ArrayList<Reparacion> buscarPorVehiculo(String pplaca)throws java.sql.SQLException,Exception{
 	java.sql.ResultSet rs;
         String sql;
@@ -114,7 +146,13 @@ public class MultiReparacion {
         return reparaciones;    
     }
     
-     public  void borrar(Reparacion preparacion) throws
+    /**
+     *
+     * @param preparacion
+     * @throws SQLException
+     * @throws Exception
+     */
+    public  void borrar(Reparacion preparacion) throws
         java.sql.SQLException,Exception{
          
         java.sql.ResultSet rs;

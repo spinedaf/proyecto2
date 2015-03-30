@@ -9,6 +9,7 @@ import capaAccesoBD.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.Vector;
 
 /**
@@ -17,6 +18,19 @@ import java.util.Vector;
  */
 public class MultiTarea {
     
+    /**
+     *
+     * @param pnombre
+     * @param pdescripcion
+     * @param pFecha
+     * @param duracionReal
+     * @param duracionPropuesta
+     * @param codigoReparacion
+     * @param idSala
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionReal, int duracionPropuesta, 
             String codigoReparacion, int idSala)throws
 			java.sql.SQLException,Exception
@@ -40,6 +54,13 @@ public class MultiTarea {
         return tarea;
     }
     
+    /**
+     *
+     * @param pnombre
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public Tarea buscar(String pnombre) throws
         java.sql.SQLException,Exception{
         Tarea tarea = null;
@@ -66,6 +87,13 @@ public class MultiTarea {
         return tarea;
     }
     
+    /**
+     *
+     * @param codigo
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public ArrayList<Tarea> buscarPorReparacion(String codigo)throws java.sql.SQLException,Exception{
 	java.sql.ResultSet rs;
         String sql;
@@ -92,6 +120,13 @@ public class MultiTarea {
         return tareas;    
     }
     
+    /**
+     *
+     * @param idSala
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public ArrayList<Tarea> buscarPorSala(int idSala)throws java.sql.SQLException,Exception{
 	java.sql.ResultSet rs;
         String sql;
@@ -118,6 +153,12 @@ public class MultiTarea {
         return tareas;    
     }
     
+    /**
+     *
+     * @param ptarea
+     * @throws SQLException
+     * @throws Exception
+     */
     public  void borrar(Tarea ptarea) throws
         java.sql.SQLException,Exception{
             java.sql.ResultSet rs;

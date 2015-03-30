@@ -27,6 +27,16 @@ public class Tarea {
     private Reparacion reparacion;
     private ArrayList<Operario> listaOperarios;
     
+    /**
+     *
+     * @param pnombre
+     * @param pdescripcion
+     * @param pfechaCreacion
+     * @param pduracionReal
+     * @param pduracionPropuesta
+     * @param pcodigoReparacion
+     * @param pidSala
+     */
     public Tarea(String pnombre, String pdescripcion, Date pfechaCreacion, int pduracionReal, int pduracionPropuesta, 
             String pcodigoReparacion, int pidSala)
     {

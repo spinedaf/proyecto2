@@ -6,6 +6,7 @@
 package capaLogica;
 
 import capaAccesoBD.*;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +17,20 @@ import java.util.Date;
  */
 public class MultiOperario {
     
+    /**
+     *
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @param telefono
+     * @param direccion
+     * @param pfecha
+     * @param anios
+     * @param cargo
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public Operario crear(String id, String nombre, String apellido, String telefono,
             String direccion, Date pfecha, int anios, String cargo)throws
 			java.sql.SQLException,Exception
@@ -42,6 +57,13 @@ public class MultiOperario {
         return operario;
     }
     
+    /**
+     *
+     * @param pcedula
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public Operario buscar(String pcedula) throws
         java.sql.SQLException,Exception{
             Operario operario = null;
@@ -69,6 +91,12 @@ public class MultiOperario {
             return operario;
     }
     
+    /**
+     *
+     * @param poperario
+     * @throws SQLException
+     * @throws Exception
+     */
     public  void borrar(Operario poperario) throws
         java.sql.SQLException,Exception{
             java.sql.ResultSet rs;

@@ -25,11 +25,29 @@ public class Reparacion {
     private Vehiculo vehiculo;
     private ArrayList<Tarea> listaDeTareas;
     
+    /**
+     *
+     * @param pcodigo
+     * @param pnombre
+     * @param ptipo
+     * @param pfechaAsignacion
+     * @param pplacaVehiculo
+     */
     public Reparacion(String pcodigo, String pnombre, String ptipo, Date pfechaAsignacion, String pplacaVehiculo)
     {
         this(pcodigo,pnombre, ptipo, pfechaAsignacion,pfechaAsignacion,pfechaAsignacion,pplacaVehiculo);
     }
     
+    /**
+     *
+     * @param pcodigo
+     * @param pnombre
+     * @param ptipo
+     * @param pfechaAsignacion
+     * @param ptiempoInicio
+     * @param ptiempoFinal
+     * @param pplacaVehiculo
+     */
     public Reparacion(String pcodigo, String pnombre, String ptipo, Date pfechaAsignacion, Date ptiempoInicio, Date ptiempoFinal, String pplacaVehiculo)
     {
         this.setCodigo(pcodigo);

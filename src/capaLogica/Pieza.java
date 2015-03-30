@@ -10,23 +10,66 @@ package capaLogica;
  * @author pinedas
  */
 public class Pieza {
-    
+
     private String codigo;
-    private String descripcionProblema;
     private String marca;
     private String paisFabricacion;
+    private String descripcionPieza;
+    private String descripcionProblema;
     private int numeroUnidadesCambiadas;
-    
+    private int idTareaUsa;
     private Reparacion reparacion;
-    
-    public Pieza(String pcodigo, String pdescripcion, String pmarca, String pais, 
-            int numeroUnidades)
-    {
+
+    /**
+     *
+     * @param pcodigo
+     * @param pmarca
+     * @param pdescripcion
+     * @param ppais
+     * @param pnumeroUnidades
+     * @param pais
+     * @param numeroUnidades
+     * @param pidIdTarea
+     */
+    public Pieza(String pcodigo, String pmarca, String ppais, String pdescripcion,
+            int pnumeroUnidades, String pdescripcionProblema, int pidIdTarea) {
+
         this.setCodigo(pcodigo);
-        this.setDescripcionProblema(pdescripcion);
         this.setMarca(pmarca);
-        this.setPaisFabricacion(pais);
-        this.setNumeroUnidadesCambiadas(numeroUnidades);
+        this.setDescripcionPieza(pdescripcion);
+        this.setPaisFabricacion(ppais);
+        this.setDescripcionProblema(pdescripcionProblema);
+        this.setNumeroUnidadesCambiadas(pnumeroUnidades);
+        this.setIdTareaUsa(pidIdTarea);
+    }
+
+//    public String getDescripcionPieza() {
+//        return descripcionPieza;
+//    }
+
+    /**
+     *
+     * @param descripcionPieza
+     */
+    
+    public void setDescripcionPieza(String descripcionPieza) {
+        this.descripcionPieza = descripcionPieza;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int getIdTareaUsa() {
+        return idTareaUsa;
+    }
+
+    /**
+     *
+     * @param idTareaUsa
+     */
+    public void setIdTareaUsa(int idTareaUsa) {
+        this.idTareaUsa = idTareaUsa;
     }
 
     /**
@@ -99,17 +142,17 @@ public class Pieza {
         this.numeroUnidadesCambiadas = numeroUnidadesCambiadas;
     }
 
-    /**
-     * @return the reparacion
-     */
-    public Reparacion getReparacion() {
-        return reparacion;
-    }
+//    /**
+//     * @return the reparacion
+//     */
+//    public Reparacion getReparacion() {
+//        return reparacion;
+//    }
 
-    /**
-     * @param reparacion the reparacion to set
-     */
-    public void setReparacion(Reparacion reparacion) {
-        this.reparacion = reparacion;
-    }
+//    /**
+//     * @param reparacion the reparacion to set
+//     */
+//    public void setReparacion(Reparacion reparacion) {
+//        this.reparacion = reparacion;
+//    }
 }

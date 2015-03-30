@@ -27,6 +27,8 @@ public class Conector{
 	 *por las clases
 	 *@return objeto del tipo AccesoBD del paquete 
 	 *CapaAccesoDatos
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
 	 */
 	 
 //	public static AccesoBD getConector() throws 
@@ -55,7 +57,11 @@ public class Conector{
             return conectorBD;
 	}
 	
-        public static String getDBPath()
+    /**
+     *
+     * @return
+     */
+    public static String getDBPath()
         {
             String curDir = System.getProperty("user.dir").toString();
             curDir = curDir.replace("\\", "/");

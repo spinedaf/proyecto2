@@ -12,6 +12,10 @@ package capaAccesoBD;
  */
 import java.sql.*;
 
+/**
+ *
+ * @author Jagonchen
+ */
 public class AccesoBD{
 	//atributos del objeto
 	private Connection conn=null;
@@ -26,12 +30,8 @@ public class AccesoBD{
 	 *al repositorio utilizado
 	 *@param conexion cadena de conexión con la
 	 *base de datos
-	 *@param usuario nombre del usuario de la base 
-	 *de datos, si no se utiliza, se debe enviar
-	 *un string vacío
-	 *@param clave palabra clave del usuario
-	 *para realizar su autenticación en la base
-	 *de datos
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
 	 */
 //	public AccesoBD(String driver, String conexion,	String usuario, String clave) throws SQLException,Exception{
 //		Class.forName(driver);
@@ -51,6 +51,8 @@ public class AccesoBD{
 	 *es decir un insert, delete o update
 	 *@param sentencia cadena sql que será
 	 *ejecutada en la base de datos
+     * @throws java.sql.SQLException
+     * @throws java.lang.Exception
 	 *
 	 */
 	
@@ -68,6 +70,9 @@ public class AccesoBD{
 	 *ejecutada en la base de datos
 	 *@param retorno booleana que indica que se
 	 *desea un resultado de la consulta
+     * @return 
+     * @throws java.sql.SQLException 
+     * @throws java.lang.Exception
 	 */	
 	public ResultSet ejecutarSQL(String sentencia,
 	boolean retorno)
@@ -83,6 +88,7 @@ public class AccesoBD{
 	 *todas las sentencias esperarán la orden para
 	 *ser aceptadas en la base de datos
 	 *
+     * @throws java.sql.SQLException
 	 */
 	public void iniciarTransaccion()
 	throws java.sql.SQLException{
@@ -95,6 +101,7 @@ public class AccesoBD{
 	 *todas las sentencias se ejecturán de forma
 	 *individual en la base de datos
 	 *
+     * @throws java.sql.SQLException
 	 */
 	
 	public void terminarTransaccion()
@@ -105,6 +112,7 @@ public class AccesoBD{
 	/**
 	 *Indica que la transacción ha sido aceptada
 	 *
+     * @throws java.sql.SQLException
 	 */	
 	
 	public void aceptarTransaccion()
@@ -117,6 +125,7 @@ public class AccesoBD{
 	 *deshecha porque no se realizó de
 	 *forma exitosa
 	 *
+     * @throws java.sql.SQLException
 	 */	
 	
 	public void deshacerTransaccion()

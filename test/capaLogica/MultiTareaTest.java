@@ -24,13 +24,22 @@ import static org.junit.Assert.*;
  */
 public class MultiTareaTest {
     
+    /**
+     *
+     */
     public MultiTareaTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
         try{
@@ -38,10 +47,16 @@ public class MultiTareaTest {
         }catch(Exception e){}
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
         try{
@@ -51,6 +66,7 @@ public class MultiTareaTest {
 
     /**
      * Test of crear method, of class MultiTarea.
+     * @throws java.lang.Exception
      */
     @Test
     public void testCrear() throws Exception {
@@ -78,6 +94,7 @@ public class MultiTareaTest {
 
     /**
      * Test of buscar method, of class MultiTarea.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscar() throws Exception {
@@ -107,6 +124,7 @@ public class MultiTareaTest {
 
     /**
      * Test of buscarPorReparacion method, of class MultiTarea.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscarPorReparacion() throws Exception {
@@ -130,6 +148,7 @@ public class MultiTareaTest {
 
     /**
      * Test of buscarPorSala method, of class MultiTarea.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscarPorSala() throws Exception {
@@ -151,6 +170,7 @@ public class MultiTareaTest {
 
     /**
      * Test of borrar method, of class MultiTarea.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBorrar() throws Exception {

@@ -23,23 +23,36 @@ import static org.junit.Assert.*;
  */
 public class MultiOperarioTest {
     
-    
-    
+    /**
+     *
+     */
     public MultiOperarioTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
         try{
@@ -49,6 +62,7 @@ public class MultiOperarioTest {
 
     /**
      * Test of crear method, of class MultiOperario.
+     * @throws java.lang.Exception
      */
     @Test
     public void testCrear() throws Exception {
@@ -76,6 +90,7 @@ public class MultiOperarioTest {
 
     /**
      * Test of buscar method, of class MultiOperario.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscar() throws Exception {
@@ -102,6 +117,7 @@ public class MultiOperarioTest {
 
     /**
      * Test of borrar method, of class MultiOperario.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBorrar() throws Exception {

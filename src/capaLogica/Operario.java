@@ -25,6 +25,17 @@ public class Operario {
    
     private SalaDeReparacion  sala;
     
+    /**
+     *
+     * @param pid
+     * @param pnombre
+     * @param papellido
+     * @param ptelefono
+     * @param pdireccion
+     * @param fecha
+     * @param panios
+     * @param pcargo
+     */
     public Operario(String pid, String pnombre, String papellido, String ptelefono,
             String pdireccion, Date fecha, int panios, String pcargo)
     {
@@ -39,6 +50,13 @@ public class Operario {
         
     }
     
+    /**
+     *
+     * @param pid
+     * @param pnombre
+     * @param papellido
+     * @param pcargo
+     */
     public Operario(String pid, String pnombre, String papellido, String pcargo)
     {
         this(pid,pnombre,papellido,"","",new Date(),0,pcargo);

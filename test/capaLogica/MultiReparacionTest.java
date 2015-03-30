@@ -21,27 +21,43 @@ import static org.junit.Assert.*;
  */
 public class MultiReparacionTest {
     
+    /**
+     *
+     */
     public MultiReparacionTest() {
     }
     
+    /**
+     *
+     */
     @BeforeClass
     public static void setUpClass() {
     }
     
+    /**
+     *
+     */
     @AfterClass
     public static void tearDownClass() {
     }
     
+    /**
+     *
+     */
     @Before
     public void setUp() {
     }
     
+    /**
+     *
+     */
     @After
     public void tearDown() {
     }
 
     /**
      * Test of crear method, of class MultiReparacion.
+     * @throws java.lang.Exception
      */
     @Test
     public void testCrear() throws Exception {
@@ -66,6 +82,7 @@ public class MultiReparacionTest {
 
     /**
      * Test of buscar method, of class MultiReparacion.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscar() throws Exception {
@@ -92,6 +109,7 @@ public class MultiReparacionTest {
 
     /**
      * Test of actualizar method, of class MultiReparacion.
+     * @throws java.lang.Exception
      */
     @Test
     public void testActualizar() throws Exception {
@@ -118,6 +136,7 @@ public class MultiReparacionTest {
 
     /**
      * Test of buscarPorVehiculo method, of class MultiReparacion.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBuscarPorVehiculo() throws Exception {
@@ -139,6 +158,7 @@ public class MultiReparacionTest {
 
     /**
      * Test of borrar method, of class MultiReparacion.
+     * @throws java.lang.Exception
      */
     @Test
     public void testBorrar() throws Exception {
