@@ -8,7 +8,7 @@ package capaLogica;
 import capaAccesoBD.*;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -91,12 +91,35 @@ public class MultiOperario {
             return operario;
     }
     
-    /**
-     *
-     * @param poperario
-     * @throws SQLException
-     * @throws Exception
-     */
+    public ArrayList<Operario> buscarPorTarea(String pnombreTarea)throws
+        java.sql.SQLException,Exception{
+        java.sql.ResultSet rs;
+        String sql;
+        Operario operario=null;
+        ArrayList<Operario> operarios = new ArrayList<Operario>();
+        sql="SELECT * "+
+        "FROM TOperario INNER JOIN TTareaOperario " +
+        "ON TOperario.cedulaOperario = TTareaOperario.cedulaOperario "+
+        "WHERE id_tarea='"+pnombreTarea+"';";
+        Conector.getConector().ejecutarSQL(sql);
+        rs = Conector.getConector().ejecutarSQL(sql,true);
+        while (rs.next()){
+            operario = new Operario(
+                rs.getString("cedulaOperario"),
+                rs.getString("nombreOperario"),
+                rs.getString("apellidoOperario"),
+                rs.getString("telefonoOperario"),
+                rs.getString("direccionOperario"),
+                rs.getDate("fechaIngresoOperario"),
+                rs.getInt("anosExperienciaOperario"),
+                rs.getString("cargoOperario")
+                );
+            operarios.add(operario);
+        }
+        rs.close();
+        return operarios;    
+    }
+    
     public  void borrar(Operario poperario) throws
         java.sql.SQLException,Exception{
             java.sql.ResultSet rs;
