@@ -9,7 +9,7 @@ import capaAccesoBD.*;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -140,8 +140,7 @@ public class MultiOperario {
         Operario operario=null;
         ArrayList<Operario> operarios = new ArrayList<Operario>();
         sql="SELECT * "+
-        "FROM TOperario INNER JOIN TTareaOperario " +
-        "ON TOperario.cedulaOperario = TTareaOperario.cedulaOperario ";
+        "FROM TOperario ";
         try {
             Conector.getConector().ejecutarSQL(sql);
             rs = Conector.getConector().ejecutarSQL(sql,true);

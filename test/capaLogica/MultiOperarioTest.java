@@ -10,6 +10,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -81,7 +82,7 @@ public class MultiOperarioTest {
         String sala = "Tramado";
         MultiOperario instance = new MultiOperario();
         Operario expResult = new Operario(id,nombre,apellido,telefono, direccion,new Date(),anios,cargo);
-        Operario result = instance.crear(id, nombre, apellido, telefono, direccion, new Date(), anios, cargo);
+        Operario result = instance.crear(id, nombre, apellido, telefono, direccion, new java.sql.Date(Calendar.getInstance().getTimeInMillis()), anios, cargo);
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getApellido(), result.getApellido());
         assertEquals(expResult.getCargo(), result.getCargo());
@@ -107,7 +108,8 @@ public class MultiOperarioTest {
         int anios = 0;
         String cargo = "Jefe";
         MultiOperario instance = new MultiOperario();
-        instance.crear(id, nombre, apellido, telefono, direccion, new Date(), anios, cargo);
+        instance.crear(id, nombre, apellido, telefono, direccion, new java.sql.Date(Calendar.getInstance().getTimeInMillis())
+                , anios, cargo);
         
         Operario result = instance.buscar(id);
         assertEquals(nombre, result.getNombre());
@@ -135,7 +137,8 @@ public class MultiOperarioTest {
         int anios = 0;
         String cargo = "Jefe";
         MultiOperario instance = new MultiOperario();
-        Operario poperario = instance.crear(id, nombre, apellido, telefono, direccion, new Date(), anios, cargo);
+        Operario poperario = instance.crear(id, nombre, apellido, telefono, direccion, new java.sql.Date(Calendar.getInstance().getTimeInMillis())
+                , anios, cargo);
         instance.borrar(poperario);
         
         Operario operarioBorrado = null;

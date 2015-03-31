@@ -7,6 +7,8 @@ package capaLogica;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.Observable;
 
 /**
@@ -52,7 +54,7 @@ public class Gestor extends Observable{
      * @throws Exception
      */
     public void agregarVehiculo(String pplaca, String pmodelo, 
-            String pnombrePropietario, String papellidoPropietario, String pestado) throws Exception{
+            String pnombrePropietario, String papellidoPropietario, String pestado){
         Vehiculo instance; 
         
         if(new MultiVehiculo().buscarPorPlaca(pplaca) == null){
@@ -62,28 +64,47 @@ public class Gestor extends Observable{
         
     }
     
+    public void agregarOperario(String pid, String pnombre, String papellido, String ptelefono,
+            String pdireccion, int panios, String pcargo)
+    {
+        Operario instancia = null;
+        MultiOperario multi = new MultiOperario();
+        if(multi.buscar(pid) == null){
+            instancia = multi.crear(pid, pnombre, papellido, ptelefono, pdireccion, new Date(Calendar.getInstance().getTimeInMillis()), 
+                    panios, pcargo);
+            this.setMensaje("Nuevo Operario Registrado");
+        }
+    }
+    
     /**
      *
      * @return
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<String> obtenerListaVehiculos()throws 
-            java.sql.SQLException,Exception
-    {
+    public String[] obtenerListaVehiculos(){
         ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
-        
-         ArrayList<String> lista  = new ArrayList<String>();
-        
-        
-        for(Vehiculo carro: listaVehiculos)
+        String lista[] = new String[listaVehiculos.size()];
+        for(int i = 0; i < lista.length; i++)
         {
-            String info = carro.getPlaca() +" "+ carro.getModelo()+" " + carro.getNombrePropietario();
-            
-            lista.add(info);
-                    
+            lista[i] = listaVehiculos.get(i).getPlaca() +"   "+ 
+                    listaVehiculos.get(i).getModelo()+"   " + 
+                    listaVehiculos.get(i).getNombrePropietario();         
         }
         
+       
+        return lista; 
+    }
+    
+    public String[] obtenerListaOperarios(){
+        ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
+        String lista[] = new String[listaOperarios.size()];
+        for(int i = 0; i < lista.length; i++)
+        {
+            lista[i] = listaOperarios.get(i).getNombre()+"   "+ 
+                    listaOperarios.get(i).getApellido()+"   " + 
+                    listaOperarios.get(i).getId();  
+        }
        
         return lista; 
     }
