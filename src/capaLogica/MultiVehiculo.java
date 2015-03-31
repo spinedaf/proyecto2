@@ -77,11 +77,7 @@ public class MultiVehiculo {
                         rs.getString("apellidoPropietario"),
                         rs.getString("estado")
                 );
-            } else {
-                rs.close();
-                return vehiculo;
-
-            }
+            } 
             rs.close();
             return vehiculo;
 

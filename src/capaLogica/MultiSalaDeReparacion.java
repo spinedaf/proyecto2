@@ -67,6 +67,16 @@ public class MultiSalaDeReparacion {
                     + "WHERE id_sala = " + pidTarea + ";";
 
             rs = Conector.getConector().ejecutarSQL(sql, true);
+            
+             if (rs.next()){
+                sala = new SalaDeReparacion(
+                    rs.getString("descripcionSala"),
+                    rs.getString("ubicacionSala"),
+                    rs.getInt("capacidadSala")
+                    );
+            } 
+            
+            
             return sala;
         } catch (Exception ex) {
             Logger.getLogger(MultiSalaDeReparacion.class.getName()).log(Level.SEVERE, null, ex);
