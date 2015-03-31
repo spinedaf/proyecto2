@@ -20,6 +20,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private Gestor gestor;
     private DefaultListModel<String> modeloListaVehiculos;
     private DefaultListModel<String> modeloListaOperarios;
+    private DefaultListModel<String> modeloListaPiezas;
 
     /**
      * Creates new form InterfazReparaciones
@@ -35,12 +36,16 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         gestor = new Gestor();
         modeloListaVehiculos = new DefaultListModel();
         modeloListaOperarios = new DefaultListModel();
+        modeloListaPiezas = new DefaultListModel();
         this.jlVehiculos.setModel(modeloListaVehiculos);
         this.jlOperarios.setModel(modeloListaOperarios);
+        this.jlPieza.setModel(modeloListaPiezas);
+        
         gestor.addObserver(this);
         
         this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
+        this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
         
         this.setJlStatus("");
     }
@@ -96,6 +101,23 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jScrollPane3 = new javax.swing.JScrollPane();
         jlOperarios = new javax.swing.JList();
         jPanel3 = new javax.swing.JPanel();
+        jtfCodigoPieza = new javax.swing.JTextField();
+        jtfMarcaPieza = new javax.swing.JTextField();
+        jtfPaisPieza = new javax.swing.JTextField();
+        jtfDescripcionPieza = new javax.swing.JTextField();
+        jtfCantidadPieza = new javax.swing.JTextField();
+        jtfProblemaPieza = new javax.swing.JTextField();
+        jlCodigoPieza = new javax.swing.JLabel();
+        jlMarcaPieza = new javax.swing.JLabel();
+        jlPaisPieza = new javax.swing.JLabel();
+        jlDesPieza = new javax.swing.JLabel();
+        jlCanPieza = new javax.swing.JLabel();
+        jlProbPieza = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jlPieza = new javax.swing.JList();
+        jbCrearPieza = new javax.swing.JButton();
+        jlIdTarea = new javax.swing.JLabel();
+        jtfTareaIDPieza = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
         jlStatus = new javax.swing.JLabel();
 
@@ -314,15 +336,105 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Pieza"));
 
+        jtfCodigoPieza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCodigoPiezaActionPerformed(evt);
+            }
+        });
+
+        jlCodigoPieza.setText("Codigo:");
+
+        jlMarcaPieza.setText("Marca:");
+
+        jlPaisPieza.setText("País:");
+
+        jlDesPieza.setText("Descripción:");
+
+        jlCanPieza.setText("Cantidad:");
+
+        jlProbPieza.setText("Problema:");
+
+        jlPieza.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jlPieza);
+
+        jbCrearPieza.setText("Crear");
+        jbCrearPieza.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCrearPiezaActionPerformed(evt);
+            }
+        });
+
+        jlIdTarea.setText("Tarea:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 185, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlCodigoPieza)
+                            .addComponent(jlMarcaPieza)
+                            .addComponent(jlPaisPieza)
+                            .addComponent(jlDesPieza)
+                            .addComponent(jlCanPieza)
+                            .addComponent(jlProbPieza)
+                            .addComponent(jbCrearPieza)
+                            .addComponent(jlIdTarea))
+                        .addGap(29, 29, 29)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfCodigoPieza, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                            .addComponent(jtfMarcaPieza)
+                            .addComponent(jtfPaisPieza)
+                            .addComponent(jtfDescripcionPieza)
+                            .addComponent(jtfCantidadPieza)
+                            .addComponent(jtfProblemaPieza)
+                            .addComponent(jtfTareaIDPieza))))
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfCodigoPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlCodigoPieza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfMarcaPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlMarcaPieza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfPaisPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlPaisPieza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfDescripcionPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlDesPieza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfCantidadPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlCanPieza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfProblemaPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlProbPieza))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlIdTarea)
+                    .addComponent(jtfTareaIDPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbCrearPieza))
         );
 
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -354,9 +466,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(268, Short.MAX_VALUE))
+                .addContainerGap(299, Short.MAX_VALUE))
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -399,6 +511,29 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         gestor.agregarOperario(cedula, nombre, apellido, telefono, direccion, anios, cargo);
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
     }//GEN-LAST:event_jbCrearOpActionPerformed
+
+    private void jtfCodigoPiezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCodigoPiezaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfCodigoPiezaActionPerformed
+
+    private void jbCrearPiezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearPiezaActionPerformed
+        
+            
+            
+            String codigoPieza = this.jtfCodigoPieza.getText();
+            String marcaPieza = this.jtfMarcaPieza.getText();
+            String paisPieza = this.jtfPaisPieza.getText();
+            String descripcionPieza = this.jtfDescripcionPieza.getText();
+            int cantidadPieza = Integer.parseInt(this.jtfCantidadPieza.getText());
+            String problemaPieza = this.jtfDescripcionPieza.getText();
+            int idTareaPieza = Integer.parseInt(this.jtfTareaIDPieza.getText());
+            
+            gestor.AgregarPieza(codigoPieza, marcaPieza, paisPieza, 
+                    descripcionPieza, cantidadPieza, problemaPieza, idTareaPieza);
+            this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
+        
+
+    }//GEN-LAST:event_jbCrearPiezaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -453,23 +588,40 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton jbCrearOp;
+    private javax.swing.JButton jbCrearPieza;
     private javax.swing.JButton jbCrearVehiculo;
+    private javax.swing.JLabel jlCanPieza;
+    private javax.swing.JLabel jlCodigoPieza;
+    private javax.swing.JLabel jlDesPieza;
+    private javax.swing.JLabel jlIdTarea;
+    private javax.swing.JLabel jlMarcaPieza;
     private javax.swing.JList jlOperarios;
+    private javax.swing.JLabel jlPaisPieza;
+    private javax.swing.JList jlPieza;
+    private javax.swing.JLabel jlProbPieza;
     private javax.swing.JLabel jlStatus;
     private javax.swing.JList jlVehiculos;
     private javax.swing.JSpinner jsAniosOp;
     private javax.swing.JTextField jtfApellidoOperario;
     private javax.swing.JTextField jtfApellidoProp;
+    private javax.swing.JTextField jtfCantidadPieza;
     private javax.swing.JTextField jtfCargoOp;
+    private javax.swing.JTextField jtfCodigoPieza;
+    private javax.swing.JTextField jtfDescripcionPieza;
     private javax.swing.JTextField jtfDireccionOp;
     private javax.swing.JTextField jtfEstadoVehi;
     private javax.swing.JFormattedTextField jtfIDOperario;
+    private javax.swing.JTextField jtfMarcaPieza;
     private javax.swing.JTextField jtfModelo;
     private javax.swing.JTextField jtfNombreOperario;
     private javax.swing.JTextField jtfNombreProp;
+    private javax.swing.JTextField jtfPaisPieza;
     private javax.swing.JTextField jtfPlaca;
+    private javax.swing.JTextField jtfProblemaPieza;
+    private javax.swing.JTextField jtfTareaIDPieza;
     private javax.swing.JFormattedTextField jtfTelefonoOp;
     // End of variables declaration//GEN-END:variables
 

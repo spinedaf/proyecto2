@@ -98,7 +98,7 @@ public class MultiPieza {
             sql = "SELECT * "
                     + "FROM TPieza ";
             rs = Conector.getConector().ejecutarSQL(sql, true);
-            if (rs.next()) {
+            while (rs.next()) {
                 pieza = new Pieza(
                         rs.getString("codigoPieza"),
                         rs.getString("marca"),
