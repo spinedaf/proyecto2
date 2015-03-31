@@ -86,6 +86,37 @@ public class MultiPieza {
             return null;
         }
     }
+    
+    public ArrayList<Pieza> buscarTodos() {
+
+        try {
+            Pieza pieza = null;
+            ArrayList<Pieza> piezas = new ArrayList<Pieza>();
+            java.sql.ResultSet rs;
+
+            String sql;
+            sql = "SELECT * "
+                    + "FROM TPieza ";
+            rs = Conector.getConector().ejecutarSQL(sql, true);
+            if (rs.next()) {
+                pieza = new Pieza(
+                        rs.getString("codigoPieza"),
+                        rs.getString("marca"),
+                        rs.getString("pais"),
+                        rs.getString("descripcion"),
+                        rs.getInt("cantidad"),
+                        rs.getString("problema"),
+                        rs.getInt("id_tarea")
+                );
+                piezas.add(pieza);
+            }
+            rs.close();
+            return piezas;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiPieza.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
 
     /**
      *

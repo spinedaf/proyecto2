@@ -141,7 +141,7 @@ public class MultiOperarioTest {
         Operario operarioBorrado = null;
         
         try{
-            poperario = instance.buscar("Tarea");
+            poperario = instance.buscar(id);
         }catch(Exception e){}
         
         boolean resultado = (operarioBorrado==null?true:false);

@@ -71,7 +71,7 @@ public class MultiOperario {
         String sql;
         sql = "SELECT * "+
         "FROM TOperario "+
-        "WHERE cedulaOperario='"+pcedula+"';";
+        "WHERE cedulaOperario="+pcedula+";";
         try {
             rs = Conector.getConector().ejecutarSQL(sql,true);
             if (rs.next()){
@@ -110,6 +110,38 @@ public class MultiOperario {
         "FROM TOperario INNER JOIN TTareaOperario " +
         "ON TOperario.cedulaOperario = TTareaOperario.cedulaOperario "+
         "WHERE id_tarea='"+pnombreTarea+"';";
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                operario = new Operario(
+                    rs.getString("cedulaOperario"),
+                    rs.getString("nombreOperario"),
+                    rs.getString("apellidoOperario"),
+                    rs.getString("telefonoOperario"),
+                    rs.getString("direccionOperario"),
+                    rs.getDate("fechaIngresoOperario"),
+                    rs.getInt("anosExperienciaOperario"),
+                    rs.getString("cargoOperario")
+                    );
+                operarios.add(operario);
+            }
+            rs.close();
+            return operarios;  
+        } catch (Exception ex) {
+            Logger.getLogger(MultiOperario.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
+    public ArrayList<Operario> buscarTodos(){
+        java.sql.ResultSet rs;
+        String sql;
+        Operario operario=null;
+        ArrayList<Operario> operarios = new ArrayList<Operario>();
+        sql="SELECT * "+
+        "FROM TOperario INNER JOIN TTareaOperario " +
+        "ON TOperario.cedulaOperario = TTareaOperario.cedulaOperario ";
         try {
             Conector.getConector().ejecutarSQL(sql);
             rs = Conector.getConector().ejecutarSQL(sql,true);

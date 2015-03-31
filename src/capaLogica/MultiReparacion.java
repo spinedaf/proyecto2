@@ -153,6 +153,36 @@ public class MultiReparacion {
         }
     }
     
+    public ArrayList<Reparacion> buscarTodos(){
+	java.sql.ResultSet rs;
+        String sql;
+        Reparacion reparacion=null;
+        ArrayList<Reparacion> reparaciones= new ArrayList<Reparacion>();
+        sql="SELECT * "+
+        "FROM TReparacion ";
+        try {
+            Conector.getConector().ejecutarSQL(sql); 
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                reparacion = new Reparacion(
+                    rs.getString("codigoReparacion"),
+                    rs.getString("nombreReparacion"),
+                    rs.getString("tipoReparacion"),
+                    rs.getDate("fechaAsignacionReparacion"),
+                    rs.getDate("tiempoInicioReparacion"),
+                    rs.getDate("tiempoFinReparacion"),
+                    rs.getString("placaVehiculo")
+                    );
+                reparaciones.add(reparacion);
+            }
+            rs.close();
+            return reparaciones;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiReparacion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+    
     /**
      *
      * @param preparacion
