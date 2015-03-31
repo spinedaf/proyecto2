@@ -6,17 +6,22 @@
 package capaPresentacion;
 
 import capaLogica.*;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 
 /**
  *
  * @author pinedas
  */
-public class InterfazReparaciones extends javax.swing.JFrame implements Observer{
-    
+public class InterfazReparaciones extends javax.swing.JFrame implements Observer {
+
     private Gestor gestor;
     private DefaultListModel<String> modeloListaVehiculos;
     private DefaultListModel<String> modeloListaOperarios;
@@ -27,12 +32,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
      */
     public InterfazReparaciones() {
         initComponents();
-        
+
         iniciarComponentesPropios();
     }
-    
-    private void iniciarComponentesPropios()
-    {
+
+    private void iniciarComponentesPropios() {
         gestor = new Gestor();
         modeloListaVehiculos = new DefaultListModel();
         modeloListaOperarios = new DefaultListModel();
@@ -40,21 +44,19 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.jlVehiculos.setModel(modeloListaVehiculos);
         this.jlOperarios.setModel(modeloListaOperarios);
         this.jlPieza.setModel(modeloListaPiezas);
-        
+
         gestor.addObserver(this);
-        
+
         this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
         this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
-        
+
         this.setJlStatus("");
     }
-    
-    public void actualizarVistaLista(DefaultListModel modelo, String[] lista)
-    {
+
+    public void actualizarVistaLista(DefaultListModel modelo, String[] lista) {
         modelo.clear();
-        for(String linea: lista)
-        {
+        for (String linea : lista) {
             modelo.addElement(linea);
         }
     }
@@ -117,9 +119,25 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jlPieza = new javax.swing.JList();
         jbCrearPieza = new javax.swing.JButton();
         jlIdTarea = new javax.swing.JLabel();
-        jtfTareaIDPieza = new javax.swing.JTextField();
+        jtfTareaIDPieza = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
         jlStatus = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jlTareaNombre = new javax.swing.JLabel();
+        jlTareaDescripcion = new javax.swing.JLabel();
+        jlTareaFechaCreacion = new javax.swing.JLabel();
+        lbTareaDuracionPropuesta = new javax.swing.JLabel();
+        jlTareaDuracionReal = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jtfTareNombre = new javax.swing.JTextField();
+        jtfTareaDescripcion = new javax.swing.JTextField();
+        jtfTareaFechaCreacion = new javax.swing.JFormattedTextField();
+        jtfTareaSala = new javax.swing.JFormattedTextField();
+        jtfTareaDuracionPropuesta = new javax.swing.JFormattedTextField();
+        jtfTareaDuracionReal = new javax.swing.JFormattedTextField();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jlTareas = new javax.swing.JList();
+        jbCrearTarea = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -370,15 +388,14 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jlIdTarea.setText("Tarea:");
 
+        jtfTareaIDPieza.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jlCodigoPieza)
@@ -391,13 +408,16 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addComponent(jlIdTarea))
                         .addGap(29, 29, 29)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfCodigoPieza, javax.swing.GroupLayout.DEFAULT_SIZE, 92, Short.MAX_VALUE)
+                            .addComponent(jtfCodigoPieza)
                             .addComponent(jtfMarcaPieza)
                             .addComponent(jtfPaisPieza)
                             .addComponent(jtfDescripcionPieza)
                             .addComponent(jtfCantidadPieza)
                             .addComponent(jtfProblemaPieza)
-                            .addComponent(jtfTareaIDPieza))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jtfTareaIDPieza, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -448,13 +468,122 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlStatus)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(897, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addGap(0, 11, Short.MAX_VALUE)
                 .addComponent(jlStatus))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarea"));
+
+        jlTareaNombre.setText("Nombre:");
+
+        jlTareaDescripcion.setText("Descripción:");
+
+        jlTareaFechaCreacion.setText("Creación:");
+
+        lbTareaDuracionPropuesta.setText("Propuesta:");
+
+        jlTareaDuracionReal.setText("Real:");
+
+        jLabel18.setText("Sala:");
+
+        jtfTareaFechaCreacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/mm/yyyy"))));
+        jtfTareaFechaCreacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtfTareaFechaCreacionKeyTyped(evt);
+            }
+        });
+
+        jtfTareaSala.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+
+        jtfTareaDuracionPropuesta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+
+        jtfTareaDuracionReal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        jtfTareaDuracionReal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfTareaDuracionRealActionPerformed(evt);
+            }
+        });
+
+        jlTareas.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(jlTareas);
+
+        jbCrearTarea.setText("Crear");
+        jbCrearTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCrearTareaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbTareaDuracionPropuesta)
+                            .addComponent(jlTareaDuracionReal)
+                            .addComponent(jLabel18))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfTareaDuracionPropuesta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                            .addComponent(jtfTareaDuracionReal, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtfTareaSala, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlTareaDescripcion)
+                            .addComponent(jlTareaFechaCreacion)
+                            .addComponent(jlTareaNombre))
+                        .addGap(13, 13, 13)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jtfTareaFechaCreacion)
+                            .addComponent(jtfTareaDescripcion, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtfTareNombre, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(jScrollPane4)
+                    .addComponent(jbCrearTarea))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTareaNombre)
+                    .addComponent(jtfTareNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTareaDescripcion)
+                    .addComponent(jtfTareaDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTareaFechaCreacion)
+                    .addComponent(jtfTareaFechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTareaDuracionPropuesta)
+                    .addComponent(jtfTareaDuracionPropuesta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTareaDuracionReal)
+                    .addComponent(jtfTareaDuracionReal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfTareaSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addComponent(jbCrearTarea))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -464,23 +593,35 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(16, 16, 16)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(299, Short.MAX_VALUE))
-            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(324, 324, 324))))
         );
 
         pack();
@@ -496,7 +637,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         gestor.agregarVehiculo(placa, modelo, nombreProp, apellidoProp, estado);
         this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
-     
+
     }//GEN-LAST:event_jbCrearVehiculoActionPerformed
 
     private void jbCrearOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearOpActionPerformed
@@ -505,9 +646,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String apellido = this.jtfApellidoOperario.getText();
         String telefono = this.jtfTelefonoOp.getText();
         String direccion = this.jtfDireccionOp.getText();
-        int anios = (int)this.jsAniosOp.getValue();
+        int anios = (int) this.jsAniosOp.getValue();
         String cargo = this.jtfCargoOp.getText();
-        
+
         gestor.agregarOperario(cedula, nombre, apellido, telefono, direccion, anios, cargo);
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
     }//GEN-LAST:event_jbCrearOpActionPerformed
@@ -517,23 +658,53 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     }//GEN-LAST:event_jtfCodigoPiezaActionPerformed
 
     private void jbCrearPiezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearPiezaActionPerformed
-        
-            
-            
-            String codigoPieza = this.jtfCodigoPieza.getText();
-            String marcaPieza = this.jtfMarcaPieza.getText();
-            String paisPieza = this.jtfPaisPieza.getText();
-            String descripcionPieza = this.jtfDescripcionPieza.getText();
-            int cantidadPieza = Integer.parseInt(this.jtfCantidadPieza.getText());
-            String problemaPieza = this.jtfDescripcionPieza.getText();
-            int idTareaPieza = Integer.parseInt(this.jtfTareaIDPieza.getText());
-            
-            gestor.AgregarPieza(codigoPieza, marcaPieza, paisPieza, 
-                    descripcionPieza, cantidadPieza, problemaPieza, idTareaPieza);
-            this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
-        
+
+        String codigoPieza = this.jtfCodigoPieza.getText();
+        String marcaPieza = this.jtfMarcaPieza.getText();
+        String paisPieza = this.jtfPaisPieza.getText();
+        String descripcionPieza = this.jtfDescripcionPieza.getText();
+        int cantidadPieza = Integer.parseInt(this.jtfCantidadPieza.getText());
+        String problemaPieza = this.jtfProblemaPieza.getText();
+        int idTareaPieza = Integer.parseInt(this.jtfTareaIDPieza.getText());
+
+        gestor.AgregarPieza(codigoPieza, marcaPieza, paisPieza,
+                descripcionPieza, cantidadPieza, problemaPieza, idTareaPieza);
+        this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
+
 
     }//GEN-LAST:event_jbCrearPiezaActionPerformed
+
+    private void jtfTareaDuracionRealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTareaDuracionRealActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfTareaDuracionRealActionPerformed
+
+    private void jtfTareaFechaCreacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTareaFechaCreacionKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfTareaFechaCreacionKeyTyped
+
+    private void jbCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearTareaActionPerformed
+
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
+            String nombreTarea = this.jtfTareNombre.getText();
+            String descripcionTarea = this.jtfTareaDescripcion.getText();
+            Date fechaCreacionTarea = (Date) formatter.parse(this.jtfTareaFechaCreacion.getText());
+            int duracionRealTarea = Integer.parseInt(this.jtfTareaDuracionReal.getText());
+            //int duracionPropuestaTarea = 
+            
+
+//                            rs.getString("nombreTarea"),
+//                    rs.getString("descripcionTarea"),
+//                    rs.getDate("fechaCreacionTarea"),
+//                    rs.getInt("duracionRealTarea"),
+//                    rs.getInt("duracionPropuestaTarea"),
+//                    rs.getString("codigo_reparacion"),
+//                    rs.getInt("id_sala")
+        } catch (ParseException ex) {
+            Logger.getLogger(InterfazReparaciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jbCrearTareaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -575,6 +746,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -587,11 +759,14 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton jbCrearOp;
     private javax.swing.JButton jbCrearPieza;
+    private javax.swing.JButton jbCrearTarea;
     private javax.swing.JButton jbCrearVehiculo;
     private javax.swing.JLabel jlCanPieza;
     private javax.swing.JLabel jlCodigoPieza;
@@ -603,6 +778,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JList jlPieza;
     private javax.swing.JLabel jlProbPieza;
     private javax.swing.JLabel jlStatus;
+    private javax.swing.JLabel jlTareaDescripcion;
+    private javax.swing.JLabel jlTareaDuracionReal;
+    private javax.swing.JLabel jlTareaFechaCreacion;
+    private javax.swing.JLabel jlTareaNombre;
+    private javax.swing.JList jlTareas;
     private javax.swing.JList jlVehiculos;
     private javax.swing.JSpinner jsAniosOp;
     private javax.swing.JTextField jtfApellidoOperario;
@@ -621,8 +801,15 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JTextField jtfPaisPieza;
     private javax.swing.JTextField jtfPlaca;
     private javax.swing.JTextField jtfProblemaPieza;
-    private javax.swing.JTextField jtfTareaIDPieza;
+    private javax.swing.JTextField jtfTareNombre;
+    private javax.swing.JTextField jtfTareaDescripcion;
+    private javax.swing.JFormattedTextField jtfTareaDuracionPropuesta;
+    private javax.swing.JFormattedTextField jtfTareaDuracionReal;
+    private javax.swing.JFormattedTextField jtfTareaFechaCreacion;
+    private javax.swing.JFormattedTextField jtfTareaIDPieza;
+    private javax.swing.JFormattedTextField jtfTareaSala;
     private javax.swing.JFormattedTextField jtfTelefonoOp;
+    private javax.swing.JLabel lbTareaDuracionPropuesta;
     // End of variables declaration//GEN-END:variables
 
     /**
