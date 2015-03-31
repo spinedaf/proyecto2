@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,9 +34,7 @@ public class MultiOperario {
      * @throws Exception
      */
     public Operario crear(String id, String nombre, String apellido, String telefono,
-            String direccion, Date pfecha, int anios, String cargo)throws
-			java.sql.SQLException,Exception
-    {
+            String direccion, Date pfecha, int anios, String cargo){
         Timestamp mmddyyyyXmas = 
         new Timestamp(pfecha.getTime()); 
         
@@ -51,8 +51,9 @@ public class MultiOperario {
             Conector.getConector().ejecutarSQL(sql);
             operario = new Operario(id, nombre,apellido,telefono,direccion,pfecha,anios,cargo);
         }
-        catch (Exception e) {
-            throw new Exception ("El operario ya esta en el sistema.");
+        catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
         return operario;
     }
@@ -64,14 +65,14 @@ public class MultiOperario {
      * @throws SQLException
      * @throws Exception
      */
-    public Operario buscar(String pcedula) throws
-        java.sql.SQLException,Exception{
-            Operario operario = null;
-            java.sql.ResultSet rs;
-            String sql;
-            sql = "SELECT * "+
-            "FROM TOperario "+
-            "WHERE cedulaOperario='"+pcedula+"';";
+    public Operario buscar(String pcedula){
+        Operario operario = null;
+        java.sql.ResultSet rs;
+        String sql;
+        sql = "SELECT * "+
+        "FROM TOperario "+
+        "WHERE cedulaOperario='"+pcedula+"';";
+        try {
             rs = Conector.getConector().ejecutarSQL(sql,true);
             if (rs.next()){
                 operario = new Operario(
@@ -84,11 +85,13 @@ public class MultiOperario {
                     rs.getInt("anosExperienciaOperario"),
                     rs.getString("cargoOperario")
                     );
-            } else {
-                throw new Exception ("Operario no esta registrado.");
             }
             rs.close();
             return operario;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiOperario.class.getName()).log(Level.WARNING, null, ex);
+            return null;
+        }
     }
     
     /**
@@ -98,8 +101,7 @@ public class MultiOperario {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<Operario> buscarPorTarea(String pnombreTarea)throws
-        java.sql.SQLException,Exception{
+    public ArrayList<Operario> buscarPorTarea(String pnombreTarea){
         java.sql.ResultSet rs;
         String sql;
         Operario operario=null;
@@ -108,23 +110,28 @@ public class MultiOperario {
         "FROM TOperario INNER JOIN TTareaOperario " +
         "ON TOperario.cedulaOperario = TTareaOperario.cedulaOperario "+
         "WHERE id_tarea='"+pnombreTarea+"';";
-        Conector.getConector().ejecutarSQL(sql);
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        while (rs.next()){
-            operario = new Operario(
-                rs.getString("cedulaOperario"),
-                rs.getString("nombreOperario"),
-                rs.getString("apellidoOperario"),
-                rs.getString("telefonoOperario"),
-                rs.getString("direccionOperario"),
-                rs.getDate("fechaIngresoOperario"),
-                rs.getInt("anosExperienciaOperario"),
-                rs.getString("cargoOperario")
-                );
-            operarios.add(operario);
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                operario = new Operario(
+                    rs.getString("cedulaOperario"),
+                    rs.getString("nombreOperario"),
+                    rs.getString("apellidoOperario"),
+                    rs.getString("telefonoOperario"),
+                    rs.getString("direccionOperario"),
+                    rs.getDate("fechaIngresoOperario"),
+                    rs.getInt("anosExperienciaOperario"),
+                    rs.getString("cargoOperario")
+                    );
+                operarios.add(operario);
+            }
+            rs.close();
+            return operarios;  
+        } catch (Exception ex) {
+            Logger.getLogger(MultiOperario.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return operarios;    
     }
     
     /**
@@ -133,8 +140,7 @@ public class MultiOperario {
      * @throws SQLException
      * @throws Exception
      */
-    public  void borrar(Operario poperario) throws
-        java.sql.SQLException,Exception{
+    public  void borrar(Operario poperario){
             java.sql.ResultSet rs;
             String sql;
             sql= "DELETE FROM TOperario "+
@@ -142,8 +148,8 @@ public class MultiOperario {
             try {
                 Conector.getConector().ejecutarSQL(sql);
             }
-            catch (Exception e) {
-                throw new Exception ("Operario tiene entradas.");
+            catch (Exception ex) {
+                Logger.getLogger(MultiOperario.class.getName()).log(Level.SEVERE, null, ex);
             }
 	}
 }

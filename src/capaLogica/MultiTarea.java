@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,8 +34,7 @@ public class MultiTarea {
      * @throws Exception
      */
     public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionReal, int duracionPropuesta, 
-            String codigoReparacion, int idSala)throws
-			java.sql.SQLException,Exception
+            String codigoReparacion, int idSala)
     {
         Timestamp mmddyyyyXmas = 
         new Timestamp(pFecha.getTime()); 
@@ -47,11 +48,12 @@ public class MultiTarea {
         try {
             Conector.getConector().ejecutarSQL(sql);
             tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoReparacion,idSala);
+            return tarea;
         }
-        catch (Exception e) {
-            throw new Exception ("El nombre de tarea ya esta en el sistema.");
+        catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return tarea;
     }
     
     /**
@@ -61,30 +63,32 @@ public class MultiTarea {
      * @throws SQLException
      * @throws Exception
      */
-    public Tarea buscar(String pnombre) throws
-        java.sql.SQLException,Exception{
+    public Tarea buscar(String pnombre){
         Tarea tarea = null;
         java.sql.ResultSet rs;
         String sql;
         sql = "SELECT * "+
         "FROM TTarea "+
         "WHERE nombreTarea='"+pnombre+"';";
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        if (rs.next()){
-            tarea = new Tarea(
-                rs.getString("nombreTarea"),
-                rs.getString("descripcionTarea"),
-                rs.getDate("fechaCreacionTarea"),
-                rs.getInt("duracionRealTarea"),
-                rs.getInt("duracionPropuestaTarea"),
-                rs.getString("codigo_reparacion"),
-                rs.getInt("id_sala")
-                );
-        } else {
-            throw new Exception ("La tarea no esta registrada.");
+        try {
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            if (rs.next()){
+                tarea = new Tarea(
+                    rs.getString("nombreTarea"),
+                    rs.getString("descripcionTarea"),
+                    rs.getDate("fechaCreacionTarea"),
+                    rs.getInt("duracionRealTarea"),
+                    rs.getInt("duracionPropuestaTarea"),
+                    rs.getString("codigo_reparacion"),
+                    rs.getInt("id_sala")
+                    );
+            } 
+            rs.close();
+            return tarea;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return tarea;
     }
     
     /**
@@ -94,7 +98,7 @@ public class MultiTarea {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<Tarea> buscarPorReparacion(String codigo)throws java.sql.SQLException,Exception{
+    public ArrayList<Tarea> buscarPorReparacion(String codigo){
 	java.sql.ResultSet rs;
         String sql;
         Tarea tarea=null;
@@ -102,22 +106,27 @@ public class MultiTarea {
         sql="SELECT * "+
         "FROM TTarea "+
         "WHERE codigo_reparacion='"+codigo+"';";
-        Conector.getConector().ejecutarSQL(sql);
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        while (rs.next()){
-            tarea = new Tarea(
-                rs.getString("nombreTarea"),
-                rs.getString("descripcionTarea"),
-                rs.getDate("fechaCreacionTarea"),
-                rs.getInt("duracionRealTarea"),
-                rs.getInt("duracionPropuestaTarea"),
-                rs.getString("codigo_reparacion"),
-                rs.getInt("id_sala")
-                );
-            tareas.add(tarea);
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                tarea = new Tarea(
+                    rs.getString("nombreTarea"),
+                    rs.getString("descripcionTarea"),
+                    rs.getDate("fechaCreacionTarea"),
+                    rs.getInt("duracionRealTarea"),
+                    rs.getInt("duracionPropuestaTarea"),
+                    rs.getString("codigo_reparacion"),
+                    rs.getInt("id_sala")
+                    );
+                tareas.add(tarea);
+            }
+            rs.close();
+            return tareas; 
+         } catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return tareas;    
     }
     
     /**
@@ -127,7 +136,7 @@ public class MultiTarea {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<Tarea> buscarPorSala(int idSala)throws java.sql.SQLException,Exception{
+    public ArrayList<Tarea> buscarPorSala(int idSala){
 	java.sql.ResultSet rs;
         String sql;
         Tarea tarea=null;
@@ -135,47 +144,57 @@ public class MultiTarea {
         sql="SELECT * "+
         "FROM TTarea "+
         "WHERE id_sala='"+idSala+"';";
-        Conector.getConector().ejecutarSQL(sql);
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        while (rs.next()){
-            tarea = new Tarea(
-                rs.getString("nombreTarea"),
-                rs.getString("descripcionTarea"),
-                rs.getDate("fechaCreacionTarea"),
-                rs.getInt("duracionRealTarea"),
-                rs.getInt("duracionPropuestaTarea"),
-                rs.getString("codigo_reparacion"),
-                rs.getInt("id_sala")
-                );
-            tareas.add(tarea);
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                tarea = new Tarea(
+                    rs.getString("nombreTarea"),
+                    rs.getString("descripcionTarea"),
+                    rs.getDate("fechaCreacionTarea"),
+                    rs.getInt("duracionRealTarea"),
+                    rs.getInt("duracionPropuestaTarea"),
+                    rs.getString("codigo_reparacion"),
+                    rs.getInt("id_sala")
+                    );
+                tareas.add(tarea);
+            }
+            rs.close();
+            return tareas;   
+        } catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return tareas;    
     }
     
-    public ArrayList<Tarea> buscarTodos()throws java.sql.SQLException,Exception{
+    public ArrayList<Tarea> buscarTodos(){
 	java.sql.ResultSet rs;
         String sql;
         Tarea tarea=null;
         ArrayList<Tarea> tareas= new ArrayList<Tarea>();
         sql="SELECT * "+
         "FROM TTarea ";
-        Conector.getConector().ejecutarSQL(sql);
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        while (rs.next()){
-            tarea = new Tarea(
-                rs.getString("nombreTarea"),
-                rs.getString("descripcionTarea"),
-                rs.getDate("fechaCreacionTarea"),
-                rs.getInt("duracionRealTarea"),
-                rs.getInt("duracionPropuestaTarea"),
-                rs.getString("codigo_reparacion"),
-                rs.getInt("id_sala")
-                );
-            tareas.add(tarea);
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                tarea = new Tarea(
+                    rs.getString("nombreTarea"),
+                    rs.getString("descripcionTarea"),
+                    rs.getDate("fechaCreacionTarea"),
+                    rs.getInt("duracionRealTarea"),
+                    rs.getInt("duracionPropuestaTarea"),
+                    rs.getString("codigo_reparacion"),
+                    rs.getInt("id_sala")
+                    );
+                tareas.add(tarea);
+            }
+            rs.close();
+            return tareas;   
+         } catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return tareas;    
     }
     
     /**
@@ -184,17 +203,16 @@ public class MultiTarea {
      * @throws SQLException
      * @throws Exception
      */
-    public  void borrar(Tarea ptarea) throws
-        java.sql.SQLException,Exception{
-            java.sql.ResultSet rs;
-            String sql;
-            sql= "DELETE FROM TTarea "+
-            "WHERE nombreTarea='"+ptarea.getNombre()+"';";
-            try {
-                Conector.getConector().ejecutarSQL(sql);
-            }
-            catch (Exception e) {
-                throw new Exception ("La tarea tiene entradas.");
-            }
-	}
+    public  void borrar(Tarea ptarea){
+        java.sql.ResultSet rs;
+        String sql;
+        sql= "DELETE FROM TTarea "+
+        "WHERE nombreTarea='"+ptarea.getNombre()+"';";
+        try {
+            Conector.getConector().ejecutarSQL(sql);
+        }
+        catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

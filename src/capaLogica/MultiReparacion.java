@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -28,9 +30,7 @@ public class MultiReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public Reparacion crear(String pcodigo, String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo)throws
-			java.sql.SQLException,Exception   
-    {
+    public Reparacion crear(String pcodigo, String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo){
         Timestamp mmddyyyyXmas = 
         new Timestamp(pfechaAsignacion.getTime());
         
@@ -45,8 +45,9 @@ public class MultiReparacion {
             Conector.getConector().ejecutarSQL(sql);
             reparacion = new Reparacion(pcodigo, pnombre, tipo,pfechaAsignacion,pplacaVehiculo);
         }
-        catch (Exception e) {
-            throw new Exception ("La reparacion ya esta en el sistema.");
+        catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
         return reparacion;
     }
@@ -58,30 +59,32 @@ public class MultiReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public Reparacion buscar(String codigo)throws
-        java.sql.SQLException,Exception{
+    public Reparacion buscar(String codigo){
         Reparacion reparacion = null;
         java.sql.ResultSet rs;
         String sql;
         sql = "SELECT * "+
         "FROM TReparacion "+
         "WHERE codigoReparacion='"+codigo+"';";
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        if (rs.next()){
-            reparacion = new Reparacion(
-                rs.getString("codigoReparacion"),
-                rs.getString("nombreReparacion"),
-                rs.getString("tipoReparacion"),
-                rs.getDate("fechaAsignacionReparacion"),
-                rs.getDate("tiempoInicioReparacion"),
-                rs.getDate("tiempoFinReparacion"),
-                rs.getString("placaVehiculo")
-                );
-        } else {
-            throw new Exception ("La reparacion no esta registrada.");
+        try {
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            if (rs.next()){
+                reparacion = new Reparacion(
+                    rs.getString("codigoReparacion"),
+                    rs.getString("nombreReparacion"),
+                    rs.getString("tipoReparacion"),
+                    rs.getDate("fechaAsignacionReparacion"),
+                    rs.getDate("tiempoInicioReparacion"),
+                    rs.getDate("tiempoFinReparacion"),
+                    rs.getString("placaVehiculo")
+                    );
+            } 
+            rs.close();
+            return reparacion;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiReparacion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return reparacion;
     }
 
     /**
@@ -90,8 +93,7 @@ public class MultiReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public  void actualizar(Reparacion preparacion) throws
-                    java.sql.SQLException,Exception{
+    public  void actualizar(Reparacion preparacion){
         Timestamp mmddyyyyXmas = new Timestamp(preparacion.getFechaAsignacion().getTime());
         Timestamp mmddyyyyXmas2 = new Timestamp(preparacion.getTiempoDeInicio().getTime());
         Timestamp mmddyyyyXmas3 = new Timestamp(preparacion.getTiempoDeFinalizacion().getTime());
@@ -108,8 +110,8 @@ public class MultiReparacion {
         try {
             Conector.getConector().ejecutarSQL(sql); 	
         }
-        catch (Exception e) {
-            throw new Exception ("La reparacion no esta registrada.");
+        catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -120,7 +122,7 @@ public class MultiReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<Reparacion> buscarPorVehiculo(String pplaca)throws java.sql.SQLException,Exception{
+    public ArrayList<Reparacion> buscarPorVehiculo(String pplaca){
 	java.sql.ResultSet rs;
         String sql;
         Reparacion reparacion=null;
@@ -128,22 +130,27 @@ public class MultiReparacion {
         sql="SELECT * "+
         "FROM TReparacion "+
         "WHERE placaVehiculo='"+pplaca+"';";
-        Conector.getConector().ejecutarSQL(sql);
-        rs = Conector.getConector().ejecutarSQL(sql,true);
-        while (rs.next()){
-            reparacion = new Reparacion(
-                rs.getString("codigoReparacion"),
-                rs.getString("nombreReparacion"),
-                rs.getString("tipoReparacion"),
-                rs.getDate("fechaAsignacionReparacion"),
-                rs.getDate("tiempoInicioReparacion"),
-                rs.getDate("tiempoFinReparacion"),
-                rs.getString("placaVehiculo")
-                );
-            reparaciones.add(reparacion);
+        try {
+            Conector.getConector().ejecutarSQL(sql); 
+            rs = Conector.getConector().ejecutarSQL(sql,true);
+            while (rs.next()){
+                reparacion = new Reparacion(
+                    rs.getString("codigoReparacion"),
+                    rs.getString("nombreReparacion"),
+                    rs.getString("tipoReparacion"),
+                    rs.getDate("fechaAsignacionReparacion"),
+                    rs.getDate("tiempoInicioReparacion"),
+                    rs.getDate("tiempoFinReparacion"),
+                    rs.getString("placaVehiculo")
+                    );
+                reparaciones.add(reparacion);
+            }
+            rs.close();
+            return reparaciones;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiReparacion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return reparaciones;    
     }
     
     /**
@@ -152,8 +159,7 @@ public class MultiReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public  void borrar(Reparacion preparacion) throws
-        java.sql.SQLException,Exception{
+    public  void borrar(Reparacion preparacion){
          
         java.sql.ResultSet rs;
         String sql;
@@ -162,8 +168,8 @@ public class MultiReparacion {
         try {
             Conector.getConector().ejecutarSQL(sql);
         }
-        catch (Exception e) {
-            throw new Exception ("La reparacion tiene entradas.");
+        catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
