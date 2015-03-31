@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import capaAccesoBD.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,22 +28,24 @@ public class MultiSalaDeReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public SalaDeReparacion crear(String pdescripcion, String pubicacion, int pcapacidad) throws
-            java.sql.SQLException, Exception {
+    public SalaDeReparacion crear(String pdescripcion, String pubicacion, int pcapacidad) {
 
-        SalaDeReparacion sala = null;
-        String sql;
-        sql = "INSERT INTO TSala "
-                + "(descripcionSala, ubicacionSala, capacidadSala) "
-                + "VALUES ('" + pdescripcion + "', '" + pubicacion + "', " + pcapacidad + ");";
         try {
+            SalaDeReparacion sala;
+            String sql;
+            sql = "INSERT INTO TSala "
+                    + "(descripcionSala, ubicacionSala, capacidadSala) "
+                    + "VALUES ('" + pdescripcion + "', '" + pubicacion + "', "
+                    + pcapacidad + ");";
+
             Conector.getConector().ejecutarSQL(sql);
             sala = new SalaDeReparacion(pdescripcion, pubicacion, pcapacidad);
-
-        } catch (Exception e) {
-            throw new Exception("No se puede crear  la salsa.");
+            return sala;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiSalaDeReparacion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return sala;
+
     }
 
     /**
@@ -51,51 +55,55 @@ public class MultiSalaDeReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public SalaDeReparacion buscarSalaDeReparacion(int pidTarea) throws
-            java.sql.SQLException, Exception {
-        SalaDeReparacion sala = null;
-        java.sql.ResultSet rs;
+    public SalaDeReparacion buscarSalaDeReparacion(int pidTarea) {
 
-        String sql;
-        sql = "SELECT * "
-                + "FROM TSala "
-                + "WHERE id_sala = " + pidTarea + ";";
-        rs = Conector.getConector().ejecutarSQL(sql, true);
-        if (rs.next()){
-            sala = new SalaDeReparacion(
-                rs.getString("descripcionSala"),
-                rs.getString("ubicacionSala"),
-                rs.getInt("capacidadSala")
-            );
-        } else {
+        try {
+            SalaDeReparacion sala = null;
+            java.sql.ResultSet rs;
+
+            String sql;
+            sql = "SELECT * "
+                    + "FROM TSala "
+                    + "WHERE id_sala = " + pidTarea + ";";
+
+            rs = Conector.getConector().ejecutarSQL(sql, true);
+            return sala;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiSalaDeReparacion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+    }
+
+    public SalaDeReparacion buscarTodos() {
+
+        try {
+
+            SalaDeReparacion sala = null;
+            java.sql.ResultSet rs;
+            ArrayList<SalaDeReparacion> salas = new ArrayList<SalaDeReparacion>();
+            String sql;
+            sql = "SELECT * "
+                    + "FROM TSala ";
+
+            rs = Conector.getConector().ejecutarSQL(sql, true);
+
+            while (rs.next()) {
+                sala = new SalaDeReparacion(
+                        rs.getString("descripcionSala"),
+                        rs.getString("ubicacionSala"),
+                        rs.getInt("capacidadSala")
+                );
+                salas.add(sala);
+            }
+
             rs.close();
             return sala;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiSalaDeReparacion.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        
-        rs.close();
-        return sala;
-    }
-    
-    public SalaDeReparacion buscarTodos() throws
-            java.sql.SQLException, Exception {
-        SalaDeReparacion sala = null;
-        java.sql.ResultSet rs;
-        ArrayList<SalaDeReparacion> salas = new ArrayList<SalaDeReparacion>();
-        String sql;
-        sql = "SELECT * "
-                + "FROM TSala ";
-        rs = Conector.getConector().ejecutarSQL(sql, true);
-        while (rs.next()){
-            sala = new SalaDeReparacion(
-                rs.getString("descripcionSala"),
-                rs.getString("ubicacionSala"),
-                rs.getInt("capacidadSala")
-            );
-            salas.add(sala);
-        } 
-        
-        rs.close();
-        return sala;
+
     }
 
     /**
@@ -104,19 +112,22 @@ public class MultiSalaDeReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public void borrarSalaId(int pIdSala) throws
-            java.sql.SQLException, Exception {
-        java.sql.ResultSet rs;
-        String sql;
-        sql = "DELETE * "
-                + "FROM TSala"
-                + "WHERE id_sala='" + pIdSala + "';";
-        rs = Conector.getConector().ejecutarSQL(sql, true);
+    public void borrarSalaId(int pIdSala) {
         try {
+
+            java.sql.ResultSet rs;
+            String sql;
+            sql = "DELETE * "
+                    + "FROM TSala"
+                    + "WHERE id_sala='" + pIdSala + "';";
+
+            rs = Conector.getConector().ejecutarSQL(sql, true);
             Conector.getConector().ejecutarSQL(sql);
-        } catch (Exception e) {
-            throw new Exception("No hay salas con es id.");
+            rs.close();
+        } catch (Exception ex) {
+            Logger.getLogger(MultiSalaDeReparacion.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
 }

@@ -8,6 +8,8 @@ package capaLogica;
 import capaAccesoBD.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -25,84 +27,83 @@ public class MultiPieza {
      * @param pproblema
      * @param pidTarea
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public Pieza crear(String pcodigoPieza, String pmarca, String ppais,
-            String pdescripcion, int pcantidad, String pproblema, int pidTarea) throws
-            java.sql.SQLException, Exception {
+            String pdescripcion, int pcantidad, String pproblema, int pidTarea) {
 
-        Pieza pieza = null;
-        String sql;
-        sql = "INSERT INTO TPieza "
-                + "(codigoPieza, marca, pais, descripcion, cantidad, problema, id_tarea) "
-                + "VALUES ('" + pcodigoPieza + "', '" + pmarca + "', '" + ppais + "', "
-                + "'" + pdescripcion + "', " + pcantidad + ", '" + pproblema + "' ,"+ pidTarea + ");";
         try {
+            Pieza pieza = null;
+            String sql;
+            sql = "INSERT INTO TPieza "
+                    + "(codigoPieza, marca, pais, descripcion, cantidad, problema, id_tarea) "
+                    + "VALUES ('" + pcodigoPieza + "', '" + pmarca + "', '" + ppais + "', "
+                    + "'" + pdescripcion + "', " + pcantidad + ", '" + pproblema + "' ," + pidTarea + ");";
+
             Conector.getConector().ejecutarSQL(sql);
             pieza = new Pieza(pcodigoPieza, pmarca, ppais, pdescripcion,
                     pcantidad, pproblema, pidTarea);
 
-        } catch (Exception e) {
-            throw new Exception("No se puedo ingresar la pieza.");
+            return pieza;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiPieza.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        return pieza;
     }
 
     /**
      *
      * @param pidTarea
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
-    public ArrayList<Pieza>  buscarPiezaPorIdTarea(int pidTarea) throws
-            java.sql.SQLException, Exception {
-        Pieza pieza = null;
-        ArrayList<Pieza> piezas= new ArrayList<Pieza>();
-        java.sql.ResultSet rs;
-      
-        String sql;
-        sql = "SELECT * "
-                + "FROM TPieza "
-                + "WHERE id_tarea=" + pidTarea + ";";
-        rs = Conector.getConector().ejecutarSQL(sql, true);
-        if (rs.next()) {
-            pieza = new Pieza(
-                    rs.getString("codigoPieza"),
-                    rs.getString("marca"),
-                    rs.getString("pais"),
-                    rs.getString("descripcion"),
-                    rs.getInt("cantidad"),
-                    rs.getString("problema"),
-                    rs.getInt("id_tarea")
-            );
-            piezas.add(pieza);
-        } else {
-            throw new Exception("No hay piezas para una tarea que no existe.");
+    public ArrayList<Pieza> buscarPiezaPorIdTarea(int pidTarea) {
+
+        try {
+            Pieza pieza = null;
+            ArrayList<Pieza> piezas = new ArrayList<Pieza>();
+            java.sql.ResultSet rs;
+
+            String sql;
+            sql = "SELECT * "
+                    + "FROM TPieza "
+                    + "WHERE id_tarea=" + pidTarea + ";";
+            rs = Conector.getConector().ejecutarSQL(sql, true);
+            if (rs.next()) {
+                pieza = new Pieza(
+                        rs.getString("codigoPieza"),
+                        rs.getString("marca"),
+                        rs.getString("pais"),
+                        rs.getString("descripcion"),
+                        rs.getInt("cantidad"),
+                        rs.getString("problema"),
+                        rs.getInt("id_tarea")
+                );
+                piezas.add(pieza);
+            }
+            rs.close();
+            return piezas;
+        } catch (Exception ex) {
+            Logger.getLogger(MultiPieza.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
-        rs.close();
-        return piezas;
     }
 
     /**
      *
      * @param pidTarea
-     * @throws SQLException
-     * @throws Exception
      */
-    public void borrarPorTarea(int pidTarea) throws
-            java.sql.SQLException, Exception {
-       
-        java.sql.ResultSet rs;
-        String sql;
-        sql = "DELETE * "
-                + "FROM TPieza "
-                + "WHERE id_tarea='" + pidTarea + "';";
-            try {
+    public void borrarPorTarea(int pidTarea) {
+
+        try {
+            java.sql.ResultSet rs;
+            String sql;
+            sql = "DELETE * "
+                    + "FROM TPieza "
+                    + "WHERE id_tarea='" + pidTarea + "';";
+
             Conector.getConector().ejecutarSQL(sql);
-        } catch (Exception e) {
-            throw new Exception("Hoy piezas asociadas a esa tarea.");
+        } catch (Exception ex) {
+            Logger.getLogger(MultiPieza.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 }
