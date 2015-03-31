@@ -68,8 +68,31 @@ public class MultiSalaDeReparacion {
                 rs.getInt("capacidadSala")
             );
         } else {
-            throw new Exception ("La tarea no esta registrada.");
+            rs.close();
+            return sala;
         }
+        
+        rs.close();
+        return sala;
+    }
+    
+    public SalaDeReparacion buscarTodos() throws
+            java.sql.SQLException, Exception {
+        SalaDeReparacion sala = null;
+        java.sql.ResultSet rs;
+        ArrayList<SalaDeReparacion> salas = new ArrayList<SalaDeReparacion>();
+        String sql;
+        sql = "SELECT * "
+                + "FROM TSala ";
+        rs = Conector.getConector().ejecutarSQL(sql, true);
+        while (rs.next()){
+            sala = new SalaDeReparacion(
+                rs.getString("descripcionSala"),
+                rs.getString("ubicacionSala"),
+                rs.getInt("capacidadSala")
+            );
+            salas.add(sala);
+        } 
         
         rs.close();
         return sala;

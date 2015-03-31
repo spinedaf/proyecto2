@@ -153,6 +153,31 @@ public class MultiTarea {
         return tareas;    
     }
     
+    public ArrayList<Tarea> buscarTodos()throws java.sql.SQLException,Exception{
+	java.sql.ResultSet rs;
+        String sql;
+        Tarea tarea=null;
+        ArrayList<Tarea> tareas= new ArrayList<Tarea>();
+        sql="SELECT * "+
+        "FROM TTarea ";
+        Conector.getConector().ejecutarSQL(sql);
+        rs = Conector.getConector().ejecutarSQL(sql,true);
+        while (rs.next()){
+            tarea = new Tarea(
+                rs.getString("nombreTarea"),
+                rs.getString("descripcionTarea"),
+                rs.getDate("fechaCreacionTarea"),
+                rs.getInt("duracionRealTarea"),
+                rs.getInt("duracionPropuestaTarea"),
+                rs.getString("codigo_reparacion"),
+                rs.getInt("id_sala")
+                );
+            tareas.add(tarea);
+        }
+        rs.close();
+        return tareas;    
+    }
+    
     /**
      *
      * @param ptarea

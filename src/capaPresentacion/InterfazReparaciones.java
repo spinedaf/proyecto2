@@ -30,10 +30,14 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         modeloListaVehiculos = new DefaultListModel();
         this.jlVehiculos.setModel(modeloListaVehiculos);
         gestor.addObserver(this);
+        
+        this.setJlStatus("");
+        
     }
     
     /**
      * Creates new form InterfazReparaciones
+     * @param lista
      */
     public void actualizarVistaVehiculos(ArrayList<String> lista)
     {
@@ -99,16 +103,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jLabel4.setText("Apellido:");
 
         jLabel5.setText("Estado:");
-
-        jtfPlaca.setText("jTextField1");
-
-        jtfModelo.setText("jTextField2");
-
-        jtfNombreProp.setText("jTextField3");
-
-        jtfApellidoProp.setText("jTextField4");
-
-        jtfEstadoVehi.setText("jTextField5");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -326,7 +320,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     }
 
     /**
-     * @param jlStatus the jlStatus to set
+     * @param mensaje
      */
     public void setJlStatus(String mensaje) {
         this.jlStatus.setText(mensaje);

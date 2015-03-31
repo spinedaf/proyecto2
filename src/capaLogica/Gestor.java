@@ -5,6 +5,7 @@
  */
 package capaLogica;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -16,20 +17,40 @@ public class Gestor extends Observable{
     
     private String mensaje;
 
+    /**
+     *
+     * @return
+     */
     public String getMensaje() {
         return mensaje;
     }
 
+    /**
+     *
+     * @param mensaje
+     */
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
         this.setChanged();
         this.notifyObservers(mensaje);
     }
     
+    /**
+     *
+     */
     public Gestor(){
         this.mensaje = "";
     }
     
+    /**
+     *
+     * @param pplaca
+     * @param pmodelo
+     * @param pnombrePropietario
+     * @param papellidoPropietario
+     * @param pestado
+     * @throws Exception
+     */
     public void agregarVehiculo(String pplaca, String pmodelo, 
             String pnombrePropietario, String papellidoPropietario, String pestado) throws Exception{
         Vehiculo instance; 
@@ -41,6 +62,12 @@ public class Gestor extends Observable{
         
     }
     
+    /**
+     *
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
     public ArrayList<String> obtenerListaVehiculos()throws 
             java.sql.SQLException,Exception
     {

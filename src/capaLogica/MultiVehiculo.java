@@ -78,7 +78,13 @@ public class MultiVehiculo {
         return vehiculo;
     }
 
-        public ArrayList<Vehiculo> buscarTodos() throws
+    /**
+     *
+     * @return
+     * @throws SQLException
+     * @throws Exception
+     */
+    public ArrayList<Vehiculo> buscarTodos() throws
             java.sql.SQLException, Exception {
         Vehiculo vehiculo = null;
         java.sql.ResultSet rs;
