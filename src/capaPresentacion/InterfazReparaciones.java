@@ -9,11 +9,11 @@ import capaLogica.*;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 /**
@@ -26,6 +26,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private DefaultListModel<String> modeloListaVehiculos;
     private DefaultListModel<String> modeloListaOperarios;
     private DefaultListModel<String> modeloListaPiezas;
+    private DefaultComboBoxModel<String> modeloCBVehiculos;
 
     /**
      * Creates new form InterfazReparaciones
@@ -40,22 +41,33 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         gestor = new Gestor();
         modeloListaVehiculos = new DefaultListModel();
         modeloListaOperarios = new DefaultListModel();
-        modeloListaPiezas = new DefaultListModel();
+        modeloListaPiezas = new DefaultListModel<String>();
+        modeloCBVehiculos = new DefaultComboBoxModel<String>();
+        
         this.jlVehiculos.setModel(modeloListaVehiculos);
         this.jlOperarios.setModel(modeloListaOperarios);
         this.jlPieza.setModel(modeloListaPiezas);
-
+        this.jcbVehiculoReparacion.setModel(modeloCBVehiculos);
+        
         gestor.addObserver(this);
 
         this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
         this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
+        this.actualizarVistaCB(modeloCBVehiculos, gestor.obtenerListaVehiculos());
 
         this.setJlStatus("");
     }
 
     public void actualizarVistaLista(DefaultListModel modelo, String[] lista) {
         modelo.clear();
+        for (String linea : lista) {
+            modelo.addElement(linea);
+        }
+    }
+    
+    public void actualizarVistaCB(DefaultComboBoxModel modelo, String[] lista) {
+        modelo.removeAllElements();
         for (String linea : lista) {
             modelo.addElement(linea);
         }
@@ -121,7 +133,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jlIdTarea = new javax.swing.JLabel();
         jtfTareaIDPieza = new javax.swing.JFormattedTextField();
         jPanel4 = new javax.swing.JPanel();
-        jlStatus = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jlTareaNombre = new javax.swing.JLabel();
         jlTareaDescripcion = new javax.swing.JLabel();
@@ -138,6 +149,16 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jScrollPane4 = new javax.swing.JScrollPane();
         jlTareas = new javax.swing.JList();
         jbCrearTarea = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jcbVehiculoReparacion = new javax.swing.JComboBox();
+        jtfFechaReparacion = new javax.swing.JFormattedTextField();
+        jtfNombreReparacion = new javax.swing.JTextField();
+        jtfCodigoReparacion = new javax.swing.JTextField();
+        jlStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -459,22 +480,15 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jPanel4.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jlStatus.setText("jLabel6");
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jlStatus)
-                .addContainerGap(897, Short.MAX_VALUE))
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addComponent(jlStatus))
+            .addGap(0, 349, Short.MAX_VALUE)
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarea"));
@@ -586,23 +600,90 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                 .addComponent(jbCrearTarea))
         );
 
+        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Reparacion"));
+
+        jLabel13.setText("Codigo:");
+
+        jLabel14.setText("Nombre:");
+
+        jLabel15.setText("Fecha:");
+
+        jLabel16.setText("Vehiculo:");
+
+        jcbVehiculoReparacion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jtfFechaReparacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+
+        jtfNombreReparacion.setText("jTextField1");
+
+        jtfCodigoReparacion.setText("jTextField2");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jcbVehiculoReparacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jtfFechaReparacion)
+                    .addComponent(jtfNombreReparacion, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                    .addComponent(jtfCodigoReparacion))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jtfCodigoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jtfNombreReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jtfFechaReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(jcbVehiculoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+
+        jlStatus.setText("jLabel6");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jlStatus))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -620,8 +701,12 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(324, 324, 324))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlStatus))))))
         );
 
         pack();
@@ -746,6 +831,10 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -760,6 +849,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -768,6 +858,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JButton jbCrearPieza;
     private javax.swing.JButton jbCrearTarea;
     private javax.swing.JButton jbCrearVehiculo;
+    private javax.swing.JComboBox jcbVehiculoReparacion;
     private javax.swing.JLabel jlCanPieza;
     private javax.swing.JLabel jlCodigoPieza;
     private javax.swing.JLabel jlDesPieza;
@@ -790,14 +881,17 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JTextField jtfCantidadPieza;
     private javax.swing.JTextField jtfCargoOp;
     private javax.swing.JTextField jtfCodigoPieza;
+    private javax.swing.JTextField jtfCodigoReparacion;
     private javax.swing.JTextField jtfDescripcionPieza;
     private javax.swing.JTextField jtfDireccionOp;
     private javax.swing.JTextField jtfEstadoVehi;
+    private javax.swing.JFormattedTextField jtfFechaReparacion;
     private javax.swing.JFormattedTextField jtfIDOperario;
     private javax.swing.JTextField jtfMarcaPieza;
     private javax.swing.JTextField jtfModelo;
     private javax.swing.JTextField jtfNombreOperario;
     private javax.swing.JTextField jtfNombreProp;
+    private javax.swing.JTextField jtfNombreReparacion;
     private javax.swing.JTextField jtfPaisPieza;
     private javax.swing.JTextField jtfPlaca;
     private javax.swing.JTextField jtfProblemaPieza;
