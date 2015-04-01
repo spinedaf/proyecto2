@@ -120,7 +120,8 @@ public class Gestor extends Observable {
         for (int i = 0; i < lista.length; i++) {
             lista[i] = listaVehiculos.get(i).getPlaca() + ","
                     + listaVehiculos.get(i).getModelo() + ","
-                    + listaVehiculos.get(i).getNombrePropietario();
+                    + listaVehiculos.get(i).getNombrePropietario() + ","
+                    + listaVehiculos.get(i).getEstado()+ ",";
         }
 
         return lista;
