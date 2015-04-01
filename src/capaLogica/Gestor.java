@@ -63,6 +63,17 @@ public class Gestor extends Observable {
         }
 
     }
+    
+    public void agregarReparacion(String codigo, String nombre, String tipo,
+            Date fecha, String placa) {
+        Reparacion instance;
+
+        if (new MultiReparacion().buscar(codigo) == null) {
+            instance = new MultiReparacion().crear(codigo, nombre, tipo, fecha, placa);
+            this.setMensaje("Vehiculo Registrado");
+        }
+
+    }
 
     public void agregarOperario(String pid, String pnombre, String papellido, String ptelefono,
             String pdireccion, int panios, String pcargo) {
@@ -115,6 +126,16 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    public String[] obtenerPlacaVehiculos() {
+        ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
+        String lista[] = new String[listaVehiculos.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaVehiculos.get(i).getPlaca();
+        }
+
+        return lista;
+    }
+    
     public String[] obtenerListaSalas() {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];
