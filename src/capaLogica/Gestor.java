@@ -51,7 +51,6 @@ public class Gestor extends Observable {
      * @param pnombrePropietario
      * @param papellidoPropietario
      * @param pestado
-     * @throws Exception
      */
     public void agregarVehiculo(String pplaca, String pmodelo,
             String pnombrePropietario, String papellidoPropietario, String pestado) {
@@ -64,6 +63,14 @@ public class Gestor extends Observable {
 
     }
 
+    /**
+     *
+     * @param codigo
+     * @param nombre
+     * @param tipo
+     * @param fecha
+     * @param placa
+     */
     public void agregarReparacion(String codigo, String nombre, String tipo,
             Date fecha, String placa) {
         Reparacion instance;
@@ -75,6 +82,16 @@ public class Gestor extends Observable {
 
     }
 
+    /**
+     *
+     * @param pid
+     * @param pnombre
+     * @param papellido
+     * @param ptelefono
+     * @param pdireccion
+     * @param panios
+     * @param pcargo
+     */
     public void agregarOperario(String pid, String pnombre, String papellido, String ptelefono,
             String pdireccion, int panios, String pcargo) {
         Operario instance = null;
@@ -87,6 +104,12 @@ public class Gestor extends Observable {
         }
     }
 
+    /**
+     *
+     * @param pdescripcion
+     * @param pubicacion
+     * @param capacidad
+     */
     public void agregarSala(String pdescripcion, String pubicacion, int capacidad) {
         SalaDeReparacion instance = null;
         MultiSalaDeReparacion multi = new MultiSalaDeReparacion();
@@ -97,6 +120,16 @@ public class Gestor extends Observable {
         }
     }
 
+    /**
+     *
+     * @param pnombre
+     * @param pdescripcion
+     * @param pfechaCreacion
+     * @param pduracionReal
+     * @param pduracionPropuesta
+     * @param pcodigoReparacion
+     * @param pDescripcionSala
+     */
     public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion,
             int pduracionReal, int pduracionPropuesta, String pcodigoReparacion,
             String pDescripcionSala) {
@@ -113,8 +146,7 @@ public class Gestor extends Observable {
 
     /**
      *
-     * @return @throws SQLException
-     * @throws Exception
+     * @return
      */
     public String[] obtenerListaVehiculos() {
         ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
@@ -129,6 +161,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerListaSalas() {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];
@@ -141,6 +177,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerPlacasVehiculo() {
         ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
         String lista[] = new String[listaVehiculos.size()];
@@ -151,6 +191,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerListaOperarios() {
         ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
         String lista[] = new String[listaOperarios.size()];
@@ -163,6 +207,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerNombreOperarios() {
         ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
         String lista[] = new String[listaOperarios.size()];
@@ -173,6 +221,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerListaReparaciones() {
         ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarTodos();
         String lista[] = new String[listaReparaciones.size()];
@@ -185,6 +237,11 @@ public class Gestor extends Observable {
         return lista;
     }
     
+    /**
+     *
+     * @param pplaca
+     * @return
+     */
     public String[] obtenerListaTrabajosPorVehiculo(String pplaca)
     {
         ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarPorVehiculo(pplaca);
@@ -196,6 +253,16 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @param pcodigoPieza
+     * @param pmarca
+     * @param ppais
+     * @param pdescripcion
+     * @param pcantidad
+     * @param pproblema
+     * @param pNombreTarea
+     */
     public void AgregarPieza(String pcodigoPieza, String pmarca, String ppais,
             String pdescripcion, int pcantidad, String pproblema, String pNombreTarea) {
 
@@ -211,6 +278,11 @@ public class Gestor extends Observable {
 
     }
 
+    /**
+     *
+     * @param poperarioID
+     * @param pdescripcion
+     */
     public void agregarTareaOperario(String poperarioID, String pdescripcion) {
 
         Operario instance = new MultiOperario().buscar(poperarioID);
@@ -221,6 +293,10 @@ public class Gestor extends Observable {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerListaPiezas() {
         ArrayList<Pieza> listaPiezas = (new MultiPieza()).buscarTodos();
         String lista[] = new String[listaPiezas.size()];
@@ -236,6 +312,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerListaTareas() {
         ArrayList<Tarea> listaPiezas = (new MultiTarea()).buscarTodos();
         String lista[] = new String[listaPiezas.size()];
@@ -251,6 +331,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerNombresListaTareas() {
         ArrayList<Tarea> listaPiezas = (new MultiTarea()).buscarTodos();
         String lista[] = new String[listaPiezas.size()];
@@ -261,6 +345,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerNombresListaReparaciones() {
         ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarTodos();
         String lista[] = new String[listaReparaciones.size()];
@@ -271,6 +359,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerNombresListaSalasDeReparacion() {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];
@@ -281,6 +373,10 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] obtenerCedulaOperarios() {
         ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
         String lista[] = new String[listaOperarios.size()];

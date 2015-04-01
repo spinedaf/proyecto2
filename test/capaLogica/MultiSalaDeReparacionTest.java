@@ -88,11 +88,11 @@ public class MultiSalaDeReparacionTest {
     }
 
     /**
-     * Test of borrarSalaId method, of class MultiSalaDeReparacion.
+     * Test of borrar method, of class MultiSalaDeReparacion.
      * @throws java.lang.Exception
      */
     @Test
-    public void testBorrarSalaId() throws Exception {
+    public void testBorrar() throws Exception {
         System.out.println("borrarSalaId");
         int pIdSala = 9;
         MultiSalaDeReparacion instance = new MultiSalaDeReparacion();

@@ -199,8 +199,17 @@ public class Reparacion {
         this.placaVehiculo = placaVehiculo;
     }
     
-    
-     public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion, 
+    /**
+     *
+     * @param pnombre
+     * @param pdescripcion
+     * @param pfechaCreacion
+     * @param pduracionReal
+     * @param pduracionPropuesta
+     * @param pcodigoReparacion
+     * @param pDescripcionSala
+     */
+    public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion, 
             int pduracionReal, int pduracionPropuesta, String pcodigoReparacion, 
             String pDescripcionSala) {
         

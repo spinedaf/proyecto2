@@ -25,7 +25,7 @@ public class MultiPieza {
      * @param pdescripcion
      * @param pcantidad
      * @param pproblema
-     * @param pidTarea
+     * @param pNombreTarea
      * @return
      */
     public Pieza crear(String pcodigoPieza, String pmarca, String ppais,
@@ -52,7 +52,7 @@ public class MultiPieza {
 
     /**
      *
-     * @param pidTarea
+     * @param pNombreTarea
      * @return
      */
     public ArrayList<Pieza> buscarPiezaPorIdTarea(String pNombreTarea) {
@@ -67,7 +67,7 @@ public class MultiPieza {
                     + "FROM TPieza "
                     + "WHERE nombreTarea='" + pNombreTarea + "';";
             rs = Conector.getConector().ejecutarSQL(sql, true);
-            if (rs.next()) {
+            while (rs.next()) {
                 pieza = new Pieza(
                         rs.getString("codigoPieza"),
                         rs.getString("marca"),
@@ -87,6 +87,10 @@ public class MultiPieza {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Pieza> buscarTodos() {
 
         try {
@@ -120,7 +124,7 @@ public class MultiPieza {
 
     /**
      *
-     * @param pidTarea
+     * @param pNombreTarea
      */
     public void borrarPorTarea(String pNombreTarea) {
 

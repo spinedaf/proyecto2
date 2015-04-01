@@ -105,6 +105,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.setJlStatus("");
     }
 
+    /**
+     *
+     * @param modelo
+     * @param lista
+     */
     public void actualizarVistaLista(DefaultListModel modelo, String[] lista) {
         modelo.clear();
         for (String linea : lista) {
@@ -112,6 +117,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         }
     }
 
+    /**
+     *
+     * @param modelo
+     * @param lista
+     */
     public void actualizarVistaCB(DefaultComboBoxModel modelo, String[] lista) {
         modelo.removeAllElements();
         for (String linea : lista) {
@@ -119,6 +129,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         }
     }
 
+    /**
+     *
+     * @param modelo
+     * @param lista
+     */
     public void actualizarVistaTabla(DefaultTableModel modelo, String[] lista) {
         int tamano = modelo.getRowCount();
         for (int i = tamano - 1; i > 0; i--) {
@@ -131,6 +146,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         }
     }
 
+    /**
+     *
+     */
     public void actualizarVistasCB() {
         actualizarVistaCB(this.modeloCBTareas, gestor.obtenerNombresListaTareas());
         actualizarVistaCB(this.modeloCBReparaciones, gestor.obtenerNombresListaReparaciones());
@@ -1286,11 +1304,20 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.jlStatus.setText(mensaje);
     }
 
+    /**
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         this.setJlStatus((String) arg);
     }
 
+    /**
+     *
+     * @param e
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if(e.getSource() == this.jtVehiculos.getSelectionModel())

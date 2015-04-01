@@ -25,8 +25,6 @@ public class MultiSalaDeReparacion {
      * @param pubicacion
      * @param pcapacidad
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public SalaDeReparacion crear(String pdescripcion, String pubicacion, int pcapacidad) {
 
@@ -50,10 +48,8 @@ public class MultiSalaDeReparacion {
 
     /**
      *
-     * @param pidTarea
+     * @param pdescripcionSala
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public SalaDeReparacion buscarSalaDeReparacion(String pdescripcionSala) {
 
@@ -85,6 +81,10 @@ public class MultiSalaDeReparacion {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<SalaDeReparacion> buscarTodos() {
 
         try {
@@ -118,18 +118,16 @@ public class MultiSalaDeReparacion {
 
     /**
      *
-     * @param pIdSala
-     * @throws SQLException
-     * @throws Exception
+     * @param pdescripcion
      */
-    public void borrarSalaId(int pIdSala) {
+    public void borrar(String pdescripcion) {
         try {
 
             java.sql.ResultSet rs;
             String sql;
             sql = "DELETE * "
                     + "FROM TSala"
-                    + "WHERE id_sala='" + pIdSala + "';";
+                    + "WHERE id_sala='" + pdescripcion + "';";
 
             rs = Conector.getConector().ejecutarSQL(sql, true);
             Conector.getConector().ejecutarSQL(sql);

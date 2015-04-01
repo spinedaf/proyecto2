@@ -27,7 +27,6 @@ public class MultiReparacion {
      * @param pfechaAsignacion
      * @param pplacaVehiculo
      * @return
-     * @throws SQLException
      * @throws Exception
      */
     public Reparacion crear(String pcodigo, String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo){
@@ -57,7 +56,6 @@ public class MultiReparacion {
      * @param codigo
      * @return
      * @throws SQLException
-     * @throws Exception
      */
     public Reparacion buscar(String codigo){
         Reparacion reparacion = null;
@@ -153,6 +151,10 @@ public class MultiReparacion {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Reparacion> buscarTodos(){
 	java.sql.ResultSet rs;
         String sql;
@@ -185,16 +187,16 @@ public class MultiReparacion {
     
     /**
      *
+     * @param pcodigo
      * @param preparacion
      * @throws SQLException
-     * @throws Exception
      */
-    public  void borrar(Reparacion preparacion){
+    public  void borrar(String pcodigo){
          
         java.sql.ResultSet rs;
         String sql;
         sql= "DELETE FROM TReparacion "+
-        "WHERE codigoReparacion='"+preparacion.getCodigo()+"';";
+        "WHERE codigoReparacion='"+pcodigo+"';";
         try {
             Conector.getConector().ejecutarSQL(sql);
         }

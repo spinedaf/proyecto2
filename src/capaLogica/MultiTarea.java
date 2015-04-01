@@ -28,10 +28,8 @@ public class MultiTarea {
      * @param duracionReal
      * @param duracionPropuesta
      * @param codigoReparacion
-     * @param idSala
+     * @param descripcionSala
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public Tarea crear(String pnombre, String pdescripcion, Date pFecha, 
             int duracionReal, int duracionPropuesta, 
@@ -57,6 +55,11 @@ public class MultiTarea {
         }
     }
     
+    /**
+     *
+     * @param poperarioID
+     * @param ptareaDescripcion
+     */
     public void agregarOperario(String poperarioID, String ptareaDescripcion){
         try {
             String sql;
@@ -72,8 +75,6 @@ public class MultiTarea {
      *
      * @param pnombre
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public Tarea buscar(String pnombre){
         Tarea tarea = null;
@@ -134,19 +135,17 @@ public class MultiTarea {
     
     /**
      *
-     * @param codigo
+     * @param codigoReparacion
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
-    public ArrayList<Tarea> buscarPorReparacion(String codigo){
+    public ArrayList<Tarea> buscarPorReparacion(String codigoReparacion){
 	java.sql.ResultSet rs;
         String sql;
         Tarea tarea=null;
         ArrayList<Tarea> tareas= new ArrayList<Tarea>();
         sql="SELECT * "+
         "FROM TTarea "+
-        "WHERE codigo_reparacion='"+codigo+"';";
+        "WHERE codigo_reparacion='"+codigoReparacion+"';";
         try {
             Conector.getConector().ejecutarSQL(sql);
             rs = Conector.getConector().ejecutarSQL(sql,true);
@@ -172,10 +171,8 @@ public class MultiTarea {
     
     /**
      *
-     * @param idSala
+     * @param pdescripcionSala
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public ArrayList<Tarea> buscarPorSala(String pdescripcionSala){
 	java.sql.ResultSet rs;
@@ -208,6 +205,10 @@ public class MultiTarea {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Tarea> buscarTodos(){
 	java.sql.ResultSet rs;
         String sql;
@@ -241,14 +242,12 @@ public class MultiTarea {
     /**
      *
      * @param ptarea
-     * @throws SQLException
-     * @throws Exception
      */
-    public  void borrar(Tarea ptarea){
+    public  void borrar(String ptarea){
         java.sql.ResultSet rs;
         String sql;
         sql= "DELETE FROM TTarea "+
-        "WHERE nombreTarea='"+ptarea.getNombre()+"';";
+        "WHERE nombreTarea='"+ptarea+"';";
         try {
             Conector.getConector().ejecutarSQL(sql);
         }

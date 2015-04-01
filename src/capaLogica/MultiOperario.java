@@ -30,8 +30,6 @@ public class MultiOperario {
      * @param anios
      * @param cargo
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public Operario crear(String id, String nombre, String apellido, String telefono,
             String direccion, Date pfecha, int anios, String cargo){
@@ -62,7 +60,6 @@ public class MultiOperario {
      *
      * @param pcedula
      * @return
-     * @throws SQLException
      * @throws Exception
      */
     public Operario buscar(String pcedula){
@@ -98,7 +95,6 @@ public class MultiOperario {
      *
      * @param pnombreTarea
      * @return
-     * @throws SQLException
      * @throws Exception
      */
     public ArrayList<Operario> buscarPorTarea(String pnombreTarea){
@@ -134,6 +130,10 @@ public class MultiOperario {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public ArrayList<Operario> buscarTodos(){
         java.sql.ResultSet rs;
         String sql;
@@ -167,15 +167,15 @@ public class MultiOperario {
     
     /**
      *
-     * @param poperario
+     * @param pcedula
      * @throws SQLException
      * @throws Exception
      */
-    public  void borrar(Operario poperario){
+    public  void borrar(String pcedula){
             java.sql.ResultSet rs;
             String sql;
             sql= "DELETE FROM TOperario "+
-            "WHERE cedulaOperario='"+poperario.getId()+"';";
+            "WHERE cedulaOperario='"+pcedula+"';";
             try {
                 Conector.getConector().ejecutarSQL(sql);
             }

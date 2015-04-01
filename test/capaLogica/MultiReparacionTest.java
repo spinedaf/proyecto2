@@ -172,7 +172,7 @@ public class MultiReparacionTest {
         MultiReparacion instance = new MultiReparacion();
         
         Reparacion repa = instance.crear(pcodigo, pnombre, tipo, pfechaAsignacion, pplacaVehiculo);
-        instance.borrar(repa);
+        instance.borrar(pcodigo);
         
         Reparacion resultado = null;
         try{

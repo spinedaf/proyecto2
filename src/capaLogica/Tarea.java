@@ -35,7 +35,7 @@ public class Tarea {
      * @param pduracionReal
      * @param pduracionPropuesta
      * @param pcodigoReparacion
-     * @param pidSala
+     * @param pDescripcionSala
      */
     public Tarea(String pnombre, String pdescripcion, Date pfechaCreacion, int pduracionReal, int pduracionPropuesta, 
             String pcodigoReparacion, String pDescripcionSala)
@@ -151,6 +151,7 @@ public class Tarea {
     }
 
     /**
+     * @param pdescripcionSala
      * @param idSala the descripcionSala to set
      */
     public void setDescripcionSala(String pdescripcionSala) {

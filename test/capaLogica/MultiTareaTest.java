@@ -186,7 +186,7 @@ public class MultiTareaTest {
         
         MultiTarea instance = new MultiTarea();
         Tarea tarea = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, codigoRepa, idSala );
-        instance.borrar(tarea);
+        instance.borrar(pnombre);
         
         Tarea resultado = null;
         try{

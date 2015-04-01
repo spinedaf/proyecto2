@@ -25,8 +25,6 @@ public class MultiVehiculo {
      * @param papellidoPropietario
      * @param pestado
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public Vehiculo crear(String pplaca, String pmodelo, String pnombrePropietario,
             String papellidoPropietario, String pestado) {
@@ -54,8 +52,6 @@ public class MultiVehiculo {
      *
      * @param pplaca
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public Vehiculo buscarPorPlaca(String pplaca) {
 
@@ -90,8 +86,7 @@ public class MultiVehiculo {
 
     /**
      *
-     * @return @throws SQLException
-     * @throws Exception
+     * @return
      */
     public ArrayList<Vehiculo> buscarTodos() {
 
@@ -127,8 +122,6 @@ public class MultiVehiculo {
     /**
      *
      * @param pplaca
-     * @throws SQLException
-     * @throws Exception
      */
     public void borrarPorPlaca(String pplaca) {
         try {

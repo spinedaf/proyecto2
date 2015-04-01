@@ -139,7 +139,7 @@ public class MultiOperarioTest {
         MultiOperario instance = new MultiOperario();
         Operario poperario = instance.crear(id, nombre, apellido, telefono, direccion, new java.sql.Date(Calendar.getInstance().getTimeInMillis())
                 , anios, cargo);
-        instance.borrar(poperario);
+        instance.borrar(id);
         
         Operario operarioBorrado = null;
         
