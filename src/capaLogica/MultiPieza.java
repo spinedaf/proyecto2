@@ -29,19 +29,19 @@ public class MultiPieza {
      * @return
      */
     public Pieza crear(String pcodigoPieza, String pmarca, String ppais,
-            String pdescripcion, int pcantidad, String pproblema, int pidTarea) {
+            String pdescripcion, int pcantidad, String pproblema, String pNombreTarea) {
 
         try {
             Pieza pieza = null;
             String sql;
             sql = "INSERT INTO TPieza "
-                    + "(codigoPieza, marca, pais, descripcion, cantidad, problema, id_tarea) "
+                    + "(codigoPieza, marca, pais, descripcion, cantidad, problema, nombreTarea) "
                     + "VALUES ('" + pcodigoPieza + "', '" + pmarca + "', '" + ppais + "', "
-                    + "'" + pdescripcion + "', " + pcantidad + ", '" + pproblema + "' ," + pidTarea + ");";
+                    + "'" + pdescripcion + "', " + pcantidad + ", '" + pproblema + "' ," + pNombreTarea + ");";
 
             Conector.getConector().ejecutarSQL(sql);
             pieza = new Pieza(pcodigoPieza, pmarca, ppais, pdescripcion,
-                    pcantidad, pproblema, pidTarea);
+                    pcantidad, pproblema, pNombreTarea);
 
             return pieza;
         } catch (Exception ex) {
@@ -55,7 +55,7 @@ public class MultiPieza {
      * @param pidTarea
      * @return
      */
-    public ArrayList<Pieza> buscarPiezaPorIdTarea(int pidTarea) {
+    public ArrayList<Pieza> buscarPiezaPorIdTarea(String pNombreTarea) {
 
         try {
             Pieza pieza = null;
@@ -65,7 +65,7 @@ public class MultiPieza {
             String sql;
             sql = "SELECT * "
                     + "FROM TPieza "
-                    + "WHERE id_tarea=" + pidTarea + ";";
+                    + "WHERE nombreTarea=" + pNombreTarea + ";";
             rs = Conector.getConector().ejecutarSQL(sql, true);
             if (rs.next()) {
                 pieza = new Pieza(
@@ -75,7 +75,7 @@ public class MultiPieza {
                         rs.getString("descripcion"),
                         rs.getInt("cantidad"),
                         rs.getString("problema"),
-                        rs.getInt("id_tarea")
+                        rs.getString("nombreTarea")
                 );
                 piezas.add(pieza);
             }
@@ -106,7 +106,7 @@ public class MultiPieza {
                         rs.getString("descripcion"),
                         rs.getInt("cantidad"),
                         rs.getString("problema"),
-                        rs.getInt("id_tarea")
+                        rs.getString("nombreTarea")
                 );
                 piezas.add(pieza);
             }
@@ -122,14 +122,14 @@ public class MultiPieza {
      *
      * @param pidTarea
      */
-    public void borrarPorTarea(int pidTarea) {
+    public void borrarPorTarea(String pNombreTarea) {
 
         try {
             java.sql.ResultSet rs;
             String sql;
             sql = "DELETE * "
                     + "FROM TPieza "
-                    + "WHERE id_tarea='" + pidTarea + "';";
+                    + "WHERE id_tarea='" + pNombreTarea + "';";
 
             Conector.getConector().ejecutarSQL(sql);
         } catch (Exception ex) {

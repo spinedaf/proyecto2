@@ -105,13 +105,13 @@ public class Gestor extends Observable {
     }
 
     public void AgregarPieza(String pcodigoPieza, String pmarca, String ppais,
-            String pdescripcion, int pcantidad, String pproblema, int pidTarea) {
+            String pdescripcion, int pcantidad, String pproblema, String pNombreTarea) {
 
         Pieza instance;
 
-        if (new MultiTarea().buscar(pidTarea) != null) {
+        if (new MultiTarea().buscar(pNombreTarea) != null) {
             instance = new MultiPieza().crear(pcodigoPieza, pmarca, ppais,
-                    pdescripcion, pcantidad, pproblema, pidTarea);
+                    pdescripcion, pcantidad, pproblema, pNombreTarea);
             this.setMensaje("Nueva Pieza Registrada");
         } else {
             this.setMensaje("No se pudo registrar la pieza");
@@ -124,14 +124,58 @@ public class Gestor extends Observable {
         String lista[] = new String[listaPiezas.size()];
         for (int i = 0; i < lista.length; i++) {
             lista[i] = listaPiezas.get(i).getCodigo() + "   "
-                    + listaPiezas.get(i).getMarca()+ "   "
+                    + listaPiezas.get(i).getMarca() + "   "
                     + listaPiezas.get(i).getPaisFabricacion() + " "
-                    + listaPiezas.get(i).getDescripcionProblema()+ " "
-                    + listaPiezas.get(i).getNumeroUnidadesCambiadas()+ " "
-                    + listaPiezas.get(i).getIdTareaUsa();
+                    + listaPiezas.get(i).getDescripcionProblema() + " "
+                    + listaPiezas.get(i).getNumeroUnidadesCambiadas() + " "
+                    + listaPiezas.get(i).getTareaUsa();
         }
 
         return lista;
     }
 
+    public String[] obtenerListaTareas() {
+        ArrayList<Tarea> listaPiezas = (new MultiTarea()).buscarTodos();
+        String lista[] = new String[listaPiezas.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaPiezas.get(i).getNombre() + "   "
+                    + listaPiezas.get(i).getDescripcion() + "   "
+                    + listaPiezas.get(i).getFechaCreacion() + " "
+                    + listaPiezas.get(i).getDuracionPropuesta() + " "
+                    + listaPiezas.get(i).getDuracionReal() + " "
+                    + listaPiezas.get(i).getCodigoReparacion();
+        }
+
+        return lista;
+    }
+
+    public String[] obtenerNombresListaTareas() {
+        ArrayList<Tarea> listaPiezas = (new MultiTarea()).buscarTodos();
+        String lista[] = new String[listaPiezas.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaPiezas.get(i).getNombre();
+        }
+
+        return lista;
+    }
+
+    public String[] obtenerNombresListaReparaciones() {
+        ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarTodos();
+        String lista[] = new String[listaReparaciones.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaReparaciones.get(i).getCodigo();
+        }
+
+        return lista;
+    }
+
+      public String[] obtenerNombresListaSalasDeReparacion() {
+        ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
+        String lista[] = new String[listaSalas.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaSalas.get(i).getDescripcion();
+        }
+
+        return lista;
+    }
 }

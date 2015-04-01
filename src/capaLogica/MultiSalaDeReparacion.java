@@ -55,7 +55,7 @@ public class MultiSalaDeReparacion {
      * @throws SQLException
      * @throws Exception
      */
-    public SalaDeReparacion buscarSalaDeReparacion(int pidTarea) {
+    public SalaDeReparacion buscarSalaDeReparacion(String pdescripcionSala) {
 
         try {
             SalaDeReparacion sala = null;
@@ -64,7 +64,7 @@ public class MultiSalaDeReparacion {
             String sql;
             sql = "SELECT * "
                     + "FROM TSala "
-                    + "WHERE id_sala = " + pidTarea + ";";
+                    + "WHERE descripcionSala = " + pdescripcionSala + ";";
 
             rs = Conector.getConector().ejecutarSQL(sql, true);
             
@@ -85,7 +85,7 @@ public class MultiSalaDeReparacion {
 
     }
 
-    public SalaDeReparacion buscarTodos() {
+    public ArrayList<SalaDeReparacion> buscarTodos() {
 
         try {
 
@@ -108,7 +108,7 @@ public class MultiSalaDeReparacion {
             }
 
             rs.close();
-            return sala;
+            return salas;
         } catch (Exception ex) {
             Logger.getLogger(MultiSalaDeReparacion.class.getName()).log(Level.SEVERE, null, ex);
             return null;

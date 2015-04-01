@@ -66,7 +66,7 @@ public class MultiPiezaTest {
         String pdescripcion = "Algo";
         int pcantidad = 10;
         String pproblema = "Todo";
-        int pidTarea = 9;
+        String pidTarea = "UnaTarea";
         MultiPieza instance = new MultiPieza();
         Pieza expResult = new Pieza(pcodigoPieza, pmarca, ppais, pdescripcion, pcantidad, pproblema, pidTarea);
         Pieza result = instance.crear(pcodigoPieza, pmarca, ppais, pdescripcion, pcantidad, pproblema, pidTarea);
@@ -82,7 +82,7 @@ public class MultiPiezaTest {
     @Test
     public void testBuscarPiezaPorIdTarea() throws Exception {
         System.out.println("buscarPiezaPorIdTarea");
-        int pidTarea = 9;
+        String pidTarea = "UnaTarea";
         MultiPieza instance = new MultiPieza();
         ArrayList<Pieza> expResult = instance.buscarPiezaPorIdTarea(pidTarea);
         ArrayList<Pieza> result = instance.buscarPiezaPorIdTarea(pidTarea);

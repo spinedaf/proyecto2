@@ -17,7 +17,7 @@ public class Pieza {
     private String descripcionPieza;
     private String descripcionProblema;
     private int numeroUnidadesCambiadas;
-    private int idTareaUsa;
+    private String NombreTarea;
     private Reparacion reparacion;
 
     /**
@@ -31,7 +31,7 @@ public class Pieza {
      * @param pidIdTarea
      */
     public Pieza(String pcodigo, String pmarca, String ppais, String pdescripcion,
-            int pnumeroUnidades, String pdescripcionProblema, int pidIdTarea) {
+            int pnumeroUnidades, String pdescripcionProblema, String pNombreTarea) {
 
         this.setCodigo(pcodigo);
         this.setMarca(pmarca);
@@ -39,7 +39,7 @@ public class Pieza {
         this.setPaisFabricacion(ppais);
         this.setDescripcionProblema(pdescripcionProblema);
         this.setNumeroUnidadesCambiadas(pnumeroUnidades);
-        this.setIdTareaUsa(pidIdTarea);
+        this.setTareaUsa(pNombreTarea);
     }
 
 //    public String getDescripcionPieza() {
@@ -59,16 +59,16 @@ public class Pieza {
      *
      * @return
      */
-    public int getIdTareaUsa() {
-        return idTareaUsa;
+    public String getTareaUsa() {
+        return NombreTarea;
     }
 
     /**
      *
      * @param idTareaUsa
      */
-    public void setIdTareaUsa(int idTareaUsa) {
-        this.idTareaUsa = idTareaUsa;
+    public void setTareaUsa(String pnombreTarea) {
+        this.NombreTarea = pnombreTarea;
     }
 
     /**

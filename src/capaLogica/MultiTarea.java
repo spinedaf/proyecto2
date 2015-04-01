@@ -34,7 +34,7 @@ public class MultiTarea {
      * @throws Exception
      */
     public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionReal, int duracionPropuesta, 
-            String codigoReparacion, int idSala)
+            String codigoReparacion, String descripcionSala)
     {
         Timestamp mmddyyyyXmas = 
         new Timestamp(pFecha.getTime()); 
@@ -43,11 +43,11 @@ public class MultiTarea {
         String sql;
         sql = "INSERT INTO TTarea "+
         "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, codigo_reparacion) "+
-        "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+idSala
+        "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+descripcionSala
                 +"', '"+codigoReparacion+"');";
         try {
             Conector.getConector().ejecutarSQL(sql);
-            tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoReparacion,idSala);
+            tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoReparacion,descripcionSala);
             return tarea;
         }
         catch (Exception ex) {
@@ -80,7 +80,7 @@ public class MultiTarea {
                     rs.getInt("duracionRealTarea"),
                     rs.getInt("duracionPropuestaTarea"),
                     rs.getString("codigo_reparacion"),
-                    rs.getInt("id_sala")
+                    rs.getString("descripcionSala")
                     );
             } 
             rs.close();
@@ -108,7 +108,7 @@ public class MultiTarea {
                     rs.getInt("duracionRealTarea"),
                     rs.getInt("duracionPropuestaTarea"),
                     rs.getString("codigo_reparacion"),
-                    rs.getInt("id_sala")
+                    rs.getString("descripcionSala")
                     );
             } 
             rs.close();
@@ -146,7 +146,7 @@ public class MultiTarea {
                     rs.getInt("duracionRealTarea"),
                     rs.getInt("duracionPropuestaTarea"),
                     rs.getString("codigo_reparacion"),
-                    rs.getInt("id_sala")
+                    rs.getString("descripcionSala")
                     );
                 tareas.add(tarea);
             }
@@ -165,14 +165,14 @@ public class MultiTarea {
      * @throws SQLException
      * @throws Exception
      */
-    public ArrayList<Tarea> buscarPorSala(int idSala){
+    public ArrayList<Tarea> buscarPorSala(String pdescripcionSala){
 	java.sql.ResultSet rs;
         String sql;
         Tarea tarea=null;
         ArrayList<Tarea> tareas= new ArrayList<Tarea>();
         sql="SELECT * "+
         "FROM TTarea "+
-        "WHERE id_sala='"+idSala+"';";
+        "WHERE descripcionSala='"+pdescripcionSala+"';";
         try {
             Conector.getConector().ejecutarSQL(sql);
             rs = Conector.getConector().ejecutarSQL(sql,true);
@@ -184,7 +184,7 @@ public class MultiTarea {
                     rs.getInt("duracionRealTarea"),
                     rs.getInt("duracionPropuestaTarea"),
                     rs.getString("codigo_reparacion"),
-                    rs.getInt("id_sala")
+                    rs.getString("descripcionSala")
                     );
                 tareas.add(tarea);
             }
@@ -214,7 +214,7 @@ public class MultiTarea {
                     rs.getInt("duracionRealTarea"),
                     rs.getInt("duracionPropuestaTarea"),
                     rs.getString("codigo_reparacion"),
-                    rs.getInt("id_sala")
+                    rs.getString("descripcionSala")
                     );
                 tareas.add(tarea);
             }

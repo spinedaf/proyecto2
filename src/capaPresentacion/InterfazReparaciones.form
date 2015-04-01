@@ -44,9 +44,9 @@
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="11" max="32767" attributes="0"/>
+              <EmptySpace pref="9" max="32767" attributes="0"/>
               <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="122" max="32767" attributes="0"/>
+              <EmptySpace pref="119" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -57,7 +57,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -474,14 +474,14 @@
                           </Group>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jtfCodigoPieza" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jtfCodigoPieza" alignment="0" pref="92" max="32767" attributes="0"/>
                               <Component id="jtfMarcaPieza" alignment="0" max="32767" attributes="0"/>
                               <Component id="jtfPaisPieza" alignment="0" max="32767" attributes="0"/>
                               <Component id="jtfDescripcionPieza" max="32767" attributes="0"/>
                               <Component id="jtfCantidadPieza" max="32767" attributes="0"/>
                               <Component id="jtfProblemaPieza" max="32767" attributes="0"/>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jtfTareaIDPieza" min="-2" pref="92" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jcbTareasPieza" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -528,7 +528,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jlIdTarea" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jtfTareaIDPieza" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcbTareasPieza" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" min="-2" pref="90" max="-2" attributes="0"/>
@@ -619,10 +619,15 @@
             <Property name="text" type="java.lang.String" value="Tarea:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jtfTareaIDPieza">
+        <Component class="javax.swing.JComboBox" name="jcbTareasPieza">
           <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="0"/>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
             </Property>
           </Properties>
         </Component>
@@ -664,19 +669,6 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="lbTareaDuracionPropuesta" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jlTareaDuracionReal" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jtfTareaDuracionPropuesta" alignment="1" pref="85" max="32767" attributes="0"/>
-                              <Component id="jtfTareaDuracionReal" alignment="1" max="32767" attributes="0"/>
-                              <Component id="jtfTareaSala" alignment="1" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jlTareaDescripcion" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -692,6 +684,21 @@
                       </Group>
                       <Component id="jScrollPane4" max="32767" attributes="0"/>
                       <Component id="jbCrearTarea" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lbTareaDuracionPropuesta" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlTareaDuracionReal" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlReparacion" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlTarea" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jtfTareaDuracionPropuesta" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jtfTareaDuracionReal" alignment="1" max="32767" attributes="0"/>
+                              <Component id="jcbTareaReparacion" alignment="0" pref="85" max="32767" attributes="0"/>
+                              <Component id="jcbTareaSala" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -726,13 +733,18 @@
                       <Component id="jtfTareaDuracionReal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jtfTareaSala" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlReparacion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcbTareaReparacion" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlTarea" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jcbTareaSala" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="87" max="32767" attributes="0"/>
                   <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="7" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jbCrearTarea" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -764,9 +776,9 @@
             <Property name="text" type="java.lang.String" value="Real:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel18">
+        <Component class="javax.swing.JLabel" name="jlReparacion">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Sala:"/>
+            <Property name="text" type="java.lang.String" value="Reparacion:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfTareNombre">
@@ -782,13 +794,6 @@
           <Events>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfTareaFechaCreacionKeyTyped"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JFormattedTextField" name="jtfTareaSala">
-          <Properties>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="0"/>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jtfTareaDuracionPropuesta">
           <Properties>
@@ -836,6 +841,35 @@
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbCrearTareaActionPerformed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcbTareaReparacion">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jlTarea">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Tarea:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="jcbTareaSala">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

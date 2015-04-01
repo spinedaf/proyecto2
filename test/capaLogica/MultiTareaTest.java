@@ -76,7 +76,7 @@ public class MultiTareaTest {
         Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());;
         int duracionPropuesta = 5;
         int duracionReal = 4;
-        int idSala = 3;
+        String idSala = "pintura";
         String codigoRepa = "india";
         MultiTarea instance = new MultiTarea();
         Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoRepa,idSala);
@@ -87,7 +87,7 @@ public class MultiTareaTest {
         assertEquals(expResult.getDuracionReal(), result.getDuracionReal());
         assertEquals(expResult.getFechaCreacion(), result.getFechaCreacion());
         assertEquals(expResult.getCodigoReparacion(), result.getCodigoReparacion());
-        assertEquals(expResult.getIdSala(), result.getIdSala());
+        assertEquals(expResult.getDescripcionSala(), result.getDescripcionSala());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -104,7 +104,7 @@ public class MultiTareaTest {
         Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());
         int duracionPropuesta = 5;
         int duracionReal = 4;
-        int idSala = 3;
+        String idSala = "pintura";
         String codigoRepa = "india";
         MultiTarea instance = new MultiTarea();
         Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionReal,duracionPropuesta,codigoRepa,idSala);
@@ -117,7 +117,7 @@ public class MultiTareaTest {
         assertEquals(expResult.getDuracionPropuesta(), result.getDuracionPropuesta());
         assertEquals(expResult.getDuracionReal(), result.getDuracionReal());
         assertEquals(expResult.getCodigoReparacion(), result.getCodigoReparacion());
-        assertEquals(expResult.getIdSala(), result.getIdSala());
+        assertEquals(expResult.getDescripcionSala(), result.getDescripcionSala());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
     }
@@ -153,7 +153,7 @@ public class MultiTareaTest {
     @Test
     public void testBuscarPorSala() throws Exception {
         System.out.println("buscarPorSala");
-        int idSala = 3;
+        String idSala = "pintura";
         MultiTarea instance = new MultiTarea();
         ArrayList<Tarea> result = instance.buscarPorSala(idSala);
         
@@ -161,7 +161,7 @@ public class MultiTareaTest {
         
         for(Tarea t: result)
         {
-            if(t.getIdSala() != idSala)
+            if(t.getDescripcionSala() != idSala)
                 idCorrecta = false;
         }
         
@@ -181,7 +181,7 @@ public class MultiTareaTest {
         Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());
         int duracionPropuesta = 5;
         int duracionReal = 4;
-        int idSala = 3;
+        String idSala = "pintura";
         String codigoRepa = "tango";
         
         MultiTarea instance = new MultiTarea();

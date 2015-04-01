@@ -78,10 +78,10 @@ public class MultiSalaDeReparacionTest {
     @Test
     public void testBuscarSalaDeReparacion() throws Exception {
         System.out.println("buscarSalaDeReparacion");
-        int pidTarea = 9;
+        String idSala = "pintura";
         MultiSalaDeReparacion instance = new MultiSalaDeReparacion();
-        SalaDeReparacion expResult = instance.buscarSalaDeReparacion(pidTarea);
-        SalaDeReparacion result = instance.buscarSalaDeReparacion(pidTarea);
+        SalaDeReparacion expResult = instance.buscarSalaDeReparacion(idSala);
+        SalaDeReparacion result = instance.buscarSalaDeReparacion(idSala);
         assertEquals(expResult.getDescripcion(), result.getDescripcion());
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");

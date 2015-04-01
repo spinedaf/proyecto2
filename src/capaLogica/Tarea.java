@@ -21,7 +21,7 @@ public class Tarea {
     private int duracionPropuesta;
     private int duracionReal;
     
-    private int idSala;
+    private String descripcionSala;
     private SalaDeReparacion sala;
     private String codigoReparacion;
     private Reparacion reparacion;
@@ -38,7 +38,7 @@ public class Tarea {
      * @param pidSala
      */
     public Tarea(String pnombre, String pdescripcion, Date pfechaCreacion, int pduracionReal, int pduracionPropuesta, 
-            String pcodigoReparacion, int pidSala)
+            String pcodigoReparacion, String pDescripcionSala)
     {
         this.setDescripcion(pdescripcion);
         this.setNombre(pnombre);
@@ -46,7 +46,7 @@ public class Tarea {
         this.setDuracionReal(pduracionReal);
         this.setDuracionPropuesta(pduracionPropuesta);
         this.setCodigoReparacion(pcodigoReparacion);
-        this.setIdSala(pidSala);
+        this.setDescripcionSala(pDescripcionSala);
         
         sala = null;
         sala = null;
@@ -103,7 +103,7 @@ public class Tarea {
     public SalaDeReparacion getSala() throws
             java.sql.SQLException,Exception{
         if(sala == null){
-            sala = new MultiSalaDeReparacion().buscarSalaDeReparacion(idSala);
+            sala = new MultiSalaDeReparacion().buscarSalaDeReparacion(descripcionSala);
         }
         return sala;
     }
@@ -144,17 +144,17 @@ public class Tarea {
     }
 
     /**
-     * @return the idSala
+     * @return the descripcionSala
      */
-    public int getIdSala() {
-        return idSala;
+    public String getDescripcionSala() {
+        return descripcionSala;
     }
 
     /**
-     * @param idSala the idSala to set
+     * @param idSala the descripcionSala to set
      */
-    public void setIdSala(int idSala) {
-        this.idSala = idSala;
+    public void setDescripcionSala(String pdescripcionSala) {
+        this.descripcionSala = pdescripcionSala;
     }
 
     /**
