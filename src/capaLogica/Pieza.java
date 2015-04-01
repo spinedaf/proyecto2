@@ -28,7 +28,7 @@ public class Pieza {
      * @param ppais
      * @param pnumeroUnidades
      * @param pdescripcionProblema
-     * @param pidIdTarea
+     * @param pNombreTarea
      */
     public Pieza(String pcodigo, String pmarca, String ppais, String pdescripcion,
             int pnumeroUnidades, String pdescripcionProblema, String pNombreTarea) {
@@ -65,7 +65,7 @@ public class Pieza {
 
     /**
      *
-     * @param idTareaUsa
+     * @param pnombreTarea
      */
     public void setTareaUsa(String pnombreTarea) {
         this.nombreTarea = pnombreTarea;

@@ -27,7 +27,6 @@ public class MultiReparacion {
      * @param pfechaAsignacion
      * @param pplacaVehiculo
      * @return
-     * @throws Exception
      */
     public Reparacion crear(String pcodigo, String pnombre, String tipo, Date pfechaAsignacion, String pplacaVehiculo){
         Timestamp mmddyyyyXmas = 
@@ -55,7 +54,6 @@ public class MultiReparacion {
      *
      * @param codigo
      * @return
-     * @throws SQLException
      */
     public Reparacion buscar(String codigo){
         Reparacion reparacion = null;
@@ -88,8 +86,6 @@ public class MultiReparacion {
     /**
      *
      * @param preparacion
-     * @throws SQLException
-     * @throws Exception
      */
     public  void actualizar(Reparacion preparacion){
         Timestamp mmddyyyyXmas = new Timestamp(preparacion.getFechaAsignacion().getTime());
@@ -117,8 +113,6 @@ public class MultiReparacion {
      *
      * @param pplaca
      * @return
-     * @throws SQLException
-     * @throws Exception
      */
     public ArrayList<Reparacion> buscarPorVehiculo(String pplaca){
 	java.sql.ResultSet rs;
@@ -188,8 +182,6 @@ public class MultiReparacion {
     /**
      *
      * @param pcodigo
-     * @param preparacion
-     * @throws SQLException
      */
     public  void borrar(String pcodigo){
          

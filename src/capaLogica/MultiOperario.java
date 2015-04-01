@@ -60,7 +60,6 @@ public class MultiOperario {
      *
      * @param pcedula
      * @return
-     * @throws Exception
      */
     public Operario buscar(String pcedula){
         Operario operario = null;
@@ -95,7 +94,6 @@ public class MultiOperario {
      *
      * @param pnombreTarea
      * @return
-     * @throws Exception
      */
     public ArrayList<Operario> buscarPorTarea(String pnombreTarea){
         java.sql.ResultSet rs;
@@ -168,8 +166,6 @@ public class MultiOperario {
     /**
      *
      * @param pcedula
-     * @throws SQLException
-     * @throws Exception
      */
     public  void borrar(String pcedula){
             java.sql.ResultSet rs;
