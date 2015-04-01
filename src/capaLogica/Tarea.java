@@ -20,12 +20,12 @@ public class Tarea {
     private Date fechaCreacion;
     private int duracionPropuesta;
     private int duracionReal;
-    
-    private String descripcionSala;
-    private SalaDeReparacion sala;
+    private String descripcionSala;  
     private String codigoReparacion;
-    private Reparacion reparacion;
-    private ArrayList<Operario> listaOperarios;
+    
+    //private SalaDeReparacion sala;
+    //private Reparacion reparacion;
+    //private ArrayList<Operario> listaOperarios;
     
     /**
      *
@@ -48,9 +48,9 @@ public class Tarea {
         this.setCodigoReparacion(pcodigoReparacion);
         this.setDescripcionSala(pDescripcionSala);
         
-        sala = null;
-        sala = null;
-        listaOperarios = new ArrayList<Operario>();
+//        sala = null;
+//        sala = null;
+////       listaOperarios = new ArrayList<Operario>();
     }
 
     /**
@@ -100,20 +100,20 @@ public class Tarea {
      * @throws java.sql.SQLException
      * @throws java.lang.Exception
      */
-    public SalaDeReparacion getSala() throws
-            java.sql.SQLException,Exception{
-        if(sala == null){
-            sala = new MultiSalaDeReparacion().buscarSalaDeReparacion(descripcionSala);
-        }
-        return sala;
-    }
+//    public SalaDeReparacion getSala() throws
+//            java.sql.SQLException,Exception{
+//        if(sala == null){
+//            sala = new MultiSalaDeReparacion().buscarSalaDeReparacion(descripcionSala);
+//        }
+//        return sala;
+//    }
 
-    /**
-     * @param sala the sala to set
-     */
-    private void setSala(SalaDeReparacion sala) {
-        this.sala = sala;
-    }
+//    /**
+//     * @param sala the sala to set
+//     */
+//    private void setSala(SalaDeReparacion sala) {
+//        this.sala = sala;
+//    }
 
     /**
      * @return the duracionPropuesta
@@ -162,40 +162,40 @@ public class Tarea {
      * @throws java.sql.SQLException
      * @throws java.lang.Exception
      */
-    public Reparacion getReparacion() throws
-            java.sql.SQLException,Exception{
-        if(reparacion == null){
-            this.reparacion = new MultiReparacion().buscar(this.codigoReparacion);
-        }
-        return reparacion;
-    }
+//    public Reparacion getReparacion() throws
+//            java.sql.SQLException,Exception{
+//        if(reparacion == null){
+//            this.reparacion = new MultiReparacion().buscar(this.codigoReparacion);
+//        }
+//        return reparacion;
+//    }
 
     /**
-     * @param reparacion the reparacion to set
-     */
-    public void setReparacion(Reparacion reparacion) {
-        this.reparacion = reparacion;
-    }
+//     * @param reparacion the reparacion to set
+//     */
+//    public void setReparacion(Reparacion reparacion) {
+//        this.reparacion = reparacion;
+//    }
 
-    /**
-     * @return the listaOperarios
-     * @throws java.sql.SQLException
-     * @throws java.lang.Exception
-     */
-    public ArrayList<Operario> getListaOperarios() throws
-        java.sql.SQLException,Exception{
-        if(listaOperarios.isEmpty()){
-            this.setListaOperarios(new MultiOperario().buscarPorTarea(nombre));
-        }
-        return listaOperarios;
-    }
+//    /**
+//     * @return the listaOperarios
+//     * @throws java.sql.SQLException
+//     * @throws java.lang.Exception
+//     */
+//    public ArrayList<Operario> getListaOperarios() throws
+//        java.sql.SQLException,Exception{
+//        if(listaOperarios.isEmpty()){
+//            this.setListaOperarios(new MultiOperario().buscarPorTarea(nombre));
+//        }
+//        return listaOperarios;
+//    }
 
-    /**
-     * @param listaOperarios the listaOperarios to set
-     */
-    public void setListaOperarios(ArrayList<Operario> listaOperarios) {
-        this.listaOperarios = listaOperarios;
-    }
+//    /**
+//     * @param listaOperarios the listaOperarios to set
+//     */
+//    public void setListaOperarios(ArrayList<Operario> listaOperarios) {
+//        this.listaOperarios = listaOperarios;
+//    }
 
     /**
      * @return the codigoReparacion

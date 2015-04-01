@@ -79,6 +79,7 @@ public class Gestor extends Observable {
             String pdireccion, int panios, String pcargo) {
         Operario instance = null;
         MultiOperario multi = new MultiOperario();
+
         if (multi.buscar(pid) == null) {
             instance = multi.crear(pid, pnombre, papellido, ptelefono, pdireccion, new Date(Calendar.getInstance().getTimeInMillis()),
                     panios, pcargo);
@@ -89,6 +90,7 @@ public class Gestor extends Observable {
     public void agregarSala(String pdescripcion, String pubicacion, int capacidad) {
         SalaDeReparacion instance = null;
         MultiSalaDeReparacion multi = new MultiSalaDeReparacion();
+
         if (multi.buscarSalaDeReparacion(pdescripcion) == null) {
             instance = multi.crear(pdescripcion, pubicacion, capacidad);
             this.setMensaje("Nueva Sala Registrada");
@@ -198,6 +200,16 @@ public class Gestor extends Observable {
 
     }
 
+    public void agregarTareaOperario(String poperarioID, String pdescripcion) {
+
+        Operario instance = new MultiOperario().buscar(poperarioID);
+
+        if (instance != null) {
+            new MultiTarea().agregarOperario(poperarioID, pdescripcion);
+            this.setMensaje("Tarea y Operario relacionados");
+        }
+    }
+
     public String[] obtenerListaPiezas() {
         ArrayList<Pieza> listaPiezas = (new MultiPieza()).buscarTodos();
         String lista[] = new String[listaPiezas.size()];
@@ -258,4 +270,13 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    public String[] obtenerCedulaOperarios() {
+        ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
+        String lista[] = new String[listaOperarios.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaOperarios.get(i).getId();
+        }
+
+        return lista;
+    }
 }

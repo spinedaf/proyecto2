@@ -17,8 +17,8 @@ public class Pieza {
     private String descripcionPieza;
     private String descripcionProblema;
     private int numeroUnidadesCambiadas;
-    private String NombreTarea;
-    private Reparacion reparacion;
+    private String nombreTarea;
+    //private Reparacion reparacion;
 
     /**
      *
@@ -60,7 +60,7 @@ public class Pieza {
      * @return
      */
     public String getTareaUsa() {
-        return NombreTarea;
+        return nombreTarea;
     }
 
     /**
@@ -68,7 +68,7 @@ public class Pieza {
      * @param idTareaUsa
      */
     public void setTareaUsa(String pnombreTarea) {
-        this.NombreTarea = pnombreTarea;
+        this.nombreTarea = pnombreTarea;
     }
 
     /**

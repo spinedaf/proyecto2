@@ -19,10 +19,10 @@ public class Reparacion {
     private String tipo;
     private Date fechaAsignacion;
     private Date tiempoDeInicio;
-    private Date tiempoDeFinalizacion;
-    
+    private Date tiempoDeFinalizacion;  
     private String placaVehiculo;
-    private Vehiculo vehiculo;
+    //private Vehiculo vehiculo;
+   
     private ArrayList<Tarea> listaDeTareas;
     
     /**
@@ -150,20 +150,20 @@ public class Reparacion {
      * @throws java.sql.SQLException
      * @throws java.lang.Exception
      */
-    public Vehiculo getVehiculo() throws
-            java.sql.SQLException,Exception{
-        if(vehiculo == null){
-            vehiculo = new MultiVehiculo().buscarPorPlaca(this.placaVehiculo);
-        }
-        return vehiculo;
-    }
-
-    /**
-     * @param vehiculo the vehiculo to set
-     */
-    public void setVehiculo(Vehiculo vehiculo) {
-        this.vehiculo = vehiculo;
-    }
+//    public Vehiculo getVehiculo() throws
+//            java.sql.SQLException,Exception{
+//        if(vehiculo == null){
+//            vehiculo = new MultiVehiculo().buscarPorPlaca(this.placaVehiculo);
+//        }
+//        return vehiculo;
+//    }
+//
+//    /**
+//     * @param vehiculo the vehiculo to set
+//     */
+//    public void setVehiculo(Vehiculo vehiculo) {
+//        this.vehiculo = vehiculo;
+//    }
 
     /**
      * @return the listaDeTareas

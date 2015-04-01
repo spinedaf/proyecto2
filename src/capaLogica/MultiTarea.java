@@ -33,7 +33,8 @@ public class MultiTarea {
      * @throws SQLException
      * @throws Exception
      */
-    public Tarea crear(String pnombre, String pdescripcion, Date pFecha, int duracionReal, int duracionPropuesta, 
+    public Tarea crear(String pnombre, String pdescripcion, Date pFecha, 
+            int duracionReal, int duracionPropuesta, 
             String codigoReparacion, String descripcionSala)
     {
         Timestamp mmddyyyyXmas = 
@@ -53,6 +54,17 @@ public class MultiTarea {
         catch (Exception ex) {
             Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+    
+    public void agregarOperario(String poperarioID, String ptareaDescripcion){
+        try {
+            String sql;
+            sql = "INSERT INTO TTareaOperario " +
+                    "VALUES ('"+poperarioID+"', '"+ptareaDescripcion+"')";        
+            Conector.getConector().ejecutarSQL(sql);
+        } catch (Exception ex) {
+            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
