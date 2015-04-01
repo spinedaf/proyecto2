@@ -100,8 +100,7 @@ public class Tarea {
      * @throws java.sql.SQLException
      * @throws java.lang.Exception
      */
-    public SalaDeReparacion getSala() throws
-            java.sql.SQLException,Exception{
+    public SalaDeReparacion getSala(){
         if(sala == null){
             sala = new MultiSalaDeReparacion().buscarSalaDeReparacion(descripcionSala);
         }
@@ -182,8 +181,7 @@ public class Tarea {
      * @throws java.sql.SQLException
      * @throws java.lang.Exception
      */
-    public ArrayList<Operario> getListaOperarios() throws
-        java.sql.SQLException,Exception{
+    public ArrayList<Operario> getListaOperarios(){
         if(listaOperarios.isEmpty()){
             this.setListaOperarios(new MultiOperario().buscarPorTarea(nombre));
         }

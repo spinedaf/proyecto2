@@ -252,6 +252,24 @@ public class Gestor extends Observable {
 
         return lista;
     }
+    
+    public String[] obtenerListaOperariosPorTarea(String pnombreTarea)
+    {
+        Tarea tarea = new MultiTarea().buscar(pnombreTarea);
+        ArrayList<Operario> listaOpeararios = tarea.getListaOperarios();
+        String lista[] = new String[listaOpeararios.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaOpeararios.get(i).getNombre();
+        }
+        
+        return lista;
+    }
+    
+    public String obtenerSalaAsociadaTarea(String pnombreTarea)
+    {
+        Tarea tarea = new MultiTarea().buscar(pnombreTarea);
+        return tarea.getSala().getDescripcion();
+    }
 
     /**
      *
