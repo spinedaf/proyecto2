@@ -7,16 +7,11 @@ package capaPresentacion;
 
 import capaLogica.*;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,11 +20,13 @@ import javax.swing.DefaultListModel;
 public class InterfazReparaciones extends javax.swing.JFrame implements Observer {
 
     private Gestor gestor;
-    private DefaultListModel<String> modeloListaVehiculos;
-    private DefaultListModel<String> modeloListaOperarios;
-    private DefaultListModel<String> modeloListaPiezas;
-    private DefaultListModel<String> modeloListaSalas;
-    private DefaultListModel<String> modeloListaReparaciones;
+    
+    private DefaultTableModel modeloTablaTareas;
+    private DefaultTableModel modeloTablaVehiculos;
+    private DefaultTableModel modeloTablaOperarios;
+    private DefaultTableModel modeloTablaPiezas;
+    private DefaultTableModel modeloTablaSalas;
+    private DefaultTableModel modeloTablaReparaciones;
     
     private DefaultComboBoxModel<String> modeloCBTareas;
     private DefaultComboBoxModel<String> modeloCBVehiculos;
@@ -48,39 +45,47 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
     private void iniciarComponentesPropios() {
         gestor = new Gestor();
-        modeloListaVehiculos = new DefaultListModel();
-        modeloListaOperarios = new DefaultListModel();
-        modeloListaPiezas = new DefaultListModel();
-        modeloListaSalas = new DefaultListModel();
-        modeloListaReparaciones = new DefaultListModel();
         
         modeloCBVehiculos = new DefaultComboBoxModel<String>();
         modeloCBTareas = new DefaultComboBoxModel<String>();
         modeloCBReparaciones = new DefaultComboBoxModel<String>();
         modelosCBsalas = new DefaultComboBoxModel<String>();
         modeloListaTareas = new DefaultListModel();
-
-        this.jlVehiculos.setModel(modeloListaVehiculos);
-        this.jlOperarios.setModel(modeloListaOperarios);
-        this.jlPieza.setModel(modeloListaPiezas);
-        this.jlListaSalas.setModel(modelosCBsalas);
-        this.jlListaReparaciones.setModel(modeloListaReparaciones);
+        
+        String encabezadosTarea[] = new String[]{"Nombre", "Descripcion", "Fecha creacion","Duracion prop.", "Duracion Real","Cod. Reparacion"};
+        modeloTablaTareas = new DefaultTableModel(encabezadosTarea,0);
+        String encabezadosVehiculo[] = new String[]{"Numero de placa", "Modelo", "Propietaro"};
+        modeloTablaVehiculos = new DefaultTableModel(encabezadosVehiculo,0);
+        String encabezadosOperarios[] = new String[]{"Nombre","Apellido","Cedula"};
+        modeloTablaOperarios = new DefaultTableModel(encabezadosOperarios,0);
+        String encabezadosPiezas[] = new String[]{"Codigo","Marca","Pais Fab.", "Problema","Uni. Cambiadas", "Tarea"};
+        modeloTablaPiezas = new DefaultTableModel(encabezadosPiezas,0);
+        String encabezadosSalas[] = new String[]{"Descripcion","Ubicacion","Capacidad"};
+        modeloTablaSalas = new DefaultTableModel(encabezadosSalas,0);
+        String encabezadosReparaciones[] = new String[]{"Nombre","Codigo","Tipo"};
+        modeloTablaReparaciones = new DefaultTableModel(encabezadosReparaciones,0);
+        
+        this.jtVehiculos.setModel(modeloTablaVehiculos);
+        this.jtOperarios.setModel(modeloTablaOperarios);
+        this.jtTareas.setModel(modeloTablaTareas);
+        this.jtPiezas.setModel(modeloTablaPiezas);
+        this.jtReparaciones.setModel(modeloTablaReparaciones);
+        this.jtSalas.setModel(modeloTablaSalas);
         
         this.jcbTareasPieza.setModel(modeloCBTareas);
         this.jcbVehiculoReparacion.setModel(modeloCBVehiculos);
         this.jcbTareaReparacion.setModel(modeloCBReparaciones);
         this.jcbTareaSala.setModel(modelosCBsalas);
-        this.jlTareas.setModel(modeloListaTareas);
 
         gestor.addObserver(this);
 
-        this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
-        this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
-        this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
-        this.actualizarVistaLista(modeloListaSalas, gestor.obtenerListaSalas());
-        this.actualizarVistaLista(modeloListaReparaciones, gestor.obtenerListaReparaciones());
-        this.actualizarVistaLista(modeloListaTareas, gestor.obtenerListaTareas());
-        
+        this.actualizarVistaTabla(modeloTablaVehiculos, gestor.obtenerListaVehiculos());
+        this.actualizarVistaTabla(modeloTablaOperarios, gestor.obtenerListaOperarios());
+        this.actualizarVistaTabla(modeloTablaPiezas, gestor.obtenerListaPiezas());
+        this.actualizarVistaTabla(modeloTablaSalas, gestor.obtenerListaSalas());
+        this.actualizarVistaTabla(modeloTablaReparaciones, gestor.obtenerListaReparaciones());
+        this.actualizarVistaTabla(modeloTablaTareas, gestor.obtenerListaTareas());
+ 
         this.actualizarVistaCB(modeloCBVehiculos, gestor.obtenerPlacaVehiculos());
         this.actualizarVistaCB(modeloCBTareas, gestor.obtenerNombresListaTareas());
         this.actualizarVistaCB(modeloCBReparaciones, gestor.obtenerNombresListaReparaciones());
@@ -100,6 +105,20 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         modelo.removeAllElements();
         for (String linea : lista) {
             modelo.addElement(linea);
+        }
+    }
+    
+    public void actualizarVistaTabla(DefaultTableModel modelo, String[] lista)
+    {
+        int tamano = modelo.getRowCount();
+        for(int i = tamano-1; i >0; i--)
+        {
+            modelo.removeRow(i);
+        }
+        
+        for(String fila: lista){
+            String columnas[] = fila.split(" ");
+            modelo.addRow(columnas);
         }
     }
 
@@ -126,12 +145,12 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtfTareaFechaCreacion = new javax.swing.JFormattedTextField();
         jtfTareaDuracionPropuesta = new javax.swing.JFormattedTextField();
         jtfTareaDuracionReal = new javax.swing.JFormattedTextField();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jlTareas = new javax.swing.JList();
         jbCrearTarea = new javax.swing.JButton();
         jcbTareaReparacion = new javax.swing.JComboBox();
         jlTarea = new javax.swing.JLabel();
         jcbTareaSala = new javax.swing.JComboBox();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtTareas = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -148,8 +167,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtfTelefonoOp = new javax.swing.JFormattedTextField();
         jtfIDOperario = new javax.swing.JFormattedTextField();
         jbCrearOp = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jlOperarios = new javax.swing.JList();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtOperarios = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jtfCodigoPieza = new javax.swing.JTextField();
         jtfMarcaPieza = new javax.swing.JTextField();
@@ -163,11 +182,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jlDesPieza = new javax.swing.JLabel();
         jlCanPieza = new javax.swing.JLabel();
         jlProbPieza = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jlPieza = new javax.swing.JList();
         jbCrearPieza = new javax.swing.JButton();
         jlIdTarea = new javax.swing.JLabel();
         jcbTareasPieza = new javax.swing.JComboBox();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jtPiezas = new javax.swing.JTable();
         jPanel7 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -176,8 +195,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtfUbicacionSala = new javax.swing.JTextField();
         jsCapacidadSala = new javax.swing.JSpinner();
         jbCrearSala = new javax.swing.JButton();
-        jScrollPane6 = new javax.swing.JScrollPane();
-        jlListaSalas = new javax.swing.JList();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jtSalas = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -187,15 +206,13 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtfFechaReparacion = new javax.swing.JFormattedTextField();
         jtfNombreReparacion = new javax.swing.JTextField();
         jtfCodigoReparacion = new javax.swing.JTextField();
-        jsp = new javax.swing.JScrollPane();
-        jlListaReparaciones = new javax.swing.JList();
         jbCrearReparacion = new javax.swing.JButton();
         jLabel18 = new javax.swing.JLabel();
         jtfTipoReparacion = new javax.swing.JTextField();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jtReparaciones = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jbCrearVehiculo = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jlVehiculos = new javax.swing.JList();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -206,6 +223,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtfNombreProp = new javax.swing.JTextField();
         jtfApellidoProp = new javax.swing.JTextField();
         jtfEstadoVehi = new javax.swing.JTextField();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        jtVehiculos = new javax.swing.JTable();
         jTabbedPane2 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -240,13 +259,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             }
         });
 
-        jlTareas.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jlTareas);
-
         jbCrearTarea.setText("Crear");
         jbCrearTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +271,19 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jlTarea.setText("Sala:");
 
         jcbTareaSala.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jtTareas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jtTareas);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -283,24 +308,23 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jtfTareaDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                                 .addComponent(jtfTareNombre))
-                            .addComponent(jcbTareaSala, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 423, Short.MAX_VALUE))
+                            .addComponent(jcbTareaSala, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbCrearTarea)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jlTareaFechaCreacion)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfTareaFechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jlTareaFechaCreacion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfTareaFechaCreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jbCrearTarea)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlTareaNombre)
@@ -329,10 +353,10 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlTarea)
                             .addComponent(jcbTareaSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 244, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jbCrearTarea))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbCrearTarea))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Tarea", jPanel5);
@@ -374,12 +398,18 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             }
         });
 
-        jlOperarios.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(jlOperarios);
+        jtOperarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane4.setViewportView(jtOperarios);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -388,6 +418,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbCrearOp)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -409,10 +440,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addComponent(jtfDireccionOp)
                             .addComponent(jtfIDOperario, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                             .addComponent(jtfTelefonoOp, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfCargoOp)))
-                    .addComponent(jbCrearOp))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jtfCargoOp))))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -450,9 +480,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addComponent(jsAniosOp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbCrearOp))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 418, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 31, Short.MAX_VALUE))))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Operario", jPanel2);
@@ -477,13 +506,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jlProbPieza.setText("Problema:");
 
-        jlPieza.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jlPieza);
-
         jbCrearPieza.setText("Crear");
         jbCrearPieza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -495,6 +517,19 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jcbTareasPieza.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jtPiezas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane3.setViewportView(jtPiezas);
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -503,11 +538,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbCrearPieza)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jlIdTarea)
-                                .addComponent(jlProbPieza))))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlIdTarea)
+                            .addComponent(jlProbPieza)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -530,47 +563,52 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jtfPaisPieza, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                                 .addComponent(jtfCodigoPieza, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(jtfMarcaPieza, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jtfMarcaPieza, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jbCrearPieza)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 602, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlCodigoPieza)
-                            .addComponent(jtfCodigoPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jlCodigoPieza)
+                                    .addComponent(jtfCodigoPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jlMarcaPieza)
+                                    .addComponent(jtfMarcaPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jlPaisPieza))
+                            .addComponent(jtfPaisPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlMarcaPieza)
-                            .addComponent(jtfMarcaPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlDesPieza)
+                            .addComponent(jtfDescripcionPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jlPaisPieza))
-                    .addComponent(jtfPaisPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlDesPieza)
-                    .addComponent(jtfDescripcionPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlCanPieza)
-                    .addComponent(jtfCantidadPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(7, 7, 7)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlProbPieza)
-                    .addComponent(jtfProblemaPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlIdTarea)
-                    .addComponent(jcbTareasPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbCrearPieza))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 38, Short.MAX_VALUE))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlCanPieza)
+                            .addComponent(jtfCantidadPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlProbPieza)
+                            .addComponent(jtfProblemaPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlIdTarea)
+                            .addComponent(jcbTareasPieza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbCrearPieza))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Pieza", jPanel3);
@@ -596,60 +634,65 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             }
         });
 
-        jlListaSalas.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane6.setViewportView(jlListaSalas);
+        jtSalas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jtSalas);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfDescripcionSala))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel19)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtfUbicacionSala, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel20)
-                                .addGap(18, 18, 18)
-                                .addComponent(jsCapacidadSala, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel17)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jtfDescripcionSala))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel19)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jtfUbicacionSala, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel7Layout.createSequentialGroup()
+                            .addComponent(jLabel20)
+                            .addGap(18, 18, 18)
+                            .addComponent(jsCapacidadSala, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jbCrearSala))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 608, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jtfDescripcionSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel19)
-                    .addComponent(jtfUbicacionSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel20)
-                    .addComponent(jsCapacidadSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbCrearSala)
-                .addContainerGap())
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel17)
+                            .addComponent(jtfDescripcionSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel19)
+                            .addComponent(jtfUbicacionSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel20)
+                            .addComponent(jsCapacidadSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbCrearSala))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Salas", jPanel7);
@@ -672,13 +715,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jtfCodigoReparacion.setText("jTextField2");
 
-        jlListaReparaciones.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jsp.setViewportView(jlListaReparaciones);
-
         jbCrearReparacion.setText("Crear");
         jbCrearReparacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -689,6 +725,19 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jLabel18.setText("Tipo:");
 
         jtfTipoReparacion.setText("jTextField1");
+
+        jtReparaciones.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jtReparaciones);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -704,30 +753,26 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addComponent(jLabel14)
                             .addComponent(jLabel15))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jcbVehiculoReparacion, 0, 1, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jtfFechaReparacion)
-                            .addComponent(jtfNombreReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jtfCodigoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jtfNombreReparacion)
+                            .addComponent(jtfCodigoReparacion, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                            .addComponent(jcbVehiculoReparacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel18)
                         .addGap(37, 37, 37)
-                        .addComponent(jtfTipoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jbCrearReparacion)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(58, 58, 58)
-                .addComponent(jsp, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfTipoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jbCrearReparacion))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel13)
                             .addComponent(jtfCodigoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -749,10 +794,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                             .addComponent(jcbVehiculoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbCrearReparacion))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jsp, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 32, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Reparación", jPanel6);
@@ -766,14 +809,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
             }
         });
 
-        jlVehiculos.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        jlVehiculos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        jScrollPane1.setViewportView(jlVehiculos);
-
         jLabel1.setText("Placa:");
 
         jLabel2.setText("Nombre:");
@@ -784,56 +819,63 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jLabel5.setText("Estado:");
 
+        jtVehiculos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane7.setViewportView(jtVehiculos);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(5, 5, 5)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtfNombreProp))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jtfApellidoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtfNombreProp))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jtfApellidoProp, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel3)
-                                                    .addComponent(jLabel1))
-                                                .addGap(10, 10, 10))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(17, 17, 17)
-                                                .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jtfPlaca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                                .addGap(15, 15, 15)
-                                                .addComponent(jtfEstadoVehi)))))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addComponent(jbCrearVehiculo))
-                .addGap(26, 26, 26)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel1))
+                                .addGap(10, 10, 10))
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(jtfModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jtfPlaca, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(jtfEstadoVehi))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(jbCrearVehiculo)))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jtfPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -849,16 +891,14 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(jtfApellidoProp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jtfEstadoVehi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(246, 246, 246))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                .addComponent(jbCrearVehiculo)
-                .addGap(21, 21, 21))
+                        .addGap(245, 245, 245)
+                        .addComponent(jbCrearVehiculo))
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Vehículo", jPanel1);
@@ -869,20 +909,16 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jlStatus))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(583, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jlStatus)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlStatus))
         );
 
@@ -900,7 +936,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String nombreTareaPieza = (String) this.jcbTareasPieza.getSelectedItem();
         gestor.AgregarPieza(codigoPieza, marcaPieza, paisPieza,
             descripcionPieza, cantidadPieza, problemaPieza, nombreTareaPieza);
-        this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
+        this.actualizarVistaTabla(modeloTablaPiezas, gestor.obtenerListaPiezas());
         this.actualizarVistaCB(modeloCBTareas, gestor.obtenerNombresListaTareas());
     }//GEN-LAST:event_jbCrearPiezaActionPerformed
 
@@ -916,7 +952,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String apellidoProp = this.jtfApellidoProp.getText();
         String estado = this.jtfEstadoVehi.getText();
         gestor.agregarVehiculo(placa, modelo, nombreProp, apellidoProp, estado);
-        this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
+        this.actualizarVistaTabla(modeloTablaVehiculos, gestor.obtenerListaVehiculos());
     }//GEN-LAST:event_jbCrearVehiculoActionPerformed
 
     private void jbCrearReparacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearReparacionActionPerformed
@@ -928,7 +964,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String placa = (String)this.jcbVehiculoReparacion.getSelectedItem();
 
         gestor.agregarReparacion(codigo, nombre, tipo, fechaSQL, placa);
-        this.actualizarVistaLista(modeloListaReparaciones, gestor.obtenerListaReparaciones());
+        this.actualizarVistaTabla(modeloTablaReparaciones, gestor.obtenerListaReparaciones());
     }//GEN-LAST:event_jbCrearReparacionActionPerformed
 
     private void jbCrearSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearSalaActionPerformed
@@ -936,7 +972,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String ubicacion = this.jtfUbicacionSala.getText();
         int capacidad = (int) this.jsCapacidadSala.getValue();
         gestor.agregarSala(descripcion, ubicacion, capacidad);
-        this.actualizarVistaLista(modeloListaSalas, gestor.obtenerListaSalas());
+        this.actualizarVistaTabla(modeloTablaSalas, gestor.obtenerListaSalas());
     }//GEN-LAST:event_jbCrearSalaActionPerformed
 
     private void jbCrearOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearOpActionPerformed
@@ -948,7 +984,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         int anios = (int) this.jsAniosOp.getValue();
         String cargo = this.jtfCargoOp.getText();
         gestor.agregarOperario(cedula, nombre, apellido, telefono, direccion, anios, cargo);
-        this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
+        this.actualizarVistaTabla(modeloTablaOperarios, gestor.obtenerListaOperarios());
     }//GEN-LAST:event_jbCrearOpActionPerformed
 
     private void jbCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearTareaActionPerformed
@@ -964,7 +1000,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         gestor.agregarTarea(nombreTarea, descripcionTarea, fechaCreacion,
             duracionRealTarea, duracionPropuestaTarea, codigoReparacion, nombreSala);
-        this.actualizarVistaLista(modeloListaTareas, gestor.obtenerListaTareas());
+        this.actualizarVistaTabla(modeloTablaTareas, gestor.obtenerListaTareas());
 
     }//GEN-LAST:event_jbCrearTareaActionPerformed
 
@@ -1038,11 +1074,12 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JButton jbCrearOp;
@@ -1059,12 +1096,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel jlCodigoPieza;
     private javax.swing.JLabel jlDesPieza;
     private javax.swing.JLabel jlIdTarea;
-    private javax.swing.JList jlListaReparaciones;
-    private javax.swing.JList jlListaSalas;
     private javax.swing.JLabel jlMarcaPieza;
-    private javax.swing.JList jlOperarios;
     private javax.swing.JLabel jlPaisPieza;
-    private javax.swing.JList jlPieza;
     private javax.swing.JLabel jlProbPieza;
     private javax.swing.JLabel jlReparacion;
     private javax.swing.JLabel jlStatus;
@@ -1073,11 +1106,14 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel jlTareaDuracionReal;
     private javax.swing.JLabel jlTareaFechaCreacion;
     private javax.swing.JLabel jlTareaNombre;
-    private javax.swing.JList jlTareas;
-    private javax.swing.JList jlVehiculos;
     private javax.swing.JSpinner jsAniosOp;
     private javax.swing.JSpinner jsCapacidadSala;
-    private javax.swing.JScrollPane jsp;
+    private javax.swing.JTable jtOperarios;
+    private javax.swing.JTable jtPiezas;
+    private javax.swing.JTable jtReparaciones;
+    private javax.swing.JTable jtSalas;
+    private javax.swing.JTable jtTareas;
+    private javax.swing.JTable jtVehiculos;
     private javax.swing.JTextField jtfApellidoOperario;
     private javax.swing.JTextField jtfApellidoProp;
     private javax.swing.JTextField jtfCantidadPieza;

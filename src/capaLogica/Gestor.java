@@ -118,8 +118,8 @@ public class Gestor extends Observable {
         ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
         String lista[] = new String[listaVehiculos.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaVehiculos.get(i).getPlaca() + "   "
-                    + listaVehiculos.get(i).getModelo() + "   "
+            lista[i] = listaVehiculos.get(i).getPlaca() + " "
+                    + listaVehiculos.get(i).getModelo() + " "
                     + listaVehiculos.get(i).getNombrePropietario();
         }
 
@@ -140,8 +140,8 @@ public class Gestor extends Observable {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaSalas.get(i).getDescripcion() + "   "
-                    + listaSalas.get(i).getUbicacion() + "   "
+            lista[i] = listaSalas.get(i).getDescripcion() + " "
+                    + listaSalas.get(i).getUbicacion() + " "
                     + listaSalas.get(i).getCapacidad();
         }
 
@@ -162,8 +162,8 @@ public class Gestor extends Observable {
         ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
         String lista[] = new String[listaOperarios.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaOperarios.get(i).getNombre() + "   "
-                    + listaOperarios.get(i).getApellido() + "   "
+            lista[i] = listaOperarios.get(i).getNombre() + " "
+                    + listaOperarios.get(i).getApellido() + " "
                     + listaOperarios.get(i).getId();
         }
 
@@ -184,7 +184,7 @@ public class Gestor extends Observable {
         ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarTodos();
         String lista[] = new String[listaReparaciones.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaReparaciones.get(i).getNombre() + "  "
+            lista[i] = listaReparaciones.get(i).getNombre() + " "
                     + listaReparaciones.get(i).getCodigo() + " "
                     + listaReparaciones.get(i).getTipo();
         }
@@ -211,8 +211,8 @@ public class Gestor extends Observable {
         ArrayList<Pieza> listaPiezas = (new MultiPieza()).buscarTodos();
         String lista[] = new String[listaPiezas.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaPiezas.get(i).getCodigo() + "   "
-                    + listaPiezas.get(i).getMarca() + "   "
+            lista[i] = listaPiezas.get(i).getCodigo() + " "
+                    + listaPiezas.get(i).getMarca() + " "
                     + listaPiezas.get(i).getPaisFabricacion() + " "
                     + listaPiezas.get(i).getDescripcionProblema() + " "
                     + listaPiezas.get(i).getNumeroUnidadesCambiadas() + " "
@@ -226,8 +226,8 @@ public class Gestor extends Observable {
         ArrayList<Tarea> listaPiezas = (new MultiTarea()).buscarTodos();
         String lista[] = new String[listaPiezas.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaPiezas.get(i).getNombre() + "   "
-                    + listaPiezas.get(i).getDescripcion() + "   "
+            lista[i] = listaPiezas.get(i).getNombre() + " "
+                    + listaPiezas.get(i).getDescripcion() + " "
                     + listaPiezas.get(i).getFechaCreacion() + " "
                     + listaPiezas.get(i).getDuracionPropuesta() + " "
                     + listaPiezas.get(i).getDuracionReal() + " "
