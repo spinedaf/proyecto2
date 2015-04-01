@@ -74,6 +74,15 @@ public class Gestor extends Observable {
             this.setMensaje("Nuevo Operario Registrado");
         }
     }
+    
+    public void agregarSala(String pdescripcion, String pubicacion, int capacidad){
+        SalaDeReparacion instance = null;
+        MultiSalaDeReparacion multi = new MultiSalaDeReparacion();
+        if (multi.buscarSalaDeReparacion(pdescripcion) == null) {
+            instance = multi.crear(pdescripcion, pubicacion, capacidad);
+            this.setMensaje("Nueva Sala Registrada");
+        }
+    }
 
     /**
      *
@@ -91,6 +100,16 @@ public class Gestor extends Observable {
 
         return lista;
     }
+    
+    public String[] obtenerPlacasVehiculo() {
+        ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
+        String lista[] = new String[listaVehiculos.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaVehiculos.get(i).getPlaca();
+        }
+
+        return lista;
+    }
 
     public String[] obtenerListaOperarios() {
         ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
@@ -104,6 +123,28 @@ public class Gestor extends Observable {
         return lista;
     }
 
+    public String[] obtenerNombreOperarios() {
+        ArrayList<Operario> listaOperarios = (new MultiOperario()).buscarTodos();
+        String lista[] = new String[listaOperarios.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaOperarios.get(i).getNombre();
+        }
+
+        return lista;
+    }
+    
+    public String[] obtenerListaReparaciones() {
+        ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarTodos();
+        String lista[] = new String[listaReparaciones.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaReparaciones.get(i).getNombre() + "  "+
+                    listaReparaciones.get(i).getCodigo()+ " "+
+                    listaReparaciones.get(i).getTipo();
+        }
+
+        return lista;
+    }
+    
     public void AgregarPieza(String pcodigoPieza, String pmarca, String ppais,
             String pdescripcion, int pcantidad, String pproblema, String pNombreTarea) {
 
