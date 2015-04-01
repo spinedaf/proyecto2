@@ -86,7 +86,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.actualizarVistaTabla(modeloTablaReparaciones, gestor.obtenerListaReparaciones());
         this.actualizarVistaTabla(modeloTablaTareas, gestor.obtenerListaTareas());
  
-        this.actualizarVistaCB(modeloCBVehiculos, gestor.obtenerPlacaVehiculos());
+        this.actualizarVistaCB(modeloCBVehiculos, gestor.obtenerPlacasVehiculo());
         this.actualizarVistaCB(modeloCBTareas, gestor.obtenerNombresListaTareas());
         this.actualizarVistaCB(modeloCBReparaciones, gestor.obtenerNombresListaReparaciones());
         this.actualizarVistaCB(modelosCBsalas, gestor.obtenerNombresListaSalasDeReparacion());
@@ -117,9 +117,17 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         }
         
         for(String fila: lista){
-            String columnas[] = fila.split(" ");
+            String columnas[] = fila.split(",");
             modelo.addRow(columnas);
         }
+    }
+    
+    public void actualizarVistasCB()
+    {
+        actualizarVistaCB(this.modeloCBTareas,gestor.obtenerNombresListaTareas());
+        actualizarVistaCB(this.modeloCBReparaciones,gestor.obtenerNombresListaReparaciones());
+        actualizarVistaCB(this.modeloCBVehiculos,gestor.obtenerPlacasVehiculo());
+        actualizarVistaCB(this.modelosCBsalas,gestor.obtenerNombresListaSalasDeReparacion());
     }
 
     /**
@@ -228,6 +236,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jTabbedPane2 = new javax.swing.JTabbedPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jlStatus.setText("Hola");
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Tarea"));
 
@@ -908,18 +918,19 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jlStatus)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jlStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlStatus))
+                .addComponent(jlStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -953,6 +964,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String estado = this.jtfEstadoVehi.getText();
         gestor.agregarVehiculo(placa, modelo, nombreProp, apellidoProp, estado);
         this.actualizarVistaTabla(modeloTablaVehiculos, gestor.obtenerListaVehiculos());
+        this.actualizarVistasCB();
     }//GEN-LAST:event_jbCrearVehiculoActionPerformed
 
     private void jbCrearReparacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearReparacionActionPerformed
@@ -965,6 +977,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         gestor.agregarReparacion(codigo, nombre, tipo, fechaSQL, placa);
         this.actualizarVistaTabla(modeloTablaReparaciones, gestor.obtenerListaReparaciones());
+        this.actualizarVistasCB();
     }//GEN-LAST:event_jbCrearReparacionActionPerformed
 
     private void jbCrearSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearSalaActionPerformed
@@ -985,6 +998,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String cargo = this.jtfCargoOp.getText();
         gestor.agregarOperario(cedula, nombre, apellido, telefono, direccion, anios, cargo);
         this.actualizarVistaTabla(modeloTablaOperarios, gestor.obtenerListaOperarios());
+        this.actualizarVistasCB();
     }//GEN-LAST:event_jbCrearOpActionPerformed
 
     private void jbCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearTareaActionPerformed
@@ -1001,7 +1015,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         gestor.agregarTarea(nombreTarea, descripcionTarea, fechaCreacion,
             duracionRealTarea, duracionPropuestaTarea, codigoReparacion, nombreSala);
         this.actualizarVistaTabla(modeloTablaTareas, gestor.obtenerListaTareas());
-
+        
+        this.actualizarVistasCB();
     }//GEN-LAST:event_jbCrearTareaActionPerformed
 
     private void jtfTareaDuracionRealActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfTareaDuracionRealActionPerformed
