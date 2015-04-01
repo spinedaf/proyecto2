@@ -26,6 +26,7 @@ public class Tarea {
     private SalaDeReparacion sala;
     private Reparacion reparacion;
     private ArrayList<Operario> listaOperarios;
+    private ArrayList<Pieza> listaPiezas;
     
     /**
      *
@@ -51,6 +52,7 @@ public class Tarea {
         sala = null;
         sala = null;
         listaOperarios = new ArrayList<Operario>();
+        listaPiezas = new ArrayList<Pieza>();
     }
 
     /**
@@ -207,5 +209,22 @@ public class Tarea {
      */
     public void setCodigoReparacion(String codigoReparacion) {
         this.codigoReparacion = codigoReparacion;
+    }
+
+    /**
+     * @return the listaPiezas
+     */
+    public ArrayList<Pieza> getListaPiezas() {
+        if(listaPiezas.isEmpty()){
+            this.setListaPiezas(new MultiPieza().buscarPiezaPorIdTarea(this.nombre));
+        }
+        return listaPiezas;
+    }
+
+    /**
+     * @param listaPiezas the listaPiezas to set
+     */
+    public void setListaPiezas(ArrayList<Pieza> listaPiezas) {
+        this.listaPiezas = listaPiezas;
     }
 }

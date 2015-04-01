@@ -5,11 +5,12 @@
  */
 package capaLogica;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Observable;
+import java.util.Set;
 
 /**
  *
@@ -269,6 +270,78 @@ public class Gestor extends Observable {
     {
         Tarea tarea = new MultiTarea().buscar(pnombreTarea);
         return tarea.getSala().getDescripcion();
+    }
+    
+    public String[] obtenerTareasPorReparacion(String codigo)
+    {
+        Reparacion repa = (new MultiReparacion()).buscar(codigo);
+        
+        ArrayList<Tarea> listaTareas = repa.getListaDeTareas();
+        String lista[] = new String[listaTareas.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaTareas.get(i).getNombre();
+        }
+        
+        return lista;
+    }
+    
+    public String[] obtenerSalasPorReparacion(String codigo)
+    {
+        Reparacion repa = (new MultiReparacion()).buscar(codigo);
+        
+        ArrayList<Tarea> listaTareas = repa.getListaDeTareas();
+        String lista[] = new String[listaTareas.size()];
+        
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaTareas.get(i).getSala().getDescripcion();
+        }
+        return lista;
+    }
+        
+    public String[] obtenerPiezasPorReparacion(String codigo)
+    {
+        Reparacion repa = (new MultiReparacion()).buscar(codigo);
+        ArrayList<Tarea> listaTareas = repa.getListaDeTareas();
+        ArrayList<Pieza> listaPiezasTotal = new ArrayList<Pieza>();
+        
+        for(Tarea t: listaTareas)
+        {
+            listaPiezasTotal.addAll(t.getListaPiezas());
+        }
+        
+        //Encontrar Elementos unicos
+        Set<Pieza> listaPiezas = new HashSet<Pieza>(listaPiezasTotal);
+        String lista[] = new String[listaPiezas.size()];
+        
+        int i = 0;
+        for(Pieza p: listaPiezas) {
+            lista[i] = p.getCodigo();
+            i++;
+        }
+        return lista;
+    }
+    
+    public String[] obtenerOperariosPorReparacion(String codigo)
+    {
+        Reparacion repa = (new MultiReparacion()).buscar(codigo);
+        ArrayList<Tarea> listaTareas = repa.getListaDeTareas();
+        ArrayList<Operario> listaOperariosTotal = new ArrayList<Operario>();
+        
+        for(Tarea t: listaTareas)
+        {
+            listaOperariosTotal.addAll(t.getListaOperarios());
+        }
+        
+        //Encontrar Elementos unicos
+        Set<Operario> listaOperarios = new HashSet<Operario>(listaOperariosTotal);
+        String lista[] = new String[listaOperarios.size()];
+        
+        int i = 0;
+        for(Operario o: listaOperarios) {
+            lista[i] = o.getNombre() + " " + o.getApellido();
+            i++;
+        }
+        return lista;
     }
 
     /**

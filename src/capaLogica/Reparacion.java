@@ -170,8 +170,7 @@ public class Reparacion {
      * @throws java.sql.SQLException
      * @throws java.lang.Exception
      */
-    public ArrayList<Tarea> getListaDeTareas() throws
-            java.sql.SQLException,Exception{
+    public ArrayList<Tarea> getListaDeTareas(){
         if(listaDeTareas.isEmpty()){
             this.setListaDeTareas(new MultiTarea().buscarPorReparacion(codigo));
         }

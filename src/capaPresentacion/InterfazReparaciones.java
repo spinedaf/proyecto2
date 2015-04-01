@@ -39,6 +39,11 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     
     private DefaultListModel modeloOperariosAsociadosTarea;
     private DefaultListModel modeloReparacionesAsociadas;
+    
+    private DefaultListModel modeloOperariosReparacion;
+    private DefaultListModel modeloPiezasReparacion;
+    private DefaultListModel modeloTareasReparacion;
+    private DefaultListModel modeloSalasReparacion;
 
     /**
      * Creates new form InterfazReparaciones
@@ -60,6 +65,10 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         
         modeloReparacionesAsociadas = new DefaultListModel();
         modeloOperariosAsociadosTarea = new DefaultListModel();
+        modeloOperariosReparacion = new DefaultListModel();
+        modeloPiezasReparacion = new DefaultListModel();
+        modeloTareasReparacion = new DefaultListModel();
+        modeloSalasReparacion = new DefaultListModel();
 
         String encabezadosTarea[] = new String[]{"Nombre", "Descripcion", "Fecha creacion", "Duracion prop.", "Duracion Real", "Cod. Reparacion"};
         modeloTablaTareas = new DefaultTableModel(encabezadosTarea, 0);
@@ -81,6 +90,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.jtTareas.getSelectionModel().addListSelectionListener(this);
         this.jtPiezas.setModel(modeloTablaPiezas);
         this.jtReparaciones.setModel(modeloTablaReparaciones);
+        this.jtReparaciones.getSelectionModel().addListSelectionListener(this);
         this.jtSalas.setModel(modeloTablaSalas);
 
         this.jcbTareasPieza.setModel(modeloCBTareas);
@@ -91,6 +101,10 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         
         this.jlTrabajosAsociados.setModel(modeloReparacionesAsociadas);
         this.jlOperariosAsociadosTarea.setModel(modeloOperariosAsociadosTarea);
+        this.jlOperariosReparacion.setModel(modeloOperariosReparacion);
+        this.jlPiezasReparacion.setModel(modeloPiezasReparacion);
+        this.jlSalasReparacion.setModel(modeloSalasReparacion);
+        this.jlTareasReparacion.setModel(modeloTareasReparacion);
 
         gestor.addObserver(this);
 
@@ -260,6 +274,18 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtfTipoReparacion = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
         jtReparaciones = new javax.swing.JTable();
+        jLabel23 = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jlTareasReparacion = new javax.swing.JList();
+        jLabel27 = new javax.swing.JLabel();
+        jScrollPane10 = new javax.swing.JScrollPane();
+        jlSalasReparacion = new javax.swing.JList();
+        jLabel28 = new javax.swing.JLabel();
+        jScrollPane11 = new javax.swing.JScrollPane();
+        jlPiezasReparacion = new javax.swing.JList();
+        jLabel29 = new javax.swing.JLabel();
+        jScrollPane12 = new javax.swing.JScrollPane();
+        jlOperariosReparacion = new javax.swing.JList();
         jPanel1 = new javax.swing.JPanel();
         jbCrearVehiculo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -839,6 +865,42 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         ));
         jScrollPane6.setViewportView(jtReparaciones);
 
+        jLabel23.setText("Tareas Asociadas:");
+
+        jlTareasReparacion.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane9.setViewportView(jlTareasReparacion);
+
+        jLabel27.setText("Salas Asociadas:");
+
+        jlSalasReparacion.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane10.setViewportView(jlSalasReparacion);
+
+        jLabel28.setText("Piezas cambiadas:");
+
+        jlPiezasReparacion.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane11.setViewportView(jlPiezasReparacion);
+
+        jLabel29.setText("Operarios involucrados:");
+
+        jlOperariosReparacion.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane12.setViewportView(jlOperariosReparacion);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -848,23 +910,45 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel16)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel16)
+                                    .addComponent(jLabel13)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel15))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtfFechaReparacion)
+                                    .addComponent(jtfNombreReparacion)
+                                    .addComponent(jtfCodigoReparacion, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                    .addComponent(jcbVehiculoReparacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel18)
+                                .addGap(37, 37, 37)
+                                .addComponent(jtfTipoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbCrearReparacion))
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfFechaReparacion)
-                            .addComponent(jtfNombreReparacion)
-                            .addComponent(jtfCodigoReparacion, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                            .addComponent(jcbVehiculoReparacion, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel18)
-                        .addGap(37, 37, 37)
-                        .addComponent(jtfTipoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jbCrearReparacion))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel23))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel27)
+                                .addGap(118, 118, 118)
+                                .addComponent(jLabel28))
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(21, 21, 21)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel29)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane12))))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -891,11 +975,27 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
-                            .addComponent(jcbVehiculoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jbCrearReparacion))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(36, Short.MAX_VALUE))
+                            .addComponent(jcbVehiculoReparacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbCrearReparacion)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel27)
+                    .addComponent(jLabel28)
+                    .addComponent(jLabel29))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane9, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane11)
+                            .addComponent(jScrollPane10)
+                            .addComponent(jScrollPane12))))
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Reparación", jPanel6);
@@ -1201,9 +1301,13 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1217,6 +1321,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane10;
+    private javax.swing.JScrollPane jScrollPane11;
+    private javax.swing.JScrollPane jScrollPane12;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
@@ -1224,6 +1331,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jbAgregarOperario;
     private javax.swing.JButton jbCrearOp;
@@ -1244,15 +1352,19 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel jlMarcaPieza;
     private javax.swing.JPanel jlOperario;
     private javax.swing.JList jlOperariosAsociadosTarea;
+    private javax.swing.JList jlOperariosReparacion;
     private javax.swing.JLabel jlPaisPieza;
+    private javax.swing.JList jlPiezasReparacion;
     private javax.swing.JLabel jlProbPieza;
     private javax.swing.JLabel jlReparacion;
+    private javax.swing.JList jlSalasReparacion;
     private javax.swing.JLabel jlStatus;
     private javax.swing.JLabel jlTarea;
     private javax.swing.JLabel jlTareaDescripcion;
     private javax.swing.JLabel jlTareaDuracionReal;
     private javax.swing.JLabel jlTareaFechaCreacion;
     private javax.swing.JLabel jlTareaNombre;
+    private javax.swing.JList jlTareasReparacion;
     private javax.swing.JList jlTrabajosAsociados;
     private javax.swing.JSpinner jsAniosOp;
     private javax.swing.JSpinner jsCapacidadSala;
@@ -1338,6 +1450,17 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
                 this.actualizarVistaLista(modeloOperariosAsociadosTarea, gestor.obtenerListaOperariosPorTarea(nombre));
                 this.jtfSalaTarea.setText(gestor.obtenerSalaAsociadaTarea(nombre));
+            }else{
+                if(e.getSource() == this.jtReparaciones.getSelectionModel())
+                {
+                    int fila = jtReparaciones.getSelectedRow();
+                    String nombre = (String)modeloTablaReparaciones.getValueAt(fila, 1);
+
+                    this.actualizarVistaLista(this.modeloTareasReparacion, gestor.obtenerTareasPorReparacion(nombre));
+                    this.actualizarVistaLista(this.modeloPiezasReparacion, gestor.obtenerPiezasPorReparacion(nombre));
+                    this.actualizarVistaLista(this.modeloOperariosReparacion, gestor.obtenerOperariosPorReparacion(nombre));
+                    this.actualizarVistaLista(this.modeloSalasReparacion,gestor.obtenerSalasPorReparacion(nombre));
+                }
             }
         }
     }
