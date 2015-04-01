@@ -74,13 +74,27 @@ public class Gestor extends Observable {
             this.setMensaje("Nuevo Operario Registrado");
         }
     }
-    
-    public void agregarSala(String pdescripcion, String pubicacion, int capacidad){
+
+    public void agregarSala(String pdescripcion, String pubicacion, int capacidad) {
         SalaDeReparacion instance = null;
         MultiSalaDeReparacion multi = new MultiSalaDeReparacion();
         if (multi.buscarSalaDeReparacion(pdescripcion) == null) {
             instance = multi.crear(pdescripcion, pubicacion, capacidad);
             this.setMensaje("Nueva Sala Registrada");
+        }
+    }
+
+    public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion, 
+            int pduracionReal, int pduracionPropuesta, String pcodigoReparacion, 
+            String pDescripcionSala) {
+        
+        Tarea instance = null;
+        MultiTarea multi = new MultiTarea();
+        if (multi.buscar(pdescripcion) == null) {
+            instance = multi.crear(pnombre, pdescripcion, pfechaCreacion, 
+                    pduracionReal, pduracionPropuesta, pcodigoReparacion, 
+                    pDescripcionSala);
+            this.setMensaje("Nueva Tarea Registrada");
         }
     }
 
@@ -100,19 +114,19 @@ public class Gestor extends Observable {
 
         return lista;
     }
-    
+
     public String[] obtenerListaSalas() {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaSalas.get(i).getDescripcion()+ "   "
-                    + listaSalas.get(i).getUbicacion()+ "   "
+            lista[i] = listaSalas.get(i).getDescripcion() + "   "
+                    + listaSalas.get(i).getUbicacion() + "   "
                     + listaSalas.get(i).getCapacidad();
         }
 
         return lista;
     }
-    
+
     public String[] obtenerPlacasVehiculo() {
         ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
         String lista[] = new String[listaVehiculos.size()];
@@ -144,19 +158,19 @@ public class Gestor extends Observable {
 
         return lista;
     }
-    
+
     public String[] obtenerListaReparaciones() {
         ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarTodos();
         String lista[] = new String[listaReparaciones.size()];
         for (int i = 0; i < lista.length; i++) {
-            lista[i] = listaReparaciones.get(i).getNombre() + "  "+
-                    listaReparaciones.get(i).getCodigo()+ " "+
-                    listaReparaciones.get(i).getTipo();
+            lista[i] = listaReparaciones.get(i).getNombre() + "  "
+                    + listaReparaciones.get(i).getCodigo() + " "
+                    + listaReparaciones.get(i).getTipo();
         }
 
         return lista;
     }
-    
+
     public void AgregarPieza(String pcodigoPieza, String pmarca, String ppais,
             String pdescripcion, int pcantidad, String pproblema, String pNombreTarea) {
 
@@ -222,7 +236,7 @@ public class Gestor extends Observable {
         return lista;
     }
 
-      public String[] obtenerNombresListaSalasDeReparacion() {
+    public String[] obtenerNombresListaSalasDeReparacion() {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];
         for (int i = 0; i < lista.length; i++) {
@@ -231,4 +245,5 @@ public class Gestor extends Observable {
 
         return lista;
     }
+
 }

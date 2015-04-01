@@ -7,8 +7,10 @@ package capaPresentacion;
 
 import capaLogica.*;
 import java.sql.Date;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -31,6 +33,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private DefaultComboBoxModel<String> modeloCBVehiculos;
     private DefaultComboBoxModel<String> modeloCBReparaciones;
     private DefaultComboBoxModel<String> modelosCBsalas;
+    private DefaultListModel<String> modeloListaTareas;
 
     /**
      * Creates new form InterfazReparaciones
@@ -51,6 +54,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         modeloCBTareas = new DefaultComboBoxModel<String>();
         modeloCBReparaciones = new DefaultComboBoxModel<String>();
         modelosCBsalas = new DefaultComboBoxModel<String>();
+        modeloListaTareas = new DefaultListModel();
 
         this.jlVehiculos.setModel(modeloListaVehiculos);
         this.jlOperarios.setModel(modeloListaOperarios);
@@ -60,6 +64,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.jcbVehiculoReparacion.setModel(modeloCBVehiculos);
         this.jcbTareaReparacion.setModel(modeloCBReparaciones);
         this.jcbTareaSala.setModel(modelosCBsalas);
+        this.jlTareas.setModel(modeloListaTareas);
 
         gestor.addObserver(this);
 
@@ -71,6 +76,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.actualizarVistaCB(modeloCBTareas, gestor.obtenerNombresListaTareas());
         this.actualizarVistaCB(modeloCBReparaciones, gestor.obtenerNombresListaReparaciones());
         this.actualizarVistaCB(modelosCBsalas, gestor.obtenerNombresListaSalasDeReparacion());
+        this.actualizarVistaLista(modeloListaTareas, gestor.obtenerListaTareas());
 
         this.setJlStatus("");
     }
@@ -514,7 +520,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jlTareaDescripcion.setText("Descripción:");
 
-        jlTareaFechaCreacion.setText("Creación:");
+        jlTareaFechaCreacion.setText("Fecha Creación:");
 
         lbTareaDuracionPropuesta.setText("Propuesta:");
 
@@ -522,7 +528,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jlReparacion.setText("Reparacion:");
 
-        jtfTareaFechaCreacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/mm/yyyy"))));
+        jtfTareaFechaCreacion.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
         jtfTareaFechaCreacion.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jtfTareaFechaCreacionKeyTyped(evt);
@@ -621,9 +627,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTarea)
                     .addComponent(jcbTareaSala, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
                 .addComponent(jbCrearTarea))
         );
 
@@ -799,9 +805,9 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                         .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
+                .addGap(18, 75, Short.MAX_VALUE)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(94, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jlStatus)
@@ -841,7 +847,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String nombreProp = this.jtfNombreProp.getText();
         String apellidoProp = this.jtfApellidoProp.getText();
         String estado = this.jtfEstadoVehi.getText();
-
         gestor.agregarVehiculo(placa, modelo, nombreProp, apellidoProp, estado);
         this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
 
@@ -855,7 +860,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         String direccion = this.jtfDireccionOp.getText();
         int anios = (int) this.jsAniosOp.getValue();
         String cargo = this.jtfCargoOp.getText();
-
         gestor.agregarOperario(cedula, nombre, apellido, telefono, direccion, anios, cargo);
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
     }//GEN-LAST:event_jbCrearOpActionPerformed
@@ -891,34 +895,28 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
     private void jbCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearTareaActionPerformed
 
-        try {
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy");
-            String nombreTarea = this.jtfTareNombre.getText();
-            String descripcionTarea = this.jtfTareaDescripcion.getText();
-            Date fechaCreacionTarea = (Date) formatter.parse(this.jtfTareaFechaCreacion.getText());
-            int duracionRealTarea = Integer.parseInt(this.jtfTareaDuracionReal.getText());
-            int duracionPropuestaTarea = Integer.parseInt(this.jtfTareaDuracionPropuesta.getText());
-            String codigoReparacion = (String) this.jcbTareaReparacion.getSelectedItem();
-            
-
-//                            rs.getString("nombreTarea"),
-//                    rs.getString("descripcionTarea"),
-//                    rs.getDate("fechaCreacionTarea"),
-//                    rs.getInt("duracionRealTarea"),
-//                    rs.getInt("duracionPropuestaTarea"),
-//                    rs.getString("codigo_reparacion"),
-//                    rs.getInt("id_sala")
-        } catch (ParseException ex) {
-            Logger.getLogger(InterfazReparaciones.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String nombreTarea = this.jtfTareNombre.getText();
+        String descripcionTarea = this.jtfTareaDescripcion.getText();      
+        java.util.Date fecha = (java.util.Date)this.jtfTareaFechaCreacion.getValue();    
+        Date fechaCreacion = new Date(fecha.getTime());    
+        int duracionRealTarea = Integer.parseInt(this.jtfTareaDuracionReal.getText());
+        int duracionPropuestaTarea = Integer.parseInt(this.jtfTareaDuracionPropuesta.getText());
+        String codigoReparacion = (String) this.jcbTareaReparacion.getSelectedItem();
+        String nombreSala = (String) this.jcbTareaSala.getSelectedItem();
+        
+        
+        gestor.agregarTarea(nombreTarea, descripcionTarea, fechaCreacion, 
+                duracionRealTarea, duracionPropuestaTarea, codigoReparacion, nombreSala);
+        this.actualizarVistaLista(modeloListaTareas, gestor.obtenerListaTareas());
+        
+        
 
     }//GEN-LAST:event_jbCrearTareaActionPerformed
 
     private void jbCrearSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearSalaActionPerformed
         String descripcion = this.jtfDescripcionSala.getText();
         String ubicacion = this.jtfUbicacionSala.getText();
-        int capacidad = (int)this.jsCapacidadSala.getValue();
-        
+        int capacidad = (int) this.jsCapacidadSala.getValue();
         gestor.agregarSala(descripcion, ubicacion, capacidad);
         this.actualizarVistaLista(modeloListaSalas, gestor.obtenerListaSalas());
     }//GEN-LAST:event_jbCrearSalaActionPerformed

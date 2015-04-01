@@ -91,33 +91,33 @@ public class MultiTarea {
         }
     }
     
-        public Tarea buscar(int pidTarea){
-        Tarea tarea = null;
-        java.sql.ResultSet rs;
-        String sql;
-        sql = "SELECT * "+
-        "FROM TTarea "+
-        "WHERE id_tarea='"+pidTarea+"';";
-        try {
-            rs = Conector.getConector().ejecutarSQL(sql,true);
-            if (rs.next()){
-                tarea = new Tarea(
-                    rs.getString("nombreTarea"),
-                    rs.getString("descripcionTarea"),
-                    rs.getDate("fechaCreacionTarea"),
-                    rs.getInt("duracionRealTarea"),
-                    rs.getInt("duracionPropuestaTarea"),
-                    rs.getString("codigo_reparacion"),
-                    rs.getString("descripcionSala")
-                    );
-            } 
-            rs.close();
-            return tarea;
-        } catch (Exception ex) {
-            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-    }
+//        public Tarea buscar(int pidTarea){
+//        Tarea tarea = null;
+//        java.sql.ResultSet rs;
+//        String sql;
+//        sql = "SELECT * "+
+//        "FROM TTarea "+
+//        "WHERE id_tarea='"+pidTarea+"';";
+//        try {
+//            rs = Conector.getConector().ejecutarSQL(sql,true);
+//            if (rs.next()){
+//                tarea = new Tarea(
+//                    rs.getString("nombreTarea"),
+//                    rs.getString("descripcionTarea"),
+//                    rs.getDate("fechaCreacionTarea"),
+//                    rs.getInt("duracionRealTarea"),
+//                    rs.getInt("duracionPropuestaTarea"),
+//                    rs.getString("codigo_reparacion"),
+//                    rs.getString("descripcionSala")
+//                    );
+//            } 
+//            rs.close();
+//            return tarea;
+//        } catch (Exception ex) {
+//            Logger.getLogger(MultiTarea.class.getName()).log(Level.SEVERE, null, ex);
+//            return null;
+//        }
+//    }
     
     
     /**
