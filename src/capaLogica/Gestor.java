@@ -184,6 +184,17 @@ public class Gestor extends Observable {
 
         return lista;
     }
+    
+    public String[] obtenerListaTrabajosPorVehiculo(String pplaca)
+    {
+        ArrayList<Reparacion> listaReparaciones = (new MultiReparacion()).buscarPorVehiculo(pplaca);
+        String lista[] = new String[listaReparaciones.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaReparaciones.get(i).getNombre();
+        }
+
+        return lista;
+    }
 
     public void AgregarPieza(String pcodigoPieza, String pmarca, String ppais,
             String pdescripcion, int pcantidad, String pproblema, String pNombreTarea) {
