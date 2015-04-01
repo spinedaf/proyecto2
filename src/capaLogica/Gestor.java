@@ -63,7 +63,7 @@ public class Gestor extends Observable {
         }
 
     }
-    
+
     public void agregarReparacion(String codigo, String nombre, String tipo,
             Date fecha, String placa) {
         Reparacion instance;
@@ -95,15 +95,15 @@ public class Gestor extends Observable {
         }
     }
 
-    public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion, 
-            int pduracionReal, int pduracionPropuesta, String pcodigoReparacion, 
+    public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion,
+            int pduracionReal, int pduracionPropuesta, String pcodigoReparacion,
             String pDescripcionSala) {
-        
-        Tarea instance = null;
-        MultiTarea multi = new MultiTarea();
-        if (multi.buscar(pdescripcion) == null) {
-            instance = multi.crear(pnombre, pdescripcion, pfechaCreacion, 
-                    pduracionReal, pduracionPropuesta, pcodigoReparacion, 
+
+        Reparacion instance = new MultiReparacion().buscar(pcodigoReparacion);
+
+        if (instance != null) {
+            instance.agregarTarea(pnombre, pdescripcion, pfechaCreacion,
+                    pduracionReal, pduracionPropuesta, pcodigoReparacion,
                     pDescripcionSala);
             this.setMensaje("Nueva Tarea Registrada");
         }
@@ -135,7 +135,7 @@ public class Gestor extends Observable {
 
         return lista;
     }
-    
+
     public String[] obtenerListaSalas() {
         ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
         String lista[] = new String[listaSalas.size()];

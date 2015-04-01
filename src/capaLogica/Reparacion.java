@@ -198,6 +198,23 @@ public class Reparacion {
     public void setPlacaVehiculo(String placaVehiculo) {
         this.placaVehiculo = placaVehiculo;
     }
+    
+    
+     public void agregarTarea(String pnombre, String pdescripcion, Date pfechaCreacion, 
+            int pduracionReal, int pduracionPropuesta, String pcodigoReparacion, 
+            String pDescripcionSala) {
+        
+        Tarea instance = null;
+        
+        MultiTarea multi = new MultiTarea();
+        
+        if (multi.buscar(pdescripcion) == null) {
+            instance = multi.crear(pnombre, pdescripcion, pfechaCreacion, 
+                    pduracionReal, pduracionPropuesta, pcodigoReparacion, 
+                    pDescripcionSala);
+            
+        }
+    }
    
     
 }
