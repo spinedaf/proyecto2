@@ -168,6 +168,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         jtTareas = new javax.swing.JTable();
         jLabel21 = new javax.swing.JLabel();
         jcbOperario = new javax.swing.JComboBox();
+        jbAgregarOperario = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -312,6 +313,13 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
 
         jcbOperario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        jbAgregarOperario.setText("AgregarOperario");
+        jbAgregarOperario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAgregarOperarioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jlOperarioLayout = new javax.swing.GroupLayout(jlOperario);
         jlOperario.setLayout(jlOperarioLayout);
         jlOperarioLayout.setHorizontalGroup(
@@ -345,7 +353,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                                 .addComponent(jtfTareNombre))
                             .addGroup(jlOperarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jcbOperario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jcbTareaSala, javax.swing.GroupLayout.Alignment.LEADING, 0, 111, Short.MAX_VALUE)))))
+                                .addComponent(jcbTareaSala, javax.swing.GroupLayout.Alignment.LEADING, 0, 111, Short.MAX_VALUE))))
+                    .addComponent(jbAgregarOperario, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
                 .addContainerGap())
@@ -387,6 +396,8 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
                         .addGroup(jlOperarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel21)
                             .addComponent(jcbOperario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbAgregarOperario)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jbCrearTarea))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1083,7 +1094,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         int duracionPropuestaTarea = Integer.parseInt(this.jtfTareaDuracionPropuesta.getText());
         String codigoReparacion = (String) this.jcbTareaReparacion.getSelectedItem();
         String nombreSala = (String) this.jcbTareaSala.getSelectedItem();
-        String cedulaOperario = (String) this.jcbOperario.getSelectedItem();
+        
 
         gestor.agregarTarea(nombreTarea, descripcionTarea, fechaCreacion,
                 duracionRealTarea, duracionPropuestaTarea, codigoReparacion, nombreSala);
@@ -1092,7 +1103,6 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.actualizarVistaCB(modeloCBOperarios, gestor.obtenerCedulaOperarios());
         this.actualizarVistasCB();
 
-        gestor.agregarTareaOperario(cedulaOperario, nombreTarea);
 
 
     }//GEN-LAST:event_jbCrearTareaActionPerformed
@@ -1104,6 +1114,13 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private void jtfTareaFechaCreacionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfTareaFechaCreacionKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_jtfTareaFechaCreacionKeyTyped
+
+    private void jbAgregarOperarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarOperarioActionPerformed
+        String nombreTarea = this.jtfTareNombre.getText();
+        String cedulaOperario = (String) this.jcbOperario.getSelectedItem();
+        
+        gestor.agregarTareaOperario(cedulaOperario, nombreTarea);
+    }//GEN-LAST:event_jbAgregarOperarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1178,6 +1195,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton jbAgregarOperario;
     private javax.swing.JButton jbCrearOp;
     private javax.swing.JButton jbCrearPieza;
     private javax.swing.JButton jbCrearReparacion;
