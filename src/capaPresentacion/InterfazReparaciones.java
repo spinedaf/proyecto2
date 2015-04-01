@@ -26,6 +26,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     private DefaultListModel<String> modeloListaVehiculos;
     private DefaultListModel<String> modeloListaOperarios;
     private DefaultListModel<String> modeloListaPiezas;
+    private DefaultListModel<String> modeloListaSalas;
     private DefaultComboBoxModel<String> modeloCBTareas;
     private DefaultComboBoxModel<String> modeloCBVehiculos;
     private DefaultComboBoxModel<String> modeloCBReparaciones;
@@ -45,6 +46,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         modeloListaVehiculos = new DefaultListModel();
         modeloListaOperarios = new DefaultListModel();
         modeloListaPiezas = new DefaultListModel<String>();
+        modeloListaSalas = new DefaultListModel<String>();
         modeloCBVehiculos = new DefaultComboBoxModel<String>();
         modeloCBTareas = new DefaultComboBoxModel<String>();
         modeloCBReparaciones = new DefaultComboBoxModel<String>();
@@ -53,6 +55,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.jlVehiculos.setModel(modeloListaVehiculos);
         this.jlOperarios.setModel(modeloListaOperarios);
         this.jlPieza.setModel(modeloListaPiezas);
+        this.jlListaSalas.setModel(modelosCBsalas);
         this.jcbTareasPieza.setModel(modeloCBTareas);
         this.jcbVehiculoReparacion.setModel(modeloCBVehiculos);
         this.jcbTareaReparacion.setModel(modeloCBReparaciones);
@@ -63,6 +66,7 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
         this.actualizarVistaLista(modeloListaVehiculos, gestor.obtenerListaVehiculos());
         this.actualizarVistaLista(modeloListaOperarios, gestor.obtenerListaOperarios());
         this.actualizarVistaLista(modeloListaPiezas, gestor.obtenerListaPiezas());
+        this.actualizarVistaLista(modeloListaSalas, gestor.obtenerListaSalas());
         this.actualizarVistaCB(modeloCBVehiculos, gestor.obtenerListaVehiculos());
         this.actualizarVistaCB(modeloCBTareas, gestor.obtenerNombresListaTareas());
         this.actualizarVistaCB(modeloCBReparaciones, gestor.obtenerNombresListaReparaciones());
@@ -911,7 +915,12 @@ public class InterfazReparaciones extends javax.swing.JFrame implements Observer
     }//GEN-LAST:event_jbCrearTareaActionPerformed
 
     private void jbCrearSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCrearSalaActionPerformed
-        // TODO add your handling code here:
+        String descripcion = this.jtfDescripcionSala.getText();
+        String ubicacion = this.jtfUbicacionSala.getText();
+        int capacidad = (int)this.jsCapacidadSala.getValue();
+        
+        gestor.agregarSala(descripcion, ubicacion, capacidad);
+        this.actualizarVistaLista(modeloListaSalas, gestor.obtenerListaSalas());
     }//GEN-LAST:event_jbCrearSalaActionPerformed
 
     /**

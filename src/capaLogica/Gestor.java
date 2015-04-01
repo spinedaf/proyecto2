@@ -101,6 +101,18 @@ public class Gestor extends Observable {
         return lista;
     }
     
+    public String[] obtenerListaSalas() {
+        ArrayList<SalaDeReparacion> listaSalas = (new MultiSalaDeReparacion()).buscarTodos();
+        String lista[] = new String[listaSalas.size()];
+        for (int i = 0; i < lista.length; i++) {
+            lista[i] = listaSalas.get(i).getDescripcion()+ "   "
+                    + listaSalas.get(i).getUbicacion()+ "   "
+                    + listaSalas.get(i).getCapacidad();
+        }
+
+        return lista;
+    }
+    
     public String[] obtenerPlacasVehiculo() {
         ArrayList<Vehiculo> listaVehiculos = (new MultiVehiculo()).buscarTodos();
         String lista[] = new String[listaVehiculos.size()];

@@ -76,11 +76,11 @@ public class MultiTareaTest {
         Date pFecha = new Date(Calendar.getInstance().getTimeInMillis());;
         int duracionPropuesta = 5;
         int duracionReal = 4;
-        String idSala = "pintura";
+        String descripcion = "motores diesel";
         String codigoRepa = "india";
         MultiTarea instance = new MultiTarea();
-        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoRepa,idSala);
-        Tarea result = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, codigoRepa, idSala);
+        Tarea expResult = new Tarea(pnombre,pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoRepa,descripcion);
+        Tarea result = instance.crear(pnombre, pdescripcion, pFecha, duracionReal, duracionPropuesta, codigoRepa, descripcion);
         assertEquals(expResult.getNombre(), result.getNombre());
         assertEquals(expResult.getDescripcion(), result.getDescripcion());
         assertEquals(expResult.getDuracionPropuesta(), result.getDuracionPropuesta());

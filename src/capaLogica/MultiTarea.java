@@ -42,9 +42,9 @@ public class MultiTarea {
         Tarea tarea=null;
         String sql;
         sql = "INSERT INTO TTarea "+
-        "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, id_sala, codigo_reparacion) "+
+        "(nombreTarea, descripcionTarea, fechaCreacionTarea, duracionPropuestaTarea, duracionRealTarea, descripcionSala, codigo_reparacion) "+
         "VALUES ('"+pnombre+"', '"+pdescripcion+"', '"+mmddyyyyXmas+"', '"+duracionPropuesta+"', '"+duracionReal+"', '"+descripcionSala
-                +"', '"+codigoReparacion+"');";
+                +"', '"+codigoReparacion+"')";
         try {
             Conector.getConector().ejecutarSQL(sql);
             tarea = new Tarea (pnombre, pdescripcion,pFecha,duracionPropuesta,duracionReal,codigoReparacion,descripcionSala);

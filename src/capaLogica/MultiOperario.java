@@ -109,7 +109,7 @@ public class MultiOperario {
         sql="SELECT * "+
         "FROM TOperario INNER JOIN TTareaOperario " +
         "ON TOperario.cedulaOperario = TTareaOperario.cedulaOperario "+
-        "WHERE id_tarea='"+pnombreTarea+"';";
+        "WHERE nombreTarea='"+pnombreTarea+"';";
         try {
             Conector.getConector().ejecutarSQL(sql);
             rs = Conector.getConector().ejecutarSQL(sql,true);

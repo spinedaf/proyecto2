@@ -37,7 +37,7 @@ public class MultiPieza {
             sql = "INSERT INTO TPieza "
                     + "(codigoPieza, marca, pais, descripcion, cantidad, problema, nombreTarea) "
                     + "VALUES ('" + pcodigoPieza + "', '" + pmarca + "', '" + ppais + "', "
-                    + "'" + pdescripcion + "', " + pcantidad + ", '" + pproblema + "' ," + pNombreTarea + ");";
+                    + "'" + pdescripcion + "', " + pcantidad + ", '" + pproblema + "', '" + pNombreTarea + "')";
 
             Conector.getConector().ejecutarSQL(sql);
             pieza = new Pieza(pcodigoPieza, pmarca, ppais, pdescripcion,
@@ -65,7 +65,7 @@ public class MultiPieza {
             String sql;
             sql = "SELECT * "
                     + "FROM TPieza "
-                    + "WHERE nombreTarea=" + pNombreTarea + ";";
+                    + "WHERE nombreTarea='" + pNombreTarea + "';";
             rs = Conector.getConector().ejecutarSQL(sql, true);
             if (rs.next()) {
                 pieza = new Pieza(

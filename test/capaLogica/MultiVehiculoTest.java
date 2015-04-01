@@ -60,7 +60,7 @@ public class MultiVehiculoTest {
     @Test
     public void testCrear() throws Exception {
         System.out.println("crear");
-        String pplaca = "124a3";
+        String pplaca = "124a31";
         String pmodelo = "B1";
         String pnombrePropietario = "Joe";
         String papellidoPropietario = "Dow";

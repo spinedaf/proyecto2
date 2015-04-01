@@ -64,7 +64,7 @@ public class MultiSalaDeReparacion {
             String sql;
             sql = "SELECT * "
                     + "FROM TSala "
-                    + "WHERE descripcionSala = " + pdescripcionSala + ";";
+                    + "WHERE descripcionSala = '" + pdescripcionSala + "';";
 
             rs = Conector.getConector().ejecutarSQL(sql, true);
             
